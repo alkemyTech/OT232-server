@@ -1,6 +1,6 @@
 ﻿namespace OngProject.Repositories.Interfaces
 {
-    public class IUsersRepository
+    interface IUsersRepository: IGenericRepository<Users>
     {
     }
 }

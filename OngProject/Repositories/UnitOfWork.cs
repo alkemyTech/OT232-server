@@ -1,6 +1,9 @@
-﻿namespace OngProject.DataAccess
+﻿using OngProject.DataAccess;
+using OngProject.Repositories.Interfaces;
+
+namespace OngProject.Repositories
 {
-    public class UnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly DbContext _context;
         public UnitOfWork(DbContext context)

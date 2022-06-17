@@ -8,7 +8,7 @@ namespace OngProject.Core.Interfaces
         List<Task> GetAll();
         Task GetById(int Id);
         Task Insert();
-        Task Update(int id);
+        Task Update();
         Task Delete(int Id);
     }
 }

@@ -36,7 +36,7 @@ namespace OngProject.Core.Business
             throw new System.NotImplementedException();
         }
 
-        public Task Update(int id)
+        public Task Update()
         {
             throw new System.NotImplementedException();
         }

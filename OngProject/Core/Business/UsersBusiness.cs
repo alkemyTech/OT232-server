@@ -1,4 +1,5 @@
 ﻿using OngProject.Core.Interfaces;
+using OngProject.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,6 +7,15 @@ namespace OngProject.Core.Business
 {
     public class UsersBusiness : IUsersBusiness
     {
+
+        private readonly UnitOfWork _UoW;
+
+        public UsersBusiness(UnitOfWork UoW)
+        {
+            _UoW = UoW;
+        }
+
+
         public Task Delete(int Id)
         {
             throw new System.NotImplementedException();

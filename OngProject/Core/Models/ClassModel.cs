@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace OngProject.Core.Models
 {
-    public class ClassModel
+    class ClassModel
     {
+        
     }
 }

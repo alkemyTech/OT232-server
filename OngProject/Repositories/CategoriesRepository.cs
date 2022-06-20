@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using OngProject.DataAccess;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System;
@@ -11,7 +11,11 @@ namespace OngProject.Repositories
     public class CategoriesRepository : GenericRepository<Categories>, ICategoriesRepository
     {
         private readonly DbContext _context;
-        public CategoriesRepository(DbContext context) : base() => _context = context;
+        public CategoriesRepository(DbContext context) : base(context)
+        {
+            _context = context;
+        }
+
 
         public Task<Categories> Delete(int Id)
         {

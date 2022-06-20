@@ -9,9 +9,9 @@ namespace OngProject.Core.Business
 {
     public class TestimonialsBusiness : ITestimonialsBusiness
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public TestimonialsBusiness(UnitOfWork unitOfWork)
+        public TestimonialsBusiness(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

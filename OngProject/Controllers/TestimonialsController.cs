@@ -8,6 +8,13 @@ namespace OngProject.Controllers
     [ApiController]
     public class TestimonialsController : Controller
     {
+        private readonly ITestimonialsBusiness _testimonialsBusiness;
+
+        public TestimonialsController(ITestimonialsBusiness testimonialsBusiness)
+        {
+            _testimonialsBusiness = testimonialsBusiness;
+        }
+
         [HttpGet]
         public IActionResult GetAll()
         {

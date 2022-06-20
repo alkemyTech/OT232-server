@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OngProject.Entities
 {
-    public class Slide
+    public class Slide : BaseEntity
     {
         [StringLength(250)]
         public string ImageURL { get; set; }

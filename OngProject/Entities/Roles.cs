@@ -14,7 +14,5 @@ namespace OngProject.Entities
         [StringLength(255)]
         public string Description { get; set; }
 
-        [StringLength(255)]
-        public DateTime timeStamp { get; set; }
     }
 }

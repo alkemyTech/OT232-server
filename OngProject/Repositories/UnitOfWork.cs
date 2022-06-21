@@ -18,7 +18,7 @@ namespace OngProject.Repositories
             {
                 if (_activitiesRepository == null)
                 {
-                    _activitiesRepository = new Repository<Activity>(_context);
+                    _activitiesRepository = new GenericRepository<Activity>(_context);
                 }
                 return _activitiesRepository;
             }

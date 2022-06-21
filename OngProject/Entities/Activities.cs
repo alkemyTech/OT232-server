@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OngProject.Entities
 {
-    public class Activities :BaseEntity
+    public class Activities : BaseEntity
     {
         
         [Required,StringLength(255)]
@@ -16,10 +16,6 @@ namespace OngProject.Entities
 
         [Required,StringLength(255)]
         public string image { get; set; }
-
-        public DateTime deletedAt { get; set; }
-
-
 
     }
 }

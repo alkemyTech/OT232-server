@@ -13,6 +13,12 @@ namespace OngProject.Controllers
 
     public class CategoriesController : Controller
     {
+        private readonly ICategoriesBusiness _categoriesBusiness;
+
+        public CategoriesController(ICategoriesBusiness categoriesBusiness)
+        {
+            _categoriesBusiness = categoriesBusiness;
+        }
         
         [HttpGet]
         public IActionResult GetAll()

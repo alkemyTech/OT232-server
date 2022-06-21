@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OngProject.Repositories.Interfaces
 {
-    interface ICategoriesRepository : IGenericRepository<Categories>
+    interface ICategoriesRepository : IGenericRepository<Category>
     {
     }
 }

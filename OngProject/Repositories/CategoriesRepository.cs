@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OngProject.Repositories
 {
-    public class CategoriesRepository : GenericRepository<Categories>, ICategoriesRepository
+    public class CategoriesRepository : GenericRepository<Category>, ICategoriesRepository
     {
         private readonly DbContext _context;
         public CategoriesRepository(DbContext context) : base(context)
@@ -17,27 +17,27 @@ namespace OngProject.Repositories
         }
 
 
-        public Task<Categories> Delete(int Id)
+        public Task<Category> Delete(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public List<Task<Categories>> GetAll()
+        public List<Task<Category>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Categories> GetById(int Id)
+        public Task<Category> GetById(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Categories> Insert(Categories entity)
+        public Task<Category> Insert(Category entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Categories> Update(Categories entity)
+        public Task<Category> Update(Category entity)
         {
             throw new NotImplementedException();
         }

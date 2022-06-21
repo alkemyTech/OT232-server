@@ -9,6 +9,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using OngProject.Core.Business;
 using OngProject.Core.Interfaces;
+
+using OngProject.Repositories.Interfaces;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,8 +36,13 @@ namespace OngProject
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OngProject", Version = "v1" });
             });
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITestimonialsBusiness, TestimonialsBusiness>();
+
+
+            services.AddScoped<IMembersBussines, MembersBussines>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +54,7 @@ namespace OngProject
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OngProject v1"));
             }
+
 
             app.UseHttpsRedirection();
 

@@ -1,5 +1,6 @@
 ﻿using OngProject.Core.Interfaces;
 using OngProject.Repositories;
+using OngProject.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,9 +9,9 @@ namespace OngProject.Core.Business
     public class UsersBusiness : IUsersBusiness
     {
 
-        private readonly UnitOfWork _UoW;
+        private readonly IUnitOfWork _UoW;
 
-        public UsersBusiness(UnitOfWork UoW)
+        public UsersBusiness(IUnitOfWork UoW)
         {
             _UoW = UoW;
         }

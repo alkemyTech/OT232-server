@@ -6,6 +6,7 @@ namespace OngProject.Core.Helper
         public ImageHelper()
         {
             
+
         }
     }
 }

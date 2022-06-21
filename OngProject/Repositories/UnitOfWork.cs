@@ -10,5 +10,17 @@ namespace OngProject.Repositories
         {
             _context = context;
         }
-    }
+
+        private IGenericRepository<Activity> _activitiesRepository;
+        public IGenericRepository<Activity> ActivitiesRepository
+        {
+            get
+            {
+                if (_activitiesRepository == null)
+                {
+                    _activitiesRepository = new Repository<Activity>(_context);
+                }
+                return _activitiesRepository;
+            }
+        }
 }

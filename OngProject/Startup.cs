@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using OngProject.Core.Business;
+using OngProject.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,8 @@ namespace OngProject
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OngProject", Version = "v1" });
             });
+            //declaro un servicio para hacerlo funcionar en todo el proyecto
+            services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

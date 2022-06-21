@@ -8,8 +8,15 @@ namespace OngProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ActivitiesController
+    public class ActivitiesController: ControllerBase
     {
+
+        private readonly IActivitiesBusiness _activitiesBusiness;
+        public ActivitiesController(IActivitiesBusiness activitiesBusiness)
+        {
+            _activitiesBusiness = activitiesBusiness;
+        }
+
         [HttpGet]
         public IActionResult GetAll()
         {

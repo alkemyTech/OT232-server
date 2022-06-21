@@ -16,7 +16,6 @@ namespace OngProject.Repositories
             _context = context;
         }
 
-
         public Task<Category> Delete(int Id)
         {
             throw new NotImplementedException();

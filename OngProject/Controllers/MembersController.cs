@@ -28,19 +28,19 @@ namespace OngProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult Insert(Members entity)
+        public IActionResult Insert(Member entity)
         {
             return NoContent();
         }
 
         [HttpPut]
-        public IActionResult Update(Members entity)
+        public IActionResult Update(Member entity)
         {
             return NoContent();
         }
 
         [HttpDelete]
-        public IActionResult Delete(Members entity)
+        public IActionResult Delete(Member entity)
         {
             return NoContent();
         }

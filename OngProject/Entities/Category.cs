@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace OngProject.Entities
 {
-    public class Roles : BaseEntity
+    public class Category : BaseEntity
     {
+        [Required]
         [StringLength(255)]
         public string Name { get; set; }
-        
+
         [StringLength(255)]
         public string Description { get; set; }
 
+        [StringLength(255)]
+        public string Image { get; set; }
     }
 }

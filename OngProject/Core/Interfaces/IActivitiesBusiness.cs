@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace OngProject.Core.Interfaces
 {
-    interface IActivitiesBusiness
+    public interface IActivitiesBusiness
     {
         Task Insert();
         List<Task> GetAll();

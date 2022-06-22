@@ -33,8 +33,7 @@ namespace OngProject
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<OngDbContext>(options =>
-                   options.UseSqlServer(Configuration.GetConnectionString("OngConnectionString")));
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

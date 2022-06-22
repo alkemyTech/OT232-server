@@ -6,7 +6,11 @@ namespace OngProject.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DbContext _context;
+
+        private IGenericRepository<Roles> _rolesRepository;
+
         private IGenericRepository<User> _userRepository;
+
         public UnitOfWork(DbContext context)
         {
             _context = context;
@@ -40,5 +44,20 @@ namespace OngProject.Repositories
             }
         }
     }
+
+            public IGenericRepository<Roles> RolesRepository
+        {
+            get
+            {
+                if (_rolesRepository == null)
+                {
+
+                    _rolesRepository = new GenericRepository<Roles>(_context);
+                }
+                return _rolesRepository;
+            }
+        }
+    }
+}
 }
 

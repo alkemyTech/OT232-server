@@ -1,4 +1,4 @@
-﻿using OngProject.Repositories.Interfaces;
+using OngProject.Repositories.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
 namespace OngProject.Entities
@@ -6,7 +6,8 @@ namespace OngProject.Entities
     public class Contact : BaseEntity
     {
 
-        [StringLength(255)] 
+
+        [StringLength(255)]
         public string Name { get; set; }
 
         public string Email { get; set; }

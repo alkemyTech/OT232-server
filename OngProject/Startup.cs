@@ -7,6 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using OngProject.Repositories;
+using OngProject.Repositories.Interfaces;
+using OngProject.Core.Business;
+using OngProject.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +30,20 @@ namespace OngProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OngProject", Version = "v1" });
             });
+
+            //declaro un servicio para hacerlo funcionar en todo el proyecto
+            services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ITestimonialsBusiness, TestimonialsBusiness>();
+
+            services.AddScoped<IMembersBussines, MembersBussines>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +55,7 @@ namespace OngProject
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OngProject v1"));
             }
+
 
             app.UseHttpsRedirection();
 

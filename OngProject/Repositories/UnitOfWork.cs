@@ -1,4 +1,4 @@
-﻿using OngProject.DataAccess;
+using OngProject.DataAccess;
 using OngProject.Repositories.Interfaces;
 
 namespace OngProject.Repositories
@@ -11,6 +11,21 @@ namespace OngProject.Repositories
         {
             _context = context;
         }
+
+
+        private IGenericRepository<Activity> _activitiesRepository;
+        public IGenericRepository<Activity> ActivitiesRepository
+        {
+            get
+            {
+                if (_activitiesRepository == null)
+                {
+                    _activitiesRepository = new GenericRepository<Activity>(_context);
+                }
+                return _activitiesRepository;
+            }
+        }
+}
 
         public IGenericRepository<User> UserRepository
         {
@@ -26,3 +41,4 @@ namespace OngProject.Repositories
         }
     }
 }
+

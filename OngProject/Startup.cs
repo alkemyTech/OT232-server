@@ -7,16 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
-
 using OngProject.Core.Business;
 using OngProject.Core.Interfaces;
-
-using OngProject.Repositories.Interfaces;
-
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,14 +36,13 @@ namespace OngProject
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OngProject", Version = "v1" });
             });
 
-
+            //declaro un servicio para hacerlo funcionar en todo el proyecto
+            services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITestimonialsBusiness, TestimonialsBusiness>();
 
-
             services.AddScoped<IMembersBussines, MembersBussines>();
-
 
         }
 

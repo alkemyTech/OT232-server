@@ -59,5 +59,20 @@ namespace OngProject.Repositories
         }
     }
 }
+
+        public IGenericRepository<News> NewsRepository
+        {
+            get
+            {
+                if (_newsRepository == null)
+                {
+                    _newsRepository = new GenericRepository<News>(_context);
+
+                }
+                return _newsRepository;
+
+            }
+        }
+
 }
 

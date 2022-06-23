@@ -12,5 +12,6 @@ namespace OngProject.Entities
         public int Order { get; set; }
         [ForeignKey("Organization")]
         public int OrganizationID { get; set; }
+        public Organization Organization { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using OngProject.Core.Interfaces;
 using OngProject.Repositories;
+using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace OngProject.Core.Business
     public class ActivitiesBusiness : IActivitiesBusiness
     { 
         
-        public readonly UnitOfWork _unitOfWork;
-        public ActivitiesBusiness(UnitOfWork unitOfWork)
+        public readonly IUnitOfWork _unitOfWork;
+        public ActivitiesBusiness(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

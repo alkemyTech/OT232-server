@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OngProject.Core.Interfaces
 {
-    interface ISlidesBussines
+    public interface ISlidesBussines
     {
         public Task GetAll();
 

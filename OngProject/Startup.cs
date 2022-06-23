@@ -38,7 +38,7 @@ namespace OngProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<OngDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OngConnectionString")));
             
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -47,12 +47,12 @@ namespace OngProject
             });
 
             //declaro un servicio para hacerlo funcionar en todo el proyecto
-            services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
             services.AddScoped<ITestimonialsBusiness, TestimonialsBusiness>();
-
             services.AddScoped<IMembersBussines, MembersBussines>();
+
 
             //JWT
             services.AddAuthentication(options =>

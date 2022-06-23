@@ -7,10 +7,14 @@ namespace OngProject.Entities
     {
         [StringLength(250)]
         public string ImageURL { get; set; }
+        
         [StringLength(250)]
         public string Text { get; set; }
         public int Order { get; set; }
+        
         [ForeignKey("Organization")]
-        public int OrganizationID { get; set; }
+        public int OrganizationId { get; set; }
+
+        public Organization Organization { get; set; }
     }
 }

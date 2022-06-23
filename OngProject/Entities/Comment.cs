@@ -9,10 +9,11 @@ namespace OngProject.Entities
 {
     public class Comment : BaseEntity
     {
-        [ForeignKey("User")]
         public int UserId { get; set; }
         public string Body { get; set; }
+
         [ForeignKey("News")]
-        public int NewsID { get; set; }
+        public int NewsId { get; set; }
+        public News News { get; set; }
     }
 }

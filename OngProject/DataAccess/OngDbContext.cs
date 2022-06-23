@@ -9,11 +9,11 @@ namespace OngProject.DataAccess
 {
     public class OngDbContext : DbContext
     {
-        public OngDbContext(DbContextOptions<OngDbContext> options)
-           : base(options)
+        public OngDbContext(DbContextOptions<OngDbContext> options) : base(options)
         {
 
         }
+
         public DbSet<Activity> Activities { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Contact> Contacts { get; set; }

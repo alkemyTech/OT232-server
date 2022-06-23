@@ -1,16 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
+using OngProject.Core.Interfaces;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
-    public class UserController : ControllerBase
+    public class RolesController : Controller
     {
         [HttpGet]
         public IActionResult GetAll()
@@ -19,7 +15,7 @@ namespace OngProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(int Id)
         {
             return Ok();
         }
@@ -27,20 +23,19 @@ namespace OngProject.Controllers
         [HttpPost]
         public IActionResult Insert()
         {
-            return Ok();
+            return Created("", null);
         }
 
         [HttpPut]
         public IActionResult Update()
         {
-            return Ok();
+            return Created("", null);
         }
 
         [HttpDelete]
-        public IActionResult Delete(int id)
+        public IActionResult Delete()
         {
             return Ok();
         }
     }
-}
 }

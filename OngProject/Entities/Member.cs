@@ -1,8 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace OngProject.Entities
 {
-    public class Members : BaseEntity
+    public class Member : BaseEntity
     {
         [Required]
         [StringLength(255)]

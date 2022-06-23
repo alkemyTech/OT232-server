@@ -8,14 +8,16 @@ namespace OngProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ActivitiesController: ControllerBase
+    public class ActivitiesController : ControllerBase
     {
 
         private readonly IActivitiesBusiness _activitiesBusiness;
+
         public ActivitiesController(IActivitiesBusiness activitiesBusiness)
         {
             _activitiesBusiness = activitiesBusiness;
         }
+        
 
         [HttpGet]
         public IActionResult GetAll()
@@ -23,10 +25,7 @@ namespace OngProject.Controllers
             return Ok();
         }
 
-        private IActionResult Ok()
-        {
-            throw new NotImplementedException();
-        }
+        
 
         [HttpGet]
         public IActionResult GetById(int Id)
@@ -40,10 +39,7 @@ namespace OngProject.Controllers
             return Created("", null);
         }
 
-        private IActionResult Created(string v, object value)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         [HttpPut]
         public IActionResult Update()

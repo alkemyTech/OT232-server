@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OngProject.Entities
 {
-    public class Activitie : BaseEntity
+    public class Activity : BaseEntity
     {
         
         [Required,StringLength(255)]

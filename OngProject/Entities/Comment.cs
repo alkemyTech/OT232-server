@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OngProject.Entities
 {
-    public class Comment
+    public class Comment : BaseEntity
     {
         [ForeignKey("User")]
         public int UserId { get; set; }

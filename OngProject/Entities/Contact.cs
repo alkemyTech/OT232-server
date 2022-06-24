@@ -5,8 +5,6 @@ namespace OngProject.Entities
 {
     public class Contact : BaseEntity
     {
-
-
         [StringLength(255)]
         public string Name { get; set; }
 

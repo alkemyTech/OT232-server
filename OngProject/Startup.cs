@@ -39,9 +39,9 @@ namespace OngProject
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddDbContext<OngDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OngConnectionString")));
+       
 
-            services.AddDbContext<OngDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("OngConnString")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -49,12 +49,12 @@ namespace OngProject
             });
 
             //declaro un servicio para hacerlo funcionar en todo el proyecto
-            services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
             services.AddScoped<ITestimonialsBusiness, TestimonialsBusiness>();
-
             services.AddScoped<IMembersBussines, MembersBussines>();
+
 
             //JWT
             services.AddAuthentication(options =>

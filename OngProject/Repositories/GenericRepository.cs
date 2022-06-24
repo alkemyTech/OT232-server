@@ -1,4 +1,5 @@
-﻿using OngProject.Entities;
+﻿using OngProject.DataAccess;
+using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,13 @@ namespace OngProject.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
+        private OngDbContext _context;
+
+        public GenericRepository(OngDbContext context)
+        {
+            _context = context;
+        }
+
         public Task<T> Delete(int Id)
         {
             throw new NotImplementedException();

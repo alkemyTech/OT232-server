@@ -11,13 +11,18 @@ namespace OngProject.Entities
     {
         [StringLength(255)]
         public string Name { get; set; }
+
         [StringLength(255)]
         public string Image { get; set; }
+
         public string Address { get; set; }
+
         [StringLength(255)]
         public int Phone { get; set; }
+
         [StringLength(255)]
         public string Email { get; set; }
+
         [StringLength(255)]
         public string WelcomeText { get; set; }
         public string AboutUsText { get; set; }

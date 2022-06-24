@@ -8,14 +8,14 @@ namespace OngProject.Entities
     {
         
         [Required,StringLength(255)]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [Column(TypeName = "text")]
-        public string content { get; set; }
+        public string Content { get; set; }
 
         [Required,StringLength(255)]
-        public string image { get; set; }
+        public string Image { get; set; }
 
     }
 }

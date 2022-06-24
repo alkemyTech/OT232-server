@@ -1,25 +1,34 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using OngProject.Core.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace OngProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
-    public class UserController : ControllerBase
+    public class ActivitiesController : ControllerBase
     {
+
+        private readonly IActivitiesBusiness _activitiesBusiness;
+
+        public ActivitiesController(IActivitiesBusiness activitiesBusiness)
+        {
+            _activitiesBusiness = activitiesBusiness;
+        }
+        
+
         [HttpGet]
         public IActionResult GetAll()
         {
             return Ok();
         }
 
+        
+
         [HttpGet]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(int Id)
         {
             return Ok();
         }
@@ -27,20 +36,21 @@ namespace OngProject.Controllers
         [HttpPost]
         public IActionResult Insert()
         {
-            return Ok();
+            return Created("", null);
         }
+
+       
 
         [HttpPut]
         public IActionResult Update()
         {
-            return Ok();
+            return Created("", null);
         }
 
         [HttpDelete]
-        public IActionResult Delete(int id)
+        public IActionResult Delete()
         {
             return Ok();
         }
     }
 }
-

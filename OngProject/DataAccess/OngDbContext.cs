@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OngProject.Entities;
 using System;
 using System.Collections.Generic;
@@ -27,6 +27,7 @@ namespace OngProject.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.TestimonialsSeed();
             modelBuilder.ActivitiesSeed();
         }
 

@@ -25,5 +25,9 @@ namespace OngProject.DataAccess
         public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<Category> Categories { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.TestimonialsSeed();
+        }
     }
 }

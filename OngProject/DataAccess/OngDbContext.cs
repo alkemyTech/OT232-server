@@ -25,15 +25,20 @@ namespace OngProject.DataAccess
         public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.TestimonialsSeed();
             modelBuilder.ActivitiesSeed();
-             modelBuilder.CategoriesSeeds();
+            modelBuilder.CategoriesSeed();
         }
 
 
+
+        internal Task SavedChangesAsync()
+        {
+            throw new NotImplementedException();
+        }
+       
     }
 
 }

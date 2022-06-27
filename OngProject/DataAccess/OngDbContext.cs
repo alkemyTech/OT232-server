@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OngProject.Entities;
 using System;
 using System.Collections.Generic;
@@ -25,10 +25,15 @@ namespace OngProject.DataAccess
         public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<Category> Categories { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.TestimonialsSeed();
+            modelBuilder.ActivitiesSeed();
+            modelBuilder.CategoriesSeeds();
             modelBuilder.SeedNews();
         }
 
     }
+
 }

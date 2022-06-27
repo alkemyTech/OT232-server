@@ -30,8 +30,10 @@ namespace OngProject.DataAccess
         {
             modelBuilder.TestimonialsSeed();
             modelBuilder.ActivitiesSeed();
+            modelBuilder.MembersSeed();
             modelBuilder.CategoriesSeeds();
             modelBuilder.SeedNews();
+
         }
 
     }

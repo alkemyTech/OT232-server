@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
+using OngProject.Entities;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -14,18 +16,43 @@ namespace OngProject.Core.Helper
             _config = config;
         }
 
-        public async Task SendEmail(string toEmail)
+        public static string GetWelcomeEmail()
         {
-            var apiKey = _config["SendGridToken"];
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("SampleMail", "SampleTitle");
-            var subject = "SampleSubject";
-            var to = new EmailAddress("SampleMail");
-            var plainTextContent = "sampleText";
-            var htmlContent = File.ReadAllText("./Templates/htmlpage.html");
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            return GetEmailForTemplate("Bienvenido a Somos Mas",
+                "Su usuario ha sido creado con éxito", "somosmas@email.com");
+        }
+        public static string GetEmailForTemplate(string title, string message, string contact = "somosmas@email.com")
+        {
+            try
+            {
+                var filePath = Path.Combine(Environment.CurrentDirectory, "Templates/htmlpage.html");
+                var file = File.OpenText(filePath);
+                var content = File.ReadAllText(filePath);
+                content = content.Replace("T&iacute;tulo", title);
+                content = content.Replace("Texto del email", message);
+                content = content.Replace("Datos de contacto de ONG", contact);
+                return content;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public async Task SendEmailAsync(string email, string subject)
+        {
+            try
+            {
+                var client = new SendGridClient(_config["SendGridToken"]);
+                var from = new EmailAddress(FromEmail, FromName);
+                var to = new EmailAddress(email, email);
+                var msg = MailHelper.CreateSingleEmail(from, to, subject, String.Empty, GetWelcomeEmail());
+                var response = await client.SendEmailAsync(msg);
+            }
+            catch (Exception )
+            {
+                throw ;
+            }
 
-            await client.SendEmailAsync(msg);
         }
     }
 }

@@ -45,22 +45,23 @@ namespace OngProject.Controllers
         [HttpDelete]
         public IActionResult Delete(News model)
         {
-            var list = _newsBusiness.GetById(model.Id);
-            if ( list == null)
+            try
             {
-                return NotFound();
-            }
-            else
-            {
-                try
+                var list = _newsBusiness.GetById(model.Id);
+                if (list == null)
                 {
+                    return NotFound();
+                }
+                else
+                {
+
                     _newsBusiness.Delete(model);
                     return Ok("se borro el registro correctamente");
                 }
-                catch(Exception ex)
-                {
-                    return BadRequest(ex);
-                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
             }
         }
     }

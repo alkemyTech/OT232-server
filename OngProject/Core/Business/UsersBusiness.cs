@@ -1,7 +1,11 @@
 ﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Mapper;
+using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OngProject.Core.Business
@@ -9,20 +13,14 @@ namespace OngProject.Core.Business
     public class UsersBusiness : IUsersBusiness
     {
 
-        private readonly IUnitOfWork _UoW;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UsersBusiness(IUnitOfWork UoW)
+        public UsersBusiness(IUnitOfWork unitOfWork)
         {
-            _UoW = UoW;
+            _unitOfWork = unitOfWork;
         }
-
 
         public Task Delete(int Id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public List<Task> GetAll()
         {
             throw new System.NotImplementedException();
         }
@@ -40,6 +38,17 @@ namespace OngProject.Core.Business
         public Task Update()
         {
             throw new System.NotImplementedException();
+        }
+
+        public async Task<List<UserDto>> GetAll()
+        {
+            var listUserDto = new List<UserDto>();
+            var users = await _unitOfWork.UsersRepository.GetAll();
+            if(users != null)
+            {
+                listUserDto = ConvertUserToDto.ConvertUserDto(users);
+            }
+            return listUserDto;
         }
     }
 }

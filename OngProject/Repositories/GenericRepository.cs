@@ -1,4 +1,5 @@
-﻿using OngProject.DataAccess;
+﻿using Microsoft.EntityFrameworkCore;
+using OngProject.DataAccess;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System;
@@ -22,9 +23,10 @@ namespace OngProject.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Task<T>> GetAll()
+        public async Task<List<T>> GetAll()
         {
-            throw new NotImplementedException();
+            var source = _context.Set<T>().Where(x => !x.IsDeleted);
+            return await source.ToListAsync();
         }
 
         public Task<T> GetById(int Id)

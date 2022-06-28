@@ -27,6 +27,19 @@ namespace OngProject.Repositories
                 return _newsRepository;
             }
         }
+
+        public IGenericRepository<User> UsersRepository
+        {
+            get
+            {
+                if (_userRepository == null)
+                {
+                    _userRepository = new GenericRepository<User>(_context);
+
+                }
+                return _userRepository;
+            }
+        }
     }
 }
 

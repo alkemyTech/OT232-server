@@ -44,9 +44,10 @@ namespace OngProject.Core.Business
             throw new NotImplementedException();
         }
 
-        public static object GetById(int id)
+        public async Task<Activity> GetById(int Id)
         {
-            throw new NotImplementedException();
+            var e = await _unitOfWork.ActivitiesRepository.GetById(Id);
+            return e;
         }
 
         public async Task<Activity> Update(Activity model, UpdateActivityDto activity)

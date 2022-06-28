@@ -27,9 +27,9 @@ namespace OngProject.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<T> GetById(int Id)
+        public async Task<T> GetById(int Id)
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>().FindAsync(Id); 
         }
 
         public Task<T> Insert(T entity)

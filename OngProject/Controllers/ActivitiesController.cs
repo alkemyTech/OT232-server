@@ -44,10 +44,10 @@ namespace OngProject.Controllers
 
 
         [HttpPut("{Id})")]
-        public IActionResult Update(int Id, UpdateActivityDto activity)
+        public async Task<IActionResult> Update(int Id, UpdateActivityDto activity)
         {
 
-            var model = _activitiesBusiness.GetById(Id);
+            var model = await _activitiesBusiness.GetById(Id);
             if (model == null)
             {
                 return NotFound();
@@ -57,7 +57,7 @@ namespace OngProject.Controllers
             {
                 return BadRequest();
             }
-            return Ok("Se actualizo correctamente el regitro"+ result.Id);
+            return Ok("Se actualizo correctamente el regitro" + Id);
             
         }
 

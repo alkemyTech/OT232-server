@@ -9,9 +9,9 @@ namespace OngProject.Core.Interfaces
     {
         Task Insert();
         List<Task> GetAll();
-        Task GetById(int Id);
+        Task<Activity> GetById(int Id);
         Task Delete(int Id);
-        Task Update(Activity model, UpdateActivityDto activity);
-        
+        Task<Activity> Update(Activity model, UpdateActivityDto activity);
+       
     }
 }

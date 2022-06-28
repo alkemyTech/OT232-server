@@ -1,4 +1,5 @@
-﻿using OngProject.DataAccess;
+﻿using Microsoft.EntityFrameworkCore;
+using OngProject.DataAccess;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System;
@@ -40,6 +41,31 @@ namespace OngProject.Repositories
         public Task<T> Update(T entity)
         {
             throw new NotImplementedException();
+        }
+        public Task<List<T>> GetAsync(QueryProperty<T> query)
+        {
+            var source = ApplyQuery(query, _context.Set<T>().AsQueryable());
+            return source.ToListAsync();
+        }
+
+        private static IQueryable<T> ApplyQuery(QueryProperty<T> query, IQueryable<T> source)
+        {
+            if (query is null)
+                return source;
+
+            if (query.Where is not null)
+                source = source.Where(query.Where);
+
+            foreach (var property in query.Includes)
+                source = source.Include(property);
+            
+            if (query.Skip > 0)
+                source = source.Skip(query.Skip);
+
+            if (query.Take > 0)
+                source = source.Take(query.Take);
+
+            return source;
         }
     }
 }

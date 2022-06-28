@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace OngProject.Core.Interfaces
 {
     public interface IUsersBusiness
     {
-        List<Task> GetAll();
+        Task<List<User>> GetAll();
+        Task<List<User>> GetAsync(LoginUserDto userDto);
         Task GetById(int Id);
         Task Insert();
         Task Update();

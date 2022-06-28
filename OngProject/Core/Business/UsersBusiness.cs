@@ -1,4 +1,7 @@
 ﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Mapper;
+using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System.Collections.Generic;
@@ -9,11 +12,11 @@ namespace OngProject.Core.Business
     public class UsersBusiness : IUsersBusiness
     {
 
-        private readonly IUnitOfWork _UoW;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UsersBusiness(IUnitOfWork UoW)
+        public UsersBusiness(IUnitOfWork unitOfWork)
         {
-            _UoW = UoW;
+            _unitOfWork = unitOfWork;
         }
 
 
@@ -25,6 +28,17 @@ namespace OngProject.Core.Business
         public List<Task> GetAll()
         {
             throw new System.NotImplementedException();
+        }
+
+        public async Task<List<User>> GetAsync(LoginUserDto userDto)
+        {
+            var query = new QueryProperty<User>(1, 1);
+            query.Where = x => (x.Email == userDto.Email) && (x.Password == userDto.Password); 
+            query.Includes.Add(x => x.Roles);
+
+            var result = await _unitOfWork.UsersRepository.GetAsync(query);
+
+            return result;
         }
 
         public Task GetById(int Id)

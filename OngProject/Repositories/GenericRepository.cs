@@ -28,11 +28,14 @@ namespace OngProject.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<T> GetById(int Id)
+        public async Task<T> GetById(int Id)
         {
-            var query = _context.Set<T>().AsNoTracking()
-            .Where(t => t.Id == Id && t.IsDeleted == false);
-             return query.FirstOrDefaultAsync();
+            //var query = _context.Set<T>().AsNoTracking()
+            //.Where(t => t.Id == Id && t.IsDeleted == false);
+            // return query.FirstOrDefaultAsync();
+            var findGeneric = await _context.Set<T>().FindAsync(Id);
+
+            return findGeneric;
         }
 
         public Task<T> Insert(T entity)

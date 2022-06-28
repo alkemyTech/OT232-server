@@ -54,7 +54,7 @@ namespace OngProject
             services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
             services.AddScoped<ITestimonialsBusiness, TestimonialsBusiness>();
             services.AddScoped<IMembersBussines, MembersBussines>();
-
+            services.AddScoped<ICategoriesBusiness, CategoriesBusiness>();
 
             //JWT
             services.AddAuthentication(options =>
@@ -79,7 +79,7 @@ namespace OngProject
                     };
                 });
 
-           
+
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
 
         }

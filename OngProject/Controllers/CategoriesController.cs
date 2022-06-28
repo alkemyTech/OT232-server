@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,21 +28,22 @@ namespace OngProject.Controllers
             }
 
         [HttpGet]
-        [Route("/{id}")]
-        public IActionResult GetById(int id)
+        [Route("{id}")]
+        public async Task<IActionResult> GetById(int id)
             {
             try
             {
-          
-                var list = _categoryBusiness.GetById(id);
+                //IQueryable<CategorySearchIdDto> cat = _categoryBusiness.GetById(id);
 
-                if (list == null)
+                var result = await _categoryBusiness.GetById(id);
+
+                if (result == null)
                 {
                     return NotFound("Category ID does not exists.");
                 }
                 else
                 {
-                    return Ok(list);
+                    return Ok(result);
                 }
 
             }

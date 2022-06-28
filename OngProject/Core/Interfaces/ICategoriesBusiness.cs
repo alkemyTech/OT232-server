@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using OngProject.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace OngProject.Core.Interfaces
@@ -6,8 +7,8 @@ namespace OngProject.Core.Interfaces
     public interface ICategoriesBusiness
     {
         Task Insert();
-        List<Task> GetAll();
-        Task GetById(int Id);
+        Task<List<Category>> GetAll();
+        Task<Category> GetById(int Id);
         Task Delete(int Id);
         Task Update();
 

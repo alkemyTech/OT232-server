@@ -1,4 +1,6 @@
 ﻿using OngProject.Core.Interfaces;
+using OngProject.Entities;
+using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,14 +21,14 @@ namespace OngProject.Core.Business
             throw new System.NotImplementedException();
         }
 
-        public List<Task> GetAll()
+        public Task<List<Category>> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public Task GetById(int Id)
+        public async Task<Category> GetById(int Id)
         {
-            return _unitOfWork.CategoryRepository.GetById(Id);
+            return await _unitOfWork.CategoriesRepository.GetById(Id);
         }
 
         public Task Insert()

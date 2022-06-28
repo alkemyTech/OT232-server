@@ -29,7 +29,7 @@ namespace OngProject.Repositories
             }
         }
 
-        public IGenericRepository<Category> CategoryRepository
+        public IGenericRepository<Category> CategoriesRepository
         {
             get
             {

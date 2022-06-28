@@ -1,4 +1,5 @@
 ﻿using OngProject.Core.Interfaces;
+using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,18 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
         }
 
-        public Task Delete(int Id)
+        public Task<News> Delete(int id)
         {
-            throw new NotImplementedException();
+            var model = _unitOfWork.NewsRepository.GetById(id);
+            
+            if(model == null || model.Result.IsDeleted == true)
+            {
+                return null ;
+            }
+            else
+            {
+                return _unitOfWork.NewsRepository.Delete(id);
+            }
         }
 
         public List<Task> GetAll()
@@ -28,7 +38,7 @@ namespace OngProject.Core.Business
 
         public Task GetById(int Id)
         {
-            throw new NotImplementedException();
+            return _unitOfWork.NewsRepository.GetById(Id);
         }
 
         public Task Insert()

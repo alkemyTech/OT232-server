@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,9 +43,25 @@ namespace OngProject.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete()
+        public IActionResult Delete(News model)
         {
-            return Ok();
+            var list = _newsBusiness.GetById(model.Id);
+            if ( list == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                try
+                {
+                    _newsBusiness.Delete(model);
+                    return Ok("se borro el registro correctamente");
+                }
+                catch(Exception ex)
+                {
+                    return BadRequest(ex);
+                }
+            }
         }
     }
 }

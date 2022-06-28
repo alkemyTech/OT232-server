@@ -11,7 +11,7 @@ namespace OngProject.Repositories.Interfaces
         Task<T> Insert(T entity);
         List<Task<T>> GetAll();
         Task<T> GetById(int Id);
-        Task<T> Delete(int Id);
+        Task<T>  Delete(T entity);
         Task<T> Update(T entity);
     }
 }

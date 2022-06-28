@@ -11,7 +11,7 @@ namespace OngProject.Core.Interfaces
         Task Insert();
         List<Task> GetAll();
         Task GetById(int Id);
-        Task Delete(News model);
+        Task<News> Delete(int Id);
         Task Update();
     }
 }

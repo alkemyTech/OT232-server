@@ -19,15 +19,14 @@ namespace OngProject.Repositories
             _context = context;
         }
 
-        public Task<T> Delete(T entity)
+        public Task<T> Delete(int Id)
         {
+            T entity = _context.Set<T>().Find(Id);
             entity.IsDeleted = true;
             entity.LastModified = DateTime.Now;
-            EntityEntry entityEntry = _context.Entry<T>(entity);
-            entityEntry.State = EntityState.Modified;
+            _context.Set<T>().Update(entity);
             _context.SaveChanges();
             return Task.FromResult(entity);
-           
         }
 
         public List<Task<T>> GetAll()
@@ -37,9 +36,9 @@ namespace OngProject.Repositories
 
         public Task<T> GetById(int Id)
         {
-            var query = _context.Set<T>().AsNoTracking()
-                .Where(t => t.Id == Id && t.IsDeleted == false);          
-                return  query.FirstOrDefaultAsync();
+            T entity = _context.Set<T>().Find(Id);
+
+            return Task.FromResult(entity);
         }
 
         public Task<T> Insert(T entity)

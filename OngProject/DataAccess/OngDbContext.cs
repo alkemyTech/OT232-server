@@ -24,14 +24,19 @@ namespace OngProject.DataAccess
         public DbSet<Slide> Slide { get; set; }
         public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.TestimonialsSeed();
             modelBuilder.ActivitiesSeed();
             modelBuilder.CategoriesSeed();
-        }
 
+            modelBuilder.MembersSeed();
+            modelBuilder.SeedNews();
+
+
+        }
 
 
        

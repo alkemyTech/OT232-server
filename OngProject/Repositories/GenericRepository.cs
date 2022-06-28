@@ -1,4 +1,6 @@
-﻿using OngProject.DataAccess;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using OngProject.DataAccess;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System;
@@ -19,7 +21,12 @@ namespace OngProject.Repositories
 
         public Task<T> Delete(int Id)
         {
-            throw new NotImplementedException();
+            T entity = _context.Set<T>().Find(Id);
+            entity.IsDeleted = true;
+            entity.LastModified = DateTime.Now;
+            _context.Set<T>().Update(entity);
+            _context.SaveChanges();
+            return Task.FromResult(entity);
         }
 
         public List<Task<T>> GetAll()
@@ -29,7 +36,9 @@ namespace OngProject.Repositories
 
         public Task<T> GetById(int Id)
         {
-            throw new NotImplementedException();
+            T entity = _context.Set<T>().Find(Id);
+
+            return Task.FromResult(entity);
         }
 
         public Task<T> Insert(T entity)

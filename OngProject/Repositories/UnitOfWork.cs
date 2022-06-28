@@ -1,6 +1,8 @@
 using OngProject.DataAccess;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OngProject.Repositories
 {
@@ -8,6 +10,7 @@ namespace OngProject.Repositories
     {
         private readonly OngDbContext _context;
         public IGenericRepository<News> _newsRepository;
+        public IGenericRepository<User> _userRepository;
         public UnitOfWork(OngDbContext context)
         {
             _context = context;
@@ -22,7 +25,6 @@ namespace OngProject.Repositories
 
                 }
                 return _newsRepository;
-
             }
         }
     }

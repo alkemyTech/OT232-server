@@ -54,9 +54,10 @@ namespace OngProject
             services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
             services.AddScoped<ITestimonialsBusiness, TestimonialsBusiness>();
             services.AddScoped<IMembersBussines, MembersBussines>();
+            services.AddScoped<INewsBusiness, NewsBusiness>();
 
 
-            //JWT
+            JWT
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -79,7 +80,7 @@ namespace OngProject
                     };
                 });
 
-           
+
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
 
         }

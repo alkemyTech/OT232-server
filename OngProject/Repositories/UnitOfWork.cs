@@ -12,10 +12,12 @@ namespace OngProject.Repositories
         public IGenericRepository<News> _newsRepository;
         public IGenericRepository<User> _userRepository;
         public IGenericRepository<Category> _categoryRepository;
+        
         public UnitOfWork(OngDbContext context)
         {
             _context = context;
         }
+        
         public IGenericRepository<News> NewsRepository
         {
             get
@@ -29,6 +31,19 @@ namespace OngProject.Repositories
             }
         }
 
+        public IGenericRepository<User> UsersRepository
+        {
+            get
+            {
+                if (_userRepository == null)
+                {
+                    _userRepository = new GenericRepository<User>(_context);
+
+                }
+                return _userRepository;
+            }
+        }
+        
         public IGenericRepository<Category> CategoriesRepository
         {
             get
@@ -41,8 +56,6 @@ namespace OngProject.Repositories
                 return _categoryRepository;
             }
         }
-
-
     }
 }
 

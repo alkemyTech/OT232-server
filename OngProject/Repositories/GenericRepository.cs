@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using OngProject.DataAccess;
 using OngProject.Entities;
@@ -29,9 +30,10 @@ namespace OngProject.Repositories
             return Task.FromResult(entity);
         }
 
-        public List<Task<T>> GetAll()
+        public async Task<List<T>> GetAll()
         {
-            throw new NotImplementedException();
+            var source = _context.Set<T>().Where(x => !x.IsDeleted);
+            return await source.ToListAsync();
         }
 
         public async Task<T> GetById(int Id)

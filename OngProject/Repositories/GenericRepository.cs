@@ -1,4 +1,5 @@
-﻿using OngProject.DataAccess;
+﻿using Microsoft.EntityFrameworkCore;
+using OngProject.DataAccess;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System;
@@ -29,7 +30,9 @@ namespace OngProject.Repositories
 
         public Task<T> GetById(int Id)
         {
-            throw new NotImplementedException();
+            var query = _context.Set<T>().AsNoTracking()
+            .Where(t => t.Id == Id && t.IsDeleted == false);
+             return query.FirstOrDefaultAsync();
         }
 
         public Task<T> Insert(T entity)

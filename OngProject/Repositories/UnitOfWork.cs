@@ -11,6 +11,7 @@ namespace OngProject.Repositories
         private readonly OngDbContext _context;
         public IGenericRepository<News> _newsRepository;
         public IGenericRepository<User> _userRepository;
+        public IGenericRepository<Category> _categoryRepository;
         public UnitOfWork(OngDbContext context)
         {
             _context = context;
@@ -27,6 +28,21 @@ namespace OngProject.Repositories
                 return _newsRepository;
             }
         }
+
+        public IGenericRepository<Category> CategoryRepository
+        {
+            get
+            {
+                if (_categoryRepository == null)
+                {
+                    _categoryRepository = new GenericRepository<Category>(_context);
+
+                }
+                return _categoryRepository;
+            }
+        }
+
+
     }
 }
 

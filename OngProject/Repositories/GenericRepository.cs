@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using OngProject.DataAccess;
 using OngProject.Entities;
@@ -34,11 +34,20 @@ namespace OngProject.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<T> GetById(int Id)
+        public async Task<T> GetById(int Id)
         {
+
+            //var query = _context.Set<T>().AsNoTracking()
+            //.Where(t => t.Id == Id && t.IsDeleted == false);
+            // return query.FirstOrDefaultAsync();
+            var findGeneric = await _context.Set<T>().FindAsync(Id);
+
+            return findGeneric;
+
             T entity = _context.Set<T>().Find(Id);
 
             return Task.FromResult(entity);
+
         }
 
         public Task<T> Insert(T entity)

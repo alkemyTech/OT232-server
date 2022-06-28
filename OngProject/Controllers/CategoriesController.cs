@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OngProject.Core.Interfaces;
+using OngProject.Core.Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +13,45 @@ namespace OngProject.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-            [HttpGet]
+
+        private readonly ICategoriesBusiness _categoryBusiness;
+
+        public CategoriesController(ICategoriesBusiness categoryBusiness)
+        {
+            _categoryBusiness = categoryBusiness;
+        }
+
+        [HttpGet]
             public IActionResult GetAll()
             {
                 return Ok();
             }
 
-            [HttpGet]
-            public IActionResult GetById(int id)
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetById(int id)
             {
-                return Ok();
+            try
+            {
+                //IQueryable<CategorySearchIdDto> cat = _categoryBusiness.GetById(id);
+
+                var result = await _categoryBusiness.GetById(id);
+
+                if (result == null)
+                {
+                    return NotFound("Category ID does not exists.");
+                }
+                else
+                {
+                    return Ok(result);
+                }
+
             }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
 
             [HttpPost]
             public IActionResult Insert()

@@ -1,9 +1,11 @@
-﻿using OngProject.Entities;
+using OngProject.Entities;
 
 namespace OngProject.Repositories.Interfaces
 {
     public interface IUnitOfWork
     {
+
+        IGenericRepository<Category> CategoriesRepository { get; }
         IGenericRepository<News> NewsRepository { get; }
     }
 }

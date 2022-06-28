@@ -37,9 +37,13 @@ namespace OngProject.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<T> Update(T entity)
+        public async Task<bool> Update(T entity)
         {
-            throw new NotImplementedException();
+            entity.IsDeleted = false;
+            entity.LastModified = DateTime.UtcNow;
+            _context.Set<T>().Update(entity);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

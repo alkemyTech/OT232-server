@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace OngProject.Core.Interfaces
@@ -7,8 +9,9 @@ namespace OngProject.Core.Interfaces
     {
         Task Insert();
         List<Task> GetAll();
-        Task GetById();
+        Task GetById(int Id);
         Task Delete(int Id);
-        Task Update();
+        Task Update(Activity model, UpdateActivityDto activity);
+        
     }
 }

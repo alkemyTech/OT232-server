@@ -1,4 +1,6 @@
 ﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System;
@@ -40,6 +42,25 @@ namespace OngProject.Core.Business
         public Task Update()
         {
             throw new NotImplementedException();
+        }
+
+        public static object GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Activity> Update(Activity model, UpdateActivityDto activity)
+        {
+           
+            model.Name = activity.Name;
+            model.Content = activity.Content;
+            var result = await _unitOfWork.ActivitiesRepository.Update(model);
+            if (!result)
+            {
+                return null;
+                
+            }
+            return model;
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OngProject.Core.Business;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models.DTOs;
 using System;
 using System.Threading.Tasks;
 
@@ -39,17 +41,30 @@ namespace OngProject.Controllers
             return Created("", null);
         }
 
-       
 
-        [HttpPut]
-        public IActionResult Update()
+
+        [HttpPut("{Id})")]
+        public IActionResult Update(int Id, UpdateActivityDto activity)
         {
-            return Created("", null);
+
+            var model = _activitiesBusiness.GetById(Id);
+            if (model == null)
+            {
+                return NotFound();
+            }
+            var result = _activitiesBusiness.Update(model, activity);
+            if (result == null)
+            {
+                return BadRequest();
+            }
+            return Created($"http://localhost:5001/{model.Id}", null);
+            
         }
 
         [HttpDelete]
         public IActionResult Delete()
         {
+
             return Ok();
         }
     }

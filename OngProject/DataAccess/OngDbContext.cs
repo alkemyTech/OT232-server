@@ -34,10 +34,6 @@ namespace OngProject.DataAccess
 
 
 
-        internal Task SavedChangesAsync()
-        {
-            throw new NotImplementedException();
-        }
        
     }
 

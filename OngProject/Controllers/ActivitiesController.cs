@@ -57,7 +57,7 @@ namespace OngProject.Controllers
             {
                 return BadRequest();
             }
-            return Created($"http://localhost:5001/{model.Id}", null);
+            return Ok("Se actualizo correctamente el regitro"+ result.Id);
             
         }
 

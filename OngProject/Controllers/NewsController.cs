@@ -24,7 +24,7 @@ namespace OngProject.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpGet("{Id})")]
         public IActionResult GetById(int Id)
         {
             return Ok();
@@ -42,23 +42,22 @@ namespace OngProject.Controllers
             return Created("", null);
         }
 
-        [HttpDelete]
-        public IActionResult Delete(News model)
+        [HttpDelete]      
+        public IActionResult Delete(int id)
         {
             try
-            {
-                var list = _newsBusiness.GetById(model.Id);
-                if (list == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
+            {   
 
-                    _newsBusiness.Delete(model);
-                    return Ok("se borro el registro correctamente");
+                var model =_newsBusiness.Delete(id);
+                if (model == null)
+                {
+                    return NotFound("no se encuentra el registro");
+                }else
+                { 
+                return Ok("se borro el registro correctamente");
                 }
             }
+
             catch (Exception ex)
             {
                 return BadRequest(ex);

@@ -43,7 +43,7 @@ namespace OngProject.Core.Helper
             try
             {
                 var client = new SendGridClient(_config["SendGridToken"]);
-                var from = new EmailAddress(FromEmail, FromName);
+                var from = new EmailAddress("rodrigo.ball@LIVE.COM.AR", "Roman");
                 var to = new EmailAddress(email, email);
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, String.Empty, GetWelcomeEmail());
                 var response = await client.SendEmailAsync(msg);

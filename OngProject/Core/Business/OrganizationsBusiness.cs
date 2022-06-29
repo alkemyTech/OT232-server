@@ -21,14 +21,24 @@ namespace OngProject.Core.Business
         }
 
         public Task GetAll()
-        {
-            throw new NotImplementedException();
+          {
+            var query = new QueryProperty<Organization>(1, 1);
+            query.Where = x => (x.Name == userDto.Name); 
+            query.Where = x => (x.Image == userDto.Name); 
+            query.Where = x => (x.Phone == userDto.Name); 
+            query.Where = x => (x.Address == userDto.Name); 
+            query.Includes.Add(x => x.Organization);
+
+            var result = await _unitOfWork.OrganizationRepository.GetAsync(query);
+
+            return result;
         }
 
         public Task GetById(int id)
         {
             throw new NotImplementedException();
         }
+
 
         public Task Insert()
         {

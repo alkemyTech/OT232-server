@@ -18,7 +18,12 @@ namespace OngProject.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return NoContent();
+            _organization.Name = organization.Name;
+            _organization.Image = organization.Image;
+            _organization.Phone = organization.Phone;
+            _organization.Address = organization.Address;
+
+            return Ok(organization);
         }
 
         [HttpGet]

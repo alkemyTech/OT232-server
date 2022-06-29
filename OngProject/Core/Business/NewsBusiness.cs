@@ -17,18 +17,11 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
         }
 
-        public Task<News> Delete(int id)
+        public async Task<News> Delete(int id)
         {
-            var model = _unitOfWork.NewsRepository.GetById(id);
-            
-            if(model == null || model.Result.IsDeleted == true)
-            {
-                return null ;
-            }
-            else
-            {
-                return _unitOfWork.NewsRepository.Delete(id);
-            }
+            var model = await _unitOfWork.NewsRepository.Delete(id);
+
+            return model;
         }
 
         public List<Task> GetAll()

@@ -23,9 +23,9 @@ namespace OngProject.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Administrator")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var users = _userBusiness.GetAll();
+            var users = await _userBusiness.GetAll();
             if(users == null)
             {
                 return Ok("Error");
@@ -33,7 +33,7 @@ namespace OngProject.Controllers
             return Ok(users);
         }
 
-        [HttpGet]
+        [HttpGet("{Id})")]
         public IActionResult GetById(int id)
         {
             return Ok();

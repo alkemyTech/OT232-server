@@ -61,7 +61,7 @@ namespace OngProject
 
 
 
-            JWT
+            //JWT
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

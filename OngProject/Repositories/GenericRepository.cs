@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+
 using OngProject.DataAccess;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
@@ -20,14 +19,22 @@ namespace OngProject.Repositories
             _context = context;
         }
 
-        public Task<T> Delete(int Id)
+        public async Task<T> Delete(int Id)
         {
-            T entity = _context.Set<T>().Find(Id);
-            entity.IsDeleted = true;
-            entity.LastModified = DateTime.Now;
-            _context.Set<T>().Update(entity);
-            _context.SaveChanges();
-            return Task.FromResult(entity);
+            T entity = await _context.Set<T>().FindAsync(Id);
+            if(entity == null || entity.IsDeleted == true)
+            {
+                return null;
+            }
+            else
+            {
+                entity.IsDeleted = true;
+                entity.LastModified = DateTime.Now;
+                _context.Set<T>().Update(entity);
+                await _context.SaveChangesAsync();
+                return await Task.FromResult(entity);
+            }
+           
         }
 
         public async Task<List<T>> GetAll()
@@ -39,27 +46,34 @@ namespace OngProject.Repositories
         public async Task<T> GetById(int Id)
         {
 
-            //var query = _context.Set<T>().AsNoTracking()
-            //.Where(t => t.Id == Id && t.IsDeleted == false);
-            // return query.FirstOrDefaultAsync();
             var findGeneric = await _context.Set<T>().FindAsync(Id);
 
             return findGeneric;
 
-            T entity = _context.Set<T>().Find(Id);
-
-            return Task.FromResult(entity);
 
         }
 
-        public Task<T> Insert(T entity)
+        public async Task<T> Insert(T entity)
         {
-            throw new NotImplementedException();
+            await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
-        public Task<T> Update(T entity)
+        public async Task<T> Update(T entity)
         {
-            throw new NotImplementedException();
+            var model = await _context.Set<T>().FindAsync(entity);
+            if(model == null || model.IsDeleted== true)
+            {
+                return null;
+            }
+            else
+            {
+                _context.Entry(model).CurrentValues.SetValues(entity);
+                await _context.SaveChangesAsync();
+                return  entity;
+            }
+
         }
     }
 }

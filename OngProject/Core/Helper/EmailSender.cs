@@ -38,21 +38,23 @@ namespace OngProject.Core.Helper
                 throw;
             }
         }
-        public async Task SendEmailAsync(string email, string subject)
-        {
-            try
-            {
-                var client = new SendGridClient(_config["SendGridToken"]);
-                var from = new EmailAddress(FromEmail, FromName);
-                var to = new EmailAddress(email, email);
-                var msg = MailHelper.CreateSingleEmail(from, to, subject, String.Empty, GetWelcomeEmail());
-                var response = await client.SendEmailAsync(msg);
-            }
-            catch (Exception )
-            {
-                throw ;
-            }
 
-        }
+        // Se deja comentado hasta tener el controller!
+    //    public async Task SendEmailAsync(string email, string subject)
+    //    {
+    //        try
+    //        {
+    //            var client = new SendGridClient(_config["SendGridToken"]);
+    //            var from = new EmailAddress(FromEmail, FromName);
+    //            var to = new EmailAddress(email, email);
+    //            var msg = MailHelper.CreateSingleEmail(from, to, subject, String.Empty, GetWelcomeEmail());
+    //            var response = await client.SendEmailAsync(msg);
+    //        }
+    //        catch (Exception )
+    //        {
+    //            throw ;
+    //        }
+
+    //    }
     }
 }

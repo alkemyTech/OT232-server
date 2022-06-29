@@ -14,7 +14,7 @@ namespace OngProject.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpGet("{Id})")]
         public IActionResult GetById(int Id)
         {
             return Ok();

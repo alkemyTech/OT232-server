@@ -21,7 +21,7 @@ namespace OngProject.Controllers
             return NoContent();
         }
 
-        [HttpGet]
+        [HttpGet("{Id})")]
         public IActionResult GetById(int id)
         {
             return NoContent();

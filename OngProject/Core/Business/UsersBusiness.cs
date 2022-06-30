@@ -25,7 +25,7 @@ namespace OngProject.Core.Business
             throw new System.NotImplementedException();
         }
 
-        public List<Task> GetAll()
+        public Task<List<User>> GetAll()
         {
             throw new System.NotImplementedException();
         }
@@ -33,12 +33,11 @@ namespace OngProject.Core.Business
         public async Task<List<User>> GetAsync(LoginUserDto userDto)
         {
             var query = new QueryProperty<User>(1, 1);
+
             query.Where = x => (x.Email == userDto.Email) && (x.Password == userDto.Password); 
             query.Includes.Add(x => x.Roles);
 
-            var result = await _unitOfWork.UsersRepository.GetAsync(query);
-
-            return result;
+            return await _unitOfWork.UsersRepository.GetAsync(query);
         }
 
         public Task GetById(int Id)

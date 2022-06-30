@@ -1,15 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models.DTOs;
-using OngProject.Core.Helper;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
@@ -27,17 +19,16 @@ namespace OngProject.Controllers
         }
 
         [HttpPost("login")]
-        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Login([FromBody] LoginUserDto user)
         {
-            user.Password = CryptographyHelper.CreateHashPass(Password);
+            //user.Password = CryptographyHelper.CreateHashPass(user.Password);
+            var Exists = await _authenticationBusiness.UserExists(user);
 
-            if(await _authenticationBusiness.UserExists(user))
+            if (Exists.Count > 0)
             {
-                return Ok(_authenticationBusiness.GetToken(user));
+                return Ok(await _authenticationBusiness.GetToken(user));
             }
-
-            return Ok(false);
+            return NotFound();
         }
     }
 }

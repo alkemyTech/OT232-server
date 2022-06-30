@@ -12,7 +12,7 @@ namespace OngProject.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
-        private OngDbContext _context;
+        private readonly OngDbContext _context;
 
         public GenericRepository(OngDbContext context)
         {
@@ -36,18 +36,9 @@ namespace OngProject.Repositories
 
         public async Task<T> GetById(int Id)
         {
+            var entity = await _context.Set<T>().FindAsync(Id);
 
-            //var query = _context.Set<T>().AsNoTracking()
-            //.Where(t => t.Id == Id && t.IsDeleted == false);
-            // return query.FirstOrDefaultAsync();
-            var findGeneric = await _context.Set<T>().FindAsync(Id);
-
-            return findGeneric;
-
-            T entity = _context.Set<T>().Find(Id);
-
-            return Task.FromResult(entity);
-
+            return entity;
         }
 
         public Task<T> Insert(T entity)
@@ -61,8 +52,15 @@ namespace OngProject.Repositories
         }
         public Task<List<T>> GetAsync(QueryProperty<T> query)
         {
-            var source = ApplyQuery(query, _context.Set<T>().AsQueryable());
-            return source.ToListAsync();
+            try
+            {
+                var source = ApplyQuery(query, _context.Set<T>().AsQueryable());
+                return source.ToListAsync();
+            }
+            catch (Exception e) 
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         private static IQueryable<T> ApplyQuery(QueryProperty<T> query, IQueryable<T> source)

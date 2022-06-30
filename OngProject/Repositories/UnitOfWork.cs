@@ -40,6 +40,7 @@ namespace OngProject.Repositories
 
                 }
                 return _usersRepository;
+            }
         }
 
         public IGenericRepository<Category> CategoriesRepository

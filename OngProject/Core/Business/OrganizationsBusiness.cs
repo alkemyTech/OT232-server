@@ -23,10 +23,8 @@ namespace OngProject.Core.Business
         public Task GetAll()
           {
             var query = new QueryProperty<Organization>(1, 1);
-            query.Where = x => (x.Name == userDto.Name); 
-            query.Where = x => (x.Image == userDto.Name); 
-            query.Where = x => (x.Phone == userDto.Name); 
-            query.Where = x => (x.Address == userDto.Name); 
+            query.Where = x => (x.Name == userDto.Name && x.Image==UserDto.Image && x.Phone==userDto.Phone
+               && x.Address==userDto.Address);
             query.Includes.Add(x => x.Organization);
 
             var result = await _unitOfWork.OrganizationRepository.GetAsync(query);

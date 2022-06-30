@@ -11,7 +11,6 @@ namespace OngProject.Controllers
     [ApiController]
     public class ActivitiesController : ControllerBase
     {
-
         private readonly IActivitiesBusiness _activitiesBusiness;
 
         public ActivitiesController(IActivitiesBusiness activitiesBusiness)
@@ -19,20 +18,14 @@ namespace OngProject.Controllers
             _activitiesBusiness = activitiesBusiness;
         }
         
-
         [HttpGet]
         public IActionResult GetAll()
         {
             return Ok();
         }
 
-
-
         [HttpGet("{Id})")]
-        public IActionResult GetById(int Id)
-        {
-            return Ok();
-        }
+        public async Task<IActionResult> GetById(int Id) => Ok(await _activitiesBusiness.GetById(Id));
 
         [HttpPost]
         public IActionResult Insert()
@@ -40,12 +33,9 @@ namespace OngProject.Controllers
             return Created("", null);
         }
 
-
-
         [HttpPut("{Id})")]
         public async Task<IActionResult> Update(int Id, UpdateActivityDto activity)
         {
-
             var model = await _activitiesBusiness.GetById(Id);
             if (model == null)
             {
@@ -57,7 +47,6 @@ namespace OngProject.Controllers
                 return BadRequest();
             }
             return Ok("Se actualizo correctamente el regitro" + Id);
-
         }
 
 

@@ -4,8 +4,6 @@ namespace OngProject.Core.Models.DTOs
 {
     public class UpdateActivityDto
     {
-        [Required(ErrorMessage = "El Id es obligatorio.")]
-        public int Id { get; set; }
 
         [Required(ErrorMessage = "El name es obligatorio.")]
         public string Name { get; set; }

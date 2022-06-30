@@ -15,7 +15,7 @@ namespace OngProject.Core.Interfaces
     {
 
         Task<bool> UserRegister(RegisterRequestDto userRegister);
-
+        Task<List<User>> UserExists(LoginUserDto user);
         Task<LoginResponseDto> GetToken(LoginUserDto user);
         Task<List<User>> UserExists(LoginUserDto user);
 

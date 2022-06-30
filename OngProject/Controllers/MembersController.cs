@@ -9,8 +9,8 @@ namespace OngProject.Controllers
     [Route("api/[controller]")]
     public class MembersController : Controller
     {
-        private readonly IMembersBussines _membersBussines;
-        public MembersController(IMembersBussines membersBussines, IUnitOfWork unitOfWork)
+        private readonly IMembersBusiness _membersBussines;
+        public MembersController(IMembersBusiness membersBussines, IUnitOfWork unitOfWork)
         {
             _membersBussines = membersBussines;
         }

@@ -10,7 +10,8 @@ namespace OngProject.Core.Helper
 {
     public class EmailSender
     {
-        IConfiguration _config;
+        private readonly IConfiguration _config;
+
         public EmailSender(IConfiguration config)
         {
             _config = config;
@@ -21,6 +22,7 @@ namespace OngProject.Core.Helper
             return GetEmailForTemplate("Bienvenido a Somos Mas",
                 "Su usuario ha sido creado con éxito", "somosmas@email.com");
         }
+
         public static string GetEmailForTemplate(string title, string message, string contact = "somosmas@email.com")
         {
             try
@@ -39,22 +41,20 @@ namespace OngProject.Core.Helper
             }
         }
 
-        // Se deja comentado hasta tener el controller!
-    //    public async Task SendEmailAsync(string email, string subject)
-    //    {
-    //        try
-    //        {
-    //            var client = new SendGridClient(_config["SendGridToken"]);
-    //            var from = new EmailAddress(FromEmail, FromName);
-    //            var to = new EmailAddress(email, email);
-    //            var msg = MailHelper.CreateSingleEmail(from, to, subject, String.Empty, GetWelcomeEmail());
-    //            var response = await client.SendEmailAsync(msg);
-    //        }
-    //        catch (Exception )
-    //        {
-    //            throw ;
-    //        }
-
-    //    }
+        public async Task SendEmailAsync(string email, string subject)
+        {
+            try
+            {
+                var client = new SendGridClient(_config["SendGridToken"]);
+                var from = new EmailAddress("", "");
+                var to = new EmailAddress(email, email);
+                var msg = MailHelper.CreateSingleEmail(from, to, subject, String.Empty, GetWelcomeEmail());
+                var response = await client.SendEmailAsync(msg);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

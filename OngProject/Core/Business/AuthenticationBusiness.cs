@@ -46,18 +46,20 @@ namespace OngProject.Core.Business
 
         public async Task<List<User>> UserExists(LoginUserDto user) => await _usersBusiness.GetAsync(user);
 
+        public async Task<bool> UserRegister(RegisterRequestDto userRegister) => await _usersBusiness.Insert(userRegister);
+
         public async Task<LoginResponseDto> GetToken(LoginUserDto user)
         {
-            List<Claim> authClaims = new List<Claim>();
+            List<Claim> authClaims = new();
             var userList = await _usersBusiness.GetAsync(user);
-            User userProperties = new User();
+            User userProperties = new();
 
             foreach (var r in userList)
                 userProperties = r;
 
             try
             {
-                authClaims.Add(new Claim(type:"Id", userProperties.Id.ToString()));
+                authClaims.Add(new Claim(type: "Id", userProperties.Id.ToString()));
                 authClaims.Add(new Claim(ClaimTypes.Email, user.Email));
                 authClaims.Add(new Claim(ClaimTypes.Role, userProperties.Roles.Description));
                 authClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
@@ -86,3 +88,4 @@ namespace OngProject.Core.Business
 
     }
 }
+

@@ -12,7 +12,6 @@ namespace OngProject.Core.Business
 {
     public class UsersBusiness : IUsersBusiness
     {
-
         private readonly IUnitOfWork _unitOfWork;
 
         public UsersBusiness(IUnitOfWork unitOfWork)
@@ -25,9 +24,14 @@ namespace OngProject.Core.Business
             throw new System.NotImplementedException();
         }
 
-        public Task<List<User>> GetAll()
+        public async Task<List<User>> GetAsync(LoginUserDto userDto)
         {
-            throw new System.NotImplementedException();
+            var query = new QueryProperty<User>(1, 1);
+
+            query.Where = x => (x.Email == userDto.Email) && (x.Password == userDto.Password); 
+            query.Includes.Add(x => x.Roles);
+
+            return await _unitOfWork.UsersRepository.GetAsync(query);
         }
 
         public async Task<List<User>> GetAsync(LoginUserDto userDto)
@@ -57,10 +61,10 @@ namespace OngProject.Core.Business
         {
             var listUserDto = new List<UserDto>();
             var users = await _unitOfWork.UsersRepository.GetAll();
+
             if(users != null)
-            {
                 listUserDto = ConvertUserToDto.ConvertUserDto(users);
-            }
+
             return listUserDto;
         }
     }

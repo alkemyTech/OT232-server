@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
+using System.Threading.Tasks;
 
 namespace OngProject.Controllers
 {
@@ -16,15 +17,7 @@ namespace OngProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
-        {
-            _organization.Name = organization.Name;
-            _organization.Image = organization.Image;
-            _organization.Phone = organization.Phone;
-            _organization.Address = organization.Address;
-
-            return Ok(organization);
-        }
+        public async Task<IActionResult> GetAll() => Ok(await _organizationsBusiness.GetAll());
 
         [HttpGet("{Id})")]
         public IActionResult GetById(int id)

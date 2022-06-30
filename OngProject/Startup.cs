@@ -1,24 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using OngProject.Core.Business;
 using OngProject.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 using Microsoft.EntityFrameworkCore;
 using OngProject.DataAccess;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
@@ -38,7 +29,6 @@ namespace OngProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddDbContext<OngDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OngConnectionString")));
 
             services.AddControllers();
@@ -52,15 +42,12 @@ namespace OngProject
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
             services.AddScoped<ITestimonialsBusiness, TestimonialsBusiness>();
-
             services.AddScoped<IMembersBusiness, MembersBusiness>();
             services.AddScoped<INewsBusiness, NewsBusiness>();
             services.AddScoped<ICategoriesBusiness, CategoriesBusiness>();
+            services.AddScoped<IOrganizationsBusiness, OrganizationsBusiness>();
             services.AddScoped<IUsersBusiness, UsersBusiness>();
             services.AddScoped<IAuthenticationBusiness, AuthenticationBusiness>();
-
-
-
 
             //JWT
             services.AddAuthentication(options =>
@@ -85,9 +72,7 @@ namespace OngProject
                     };
                 });
 
-
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

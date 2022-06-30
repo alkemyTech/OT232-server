@@ -25,5 +25,18 @@ namespace OngProject.Core.Helper
                 return sb.ToString();
             }
         }
+        public string DecryptHashPass(string password)
+        {
+            using (var hmac = SHA256.Create())
+            {
+                byte[] passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+                var sb = new StringBuilder();
+                foreach (byte b in passwordHash)
+                    sb.Append(b.ToString("x2"));
+
+                return sb.ToString();
+            }
+        }
     }
 }

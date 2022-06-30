@@ -18,7 +18,7 @@ namespace OngProject.Core.Helper
             AWSCredentials awsCredentials;
             if (chain.TryGetAWSCredentials("default", out awsCredentials))
             {
-                _amazonService = new AmazonS3Client(awsCredentials.GetCredentials().AccessKey, awsCredentials.GetCredentials().SecretKey, RegionEndpoint.USEast1);
+                _amazonService = new AmazonS3Client(awsCredentials.GetCredentials().AccessKey, awsCredentials.GetCredentials().SecretKey, RegionEndpoint.SAEast1);
             }
         }
     }

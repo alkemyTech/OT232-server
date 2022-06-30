@@ -22,6 +22,7 @@ using OngProject.DataAccess;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using Amazon.S3;
 
 
 namespace OngProject
@@ -54,6 +55,7 @@ namespace OngProject
             services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
             services.AddScoped<ITestimonialsBusiness, TestimonialsBusiness>();
             services.AddScoped<IMembersBussines, MembersBussines>();
+            services.AddAWSService<IAmazonS3>();
 
             services.AddScoped<ICategoriesBusiness, CategoriesBusiness>();
 

@@ -26,5 +26,17 @@ namespace OngProject.Entities
         [StringLength(255)]
         public string WelcomeText { get; set; }
         public string AboutUsText { get; set; }
+
+        [Url]
+        [Required]
+        public string FacebookUrl { get; set }
+
+        [Url]
+        [Required]
+        public string InstagramUrl { get; set }
+
+        [Url]
+        [Required]
+        public string LinkedinUrl { get; set }
     }
 }

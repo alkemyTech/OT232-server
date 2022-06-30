@@ -30,7 +30,7 @@ namespace OngProject.Controllers
             request.Password = cryp.CreateHashPass(request.Password);
             if(!await _authenticationBusiness.UserRegister(request)) return BadRequest();
             
-            return Ok("Usuario Registrado con éxito");
+            return Ok(await _authenticationBusiness.GetToken());
         }
     }
 }

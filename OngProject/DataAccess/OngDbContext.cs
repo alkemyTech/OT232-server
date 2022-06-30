@@ -26,19 +26,17 @@ namespace OngProject.DataAccess
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.TestimonialsSeed();
-            modelBuilder.NewsSeed();
-            modelBuilder.ActivitiesSeed();
-            modelBuilder.MembersSeed();
             modelBuilder.CategoriesSeed();
-            modelBuilder.UsersSeed();
-            modelBuilder.RolesSeed();
             modelBuilder.MembersSeed();
-        
+            modelBuilder.NewsSeed();
+            modelBuilder.RolesSeed();
+            modelBuilder.ActivitiesSeed();
+            modelBuilder.UsersSeed();
         }
+
     }
 
 }

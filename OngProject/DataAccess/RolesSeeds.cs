@@ -21,8 +21,8 @@ namespace OngProject.DataAccess
             {
                 Id = 2,
                 IsDeleted = false,
-                Name = @"Invitado",
-                Description = "Administrator Role",
+                Name = @"Estándar",
+                Description = "Standard Role",
                 LastModified = DateTime.UtcNow
             });
         }

@@ -1,4 +1,6 @@
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -20,12 +22,18 @@ namespace OngProject.Core.Business
             throw new NotImplementedException();
         }
 
-        public Task GetAll()
+        public async Task<List<OrganizationDto>> GetAll() 
         {
-            throw new NotImplementedException();
+            var dtos = new List<OrganizationDto>();
+            var result = await _unitOfWork.OrganizationsRepository.GetAll();
+
+            foreach (var o in result)
+                dtos.Add(new OrganizationDto{ Name = o.Name, Address = o.Address, Image = o.Image, Phone = o.Phone });
+
+            return dtos;
         }
 
-        public Task GetById(int id)
+        public Task<Organization> GetById(int id)
         {
             throw new NotImplementedException();
         }

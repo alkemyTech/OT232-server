@@ -17,7 +17,7 @@ namespace OngProject.DataAccess
                     Description = @"This is the first News",
                     Image = @"This_is_the_first_News",
                     LastModified = DateTime.Now,
-                    CategoryId = 3
+                    CategoryId = 4
                 },
                 new News
                 {
@@ -27,7 +27,7 @@ namespace OngProject.DataAccess
                     Description = @"This is the second News",
                     Image = @"This_is_the_second_News",
                     LastModified = DateTime.Now,
-                    CategoryId = 2
+                    CategoryId = 4
                 },
                 new News
                 {
@@ -37,7 +37,7 @@ namespace OngProject.DataAccess
                     Description = @"This is the third News",
                     Image = @"This_is_the_third_News",
                     LastModified = DateTime.Now,
-                    CategoryId = 1,
+                    CategoryId = 1
                 },
                 new News
                 {
@@ -47,7 +47,7 @@ namespace OngProject.DataAccess
                     Description = @"This is the quarter News",
                     Image = @"This_is_the_quarter_News",
                     LastModified = DateTime.Now,
-                    CategoryId = 1,
+                    CategoryId = 1
                 },
                  new News
                  {
@@ -57,7 +57,7 @@ namespace OngProject.DataAccess
                      Description = @"This is the fifth News",
                      Image = @"This_is_the_fifth_News",
                      LastModified = DateTime.Now,
-                     CategoryId = 2,
+                     CategoryId = 2
                  },
                  new News
                  {
@@ -67,7 +67,7 @@ namespace OngProject.DataAccess
                      Description = @"This is the sixth News",
                      Image = @"This_is_the_sixth_News",
                      LastModified = DateTime.Now,
-                     CategoryId = 3,
+                     CategoryId = 2
                  },
                  new News
                  {
@@ -77,7 +77,7 @@ namespace OngProject.DataAccess
                      Description = @"This is the seventh News",
                      Image = @"This_is_the_seventh_News",
                      LastModified = DateTime.Now,
-                     CategoryId = 1
+                     CategoryId = 3
                  },
                  new News
                  {
@@ -87,7 +87,7 @@ namespace OngProject.DataAccess
                      Description = @"This is the eighth News",
                      Image = @"This_is_the_eighth_News",
                      LastModified = DateTime.Now,
-                     CategoryId = 1
+                     CategoryId = 3
                  },
                  new News
                  {
@@ -97,7 +97,7 @@ namespace OngProject.DataAccess
                      Description = @"This is the nineth News",
                      Image = @"This_is_the_nineth_News",
                      LastModified = DateTime.Now,
-                     CategoryId = 1
+                     CategoryId = 2
                  },
                  new News
                  {

@@ -11,6 +11,7 @@ namespace OngProject.Core.Helper
     public class EmailSender
     {
         private readonly IConfiguration _config;
+
         public EmailSender(IConfiguration config)
         {
             _config = config;
@@ -21,6 +22,7 @@ namespace OngProject.Core.Helper
             return GetEmailForTemplate("Bienvenido a Somos Mas",
                 "Su usuario ha sido creado con éxito", "somosmas@email.com");
         }
+
         public static string GetEmailForTemplate(string title, string message, string contact = "somosmas@email.com")
         {
             try
@@ -38,6 +40,7 @@ namespace OngProject.Core.Helper
                 throw;
             }
         }
+
         public async Task SendEmailAsync(string email, string subject)
         {
             try
@@ -48,11 +51,10 @@ namespace OngProject.Core.Helper
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, String.Empty, GetWelcomeEmail());
                 var response = await client.SendEmailAsync(msg);
             }
-            catch (Exception )
+            catch (Exception)
             {
-                throw ;
+                throw;
             }
-
         }
     }
 }

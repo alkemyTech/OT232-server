@@ -5,10 +5,8 @@ namespace OngProject.DataAccess
 {
     public static class CategoriesSeeds
     {
-        
         public static void CategoriesSeed(this ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<Category>().HasData(
             new Category
             {
@@ -48,13 +46,6 @@ namespace OngProject.DataAccess
                 "y que logren mas productividad ",
                 Image = "Somosmas.jpg"
             });
-
-
-
-
-
         }
     }
-
-    
 }

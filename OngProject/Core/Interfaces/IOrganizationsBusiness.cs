@@ -1,3 +1,4 @@
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,9 @@ namespace OngProject.Core.Interfaces
     public interface IOrganizationsBusiness
     {
 
-        public Task GetAll();
+        public Task<List<OrganizationDto>> GetAll();
 
-        public Task GetById(int id);
+        public Task<Organization> GetById(int id);
 
         public Task Insert();
 

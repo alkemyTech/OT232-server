@@ -1,17 +1,17 @@
 ﻿using OngProject.Core.Interfaces;
-using OngProject.Repositories;
+using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace OngProject.Core.Business
 {
     public class ActivitiesBusiness : IActivitiesBusiness
-    { 
-        
+    {
         public readonly IUnitOfWork _unitOfWork;
+
         public ActivitiesBusiness(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -27,17 +27,18 @@ namespace OngProject.Core.Business
             throw new NotImplementedException();
         }
 
-        public Task GetById()
+        public async Task<Activity> GetById(int Id) => await _unitOfWork.ActivitiesRepository.GetById(Id);
+
+        public async Task<Activity> Update(Activity model, UpdateActivityDto activity)
         {
-            throw new NotImplementedException();
+            model.Name = activity.Name;
+            model.Content = activity.Content;
+            var result = await _unitOfWork.ActivitiesRepository.Update(model);
+            
+            return result;
         }
 
         public Task Insert()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Update()
         {
             throw new NotImplementedException();
         }

@@ -22,10 +22,7 @@ namespace OngProject.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Task<T>> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        public List<Task<T>> GetAll() => await _context.Set<T>().ToListAsync();
 
         public Task<T> GetById(int Id)
         {

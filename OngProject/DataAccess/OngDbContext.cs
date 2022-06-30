@@ -34,7 +34,6 @@ namespace OngProject.DataAccess
             modelBuilder.MembersSeed();
             modelBuilder.CategoriesSeeds();
             modelBuilder.SeedNews();
-
         }
 
     }

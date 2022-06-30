@@ -64,6 +64,7 @@ namespace OngProject.Repositories
                 return _activityRepository;
             }
         }
+        
         public IGenericRepository<Category> CategoriesRepository
         {
             get

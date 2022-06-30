@@ -11,7 +11,7 @@ namespace OngProject.Core.Models.DTOs
         public string Name { get; set; }
 
         [Required(ErrorMessage = "La content es obligatorio.")]
-       
+
         public string Content { get; set; }
 
         [Required(ErrorMessage = "La Image es obligatoria.")]

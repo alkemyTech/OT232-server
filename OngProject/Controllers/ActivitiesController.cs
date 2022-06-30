@@ -25,7 +25,7 @@ namespace OngProject.Controllers
         }
 
         [HttpGet("{Id})")]
-        public IActionResult GetById(int Id) => Ok(_activitiesBusiness.GetById(Id));
+        public async Task<IActionResult> GetById(int Id) => Ok(await _activitiesBusiness.GetById(Id));
 
         [HttpPost]
         public IActionResult Insert()

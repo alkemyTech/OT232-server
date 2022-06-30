@@ -67,7 +67,7 @@ namespace OngProject.Repositories
         public async Task<T> Update(T entity)
         {
             var model = await _context.Set<T>().FindAsync(entity);
-            if(model == null || model.IsDeleted== true)
+            if (model == null || model.IsDeleted == true)
             {
                 return null;
             }
@@ -75,7 +75,7 @@ namespace OngProject.Repositories
             {
                 _context.Entry(model).CurrentValues.SetValues(entity);
                 await _context.SaveChangesAsync();
-                return  entity;
+                return entity;
             }
 
         }

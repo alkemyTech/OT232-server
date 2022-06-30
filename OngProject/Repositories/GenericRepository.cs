@@ -1,4 +1,6 @@
-﻿using OngProject.DataAccess;
+using Microsoft.EntityFrameworkCore;
+
+using OngProject.DataAccess;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System;
@@ -17,29 +19,61 @@ namespace OngProject.Repositories
             _context = context;
         }
 
-        public Task<T> Delete(int Id)
+        public async Task<T> Delete(int Id)
         {
-            throw new NotImplementedException();
+            T entity = await _context.Set<T>().FindAsync(Id);
+            if(entity == null || entity.IsDeleted == true)
+            {
+                return null;
+            }
+            else
+            {
+                entity.IsDeleted = true;
+                entity.LastModified = DateTime.Now;
+                _context.Set<T>().Update(entity);
+                await _context.SaveChangesAsync();
+                return await Task.FromResult(entity);
+            }
+           
         }
 
-        public List<Task<T>> GetAll()
+        public async Task<List<T>> GetAll()
         {
-            throw new NotImplementedException();
+            var source = _context.Set<T>().Where(x => !x.IsDeleted);
+            return await source.ToListAsync();
         }
 
-        public Task<T> GetById(int Id)
+        public async Task<T> GetById(int Id)
         {
-            throw new NotImplementedException();
+
+            var findGeneric = await _context.Set<T>().FindAsync(Id);
+
+            return findGeneric;
+
+
         }
 
-        public Task<T> Insert(T entity)
+        public async Task<T> Insert(T entity)
         {
-            throw new NotImplementedException();
+            await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
-        public Task<T> Update(T entity)
+        public async Task<T> Update(T entity)
         {
-            throw new NotImplementedException();
+            var model = await _context.Set<T>().FindAsync(entity);
+            if(model == null || model.IsDeleted== true)
+            {
+                return null;
+            }
+            else
+            {
+                _context.Entry(model).CurrentValues.SetValues(entity);
+                await _context.SaveChangesAsync();
+                return  entity;
+            }
+
         }
     }
 }

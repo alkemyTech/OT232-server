@@ -25,15 +25,28 @@ namespace OngProject.Core.Business
             throw new System.NotImplementedException();
         }
 
+        public Task<List<User>> GetAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<List<User>> GetAsync(LoginUserDto userDto)
+        {
+            var query = new QueryProperty<User>(1, 1);
+
+            query.Where = x => (x.Email == userDto.Email) && (x.Password == userDto.Password); 
+            query.Includes.Add(x => x.Roles);
+
+            return await _unitOfWork.UsersRepository.GetAsync(query);
+        }
+
+
         public Task GetById(int Id)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task Insert()
-        {
-            throw new System.NotImplementedException();
-        }
+        public async Task<bool> Insert(RegisterRequestDto dto) => await _unitOfWork.UsersRepository.Insert(UserMapper.ToUser(dto));
 
         public Task Update()
         {

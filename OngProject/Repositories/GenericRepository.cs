@@ -53,11 +53,18 @@ namespace OngProject.Repositories
 
         }
 
-        public async Task<T> Insert(T entity)
+        public async Task<bool> Insert(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
-            await _context.SaveChangesAsync();
-            return entity;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<T> Update(T entity)

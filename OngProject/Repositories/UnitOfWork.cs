@@ -10,7 +10,7 @@ namespace OngProject.Repositories
     {
         private readonly OngDbContext _context;
         public IGenericRepository<News> _newsRepository;
-        public IGenericRepository<User> _userRepository;
+        public IGenericRepository<User> _usersRepository;
         public IGenericRepository<Category> _categoryRepository;
         public IGenericRepository<Activity> _activityRepository;
         public IGenericRepository<Comment> _commentRepository;
@@ -43,12 +43,12 @@ namespace OngProject.Repositories
         {
             get
             {
-                if (_userRepository == null)
+                if (_usersRepository == null)
                 {
-                    _userRepository = new GenericRepository<User>(_context);
+                    _usersRepository = new GenericRepository<User>(_context);
 
                 }
-                return _userRepository;
+                return _usersRepository;
             }
         }
 

@@ -57,8 +57,6 @@ namespace OngProject
             services.AddScoped<ICategoriesBusiness, CategoriesBusiness>();
             services.AddScoped<IUsersBusiness, UsersBusiness>();
             services.AddScoped<IAuthenticationBusiness, AuthenticationBusiness>();
-
-
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

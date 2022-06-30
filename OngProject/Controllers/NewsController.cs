@@ -43,12 +43,12 @@ namespace OngProject.Controllers
         }
 
         [HttpDelete]      
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {   
 
-                var model =_newsBusiness.Delete(id);
+                var model = await _newsBusiness.Delete(id);
                 if (model == null)
                 {
                     return NotFound("no se encuentra el registro");

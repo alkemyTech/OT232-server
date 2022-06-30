@@ -5,6 +5,7 @@ using OngProject.Entities;
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OngProject.Core.Business
@@ -18,7 +19,6 @@ namespace OngProject.Core.Business
         {
             _unitOfWork = unitOfWork;
         }
-
 
         public Task Delete(int Id)
         {
@@ -40,6 +40,7 @@ namespace OngProject.Core.Business
             return await _unitOfWork.UsersRepository.GetAsync(query);
         }
 
+
         public Task GetById(int Id)
         {
             throw new System.NotImplementedException();
@@ -53,6 +54,17 @@ namespace OngProject.Core.Business
         public Task Update()
         {
             throw new System.NotImplementedException();
+        }
+
+        public async Task<List<UserDto>> GetAll()
+        {
+            var listUserDto = new List<UserDto>();
+            var users = await _unitOfWork.UsersRepository.GetAll();
+            if(users != null)
+            {
+                listUserDto = ConvertUserToDto.ConvertUserDto(users);
+            }
+            return listUserDto;
         }
     }
 }

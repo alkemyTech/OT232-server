@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OngProject.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +14,26 @@ namespace OngProject.Controllers
 
     public class UserController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetAll()
+        private readonly IUsersBusiness _userBusiness;
+
+        public UserController(IUsersBusiness userBusiness)
         {
-            return Ok();
+            _userBusiness = userBusiness;
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> GetAll()
+        {
+            var users = await _userBusiness.GetAll();
+            if(users == null)
+            {
+                return Ok("Error");
+            }
+            return Ok(users);
+        }
+
+        [HttpGet("{Id})")]
         public IActionResult GetById(int id)
         {
             return Ok();

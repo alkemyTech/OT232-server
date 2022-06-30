@@ -28,7 +28,7 @@ namespace OngProject.DataAccess
             },
             new Category
             {
-                Id = ,
+                Id = 3,
                 Name = "Programas Educativos Adolescentes",
                 Description = " Buscamos incrementar la capacidad efectiva y de vinculos con los pares para " +
                 "una mejor autonomia y trabjo grupal",

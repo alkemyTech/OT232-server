@@ -40,7 +40,6 @@ namespace OngProject
         {
 
             services.AddDbContext<OngDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OngConnectionString")));
-       
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -53,7 +52,14 @@ namespace OngProject
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
             services.AddScoped<ITestimonialsBusiness, TestimonialsBusiness>();
-            services.AddScoped<IMembersBussines, MembersBussines>();
+
+            services.AddScoped<IMembersBusiness, MembersBusiness>();
+            services.AddScoped<INewsBusiness, NewsBusiness>();
+            services.AddScoped<ICategoriesBusiness, CategoriesBusiness>();
+            services.AddScoped<IUsersBusiness, UsersBusiness>();
+            services.AddScoped<IAuthenticationBusiness, AuthenticationBusiness>();
+
+
 
 
             //JWT
@@ -79,7 +85,7 @@ namespace OngProject
                     };
                 });
 
-           
+
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
 
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace OngProject.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpGet("{Id})")]
         public IActionResult GetById(int Id)
         {
             return Ok();
@@ -41,10 +42,26 @@ namespace OngProject.Controllers
             return Created("", null);
         }
 
-        [HttpDelete]
-        public IActionResult Delete()
+        [HttpDelete]      
+        public async Task<IActionResult> Delete(int id)
         {
-            return Ok();
+            try
+            {   
+
+                var model = await _newsBusiness.Delete(id);
+                if (model == null)
+                {
+                    return NotFound("no se encuentra el registro");
+                }else
+                { 
+                return Ok("se borro el registro correctamente");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }

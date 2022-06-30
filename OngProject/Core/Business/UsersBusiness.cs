@@ -46,10 +46,7 @@ namespace OngProject.Core.Business
             throw new System.NotImplementedException();
         }
 
-        public Task Insert()
-        {
-            throw new System.NotImplementedException();
-        }
+        public async Task<bool> Insert(RegisterRequestDto dto) => await _unitOfWork.UsersRepository.Insert(UserMapper.ToUser(dto));
 
         public Task Update()
         {

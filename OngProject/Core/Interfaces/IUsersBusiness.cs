@@ -11,7 +11,7 @@ namespace OngProject.Core.Interfaces
         Task<List<User>> GetAsync(LoginUserDto userDto);
         Task<List<UserDto>> GetAll();
         Task GetById(int Id);
-        Task Insert();
+        Task<bool> Insert(RegisterRequestDto dto);
         Task Update();
         Task Delete(int Id);
     }

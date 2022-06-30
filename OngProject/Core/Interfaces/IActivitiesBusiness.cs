@@ -11,6 +11,6 @@ namespace OngProject.Core.Interfaces
         List<Task> GetAll();
         Task<Activity> GetById(int Id);
         Task Delete(int Id);
-        Task<Activity> Update(Activity model, UpdateActivityDto activity); INewsBusiness 
+        Task<Activity> Update(Activity model, UpdateActivityDto activity); 
     }
 }

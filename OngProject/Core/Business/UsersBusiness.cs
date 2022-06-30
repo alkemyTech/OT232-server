@@ -34,17 +34,6 @@ namespace OngProject.Core.Business
             return await _unitOfWork.UsersRepository.GetAsync(query);
         }
 
-        public async Task<List<User>> GetAsync(LoginUserDto userDto)
-        {
-            var query = new QueryProperty<User>(1, 1);
-
-            query.Where = x => (x.Email == userDto.Email) && (x.Password == userDto.Password); 
-            query.Includes.Add(x => x.Roles);
-
-            return await _unitOfWork.UsersRepository.GetAsync(query);
-        }
-
-
         public Task GetById(int Id)
         {
             throw new System.NotImplementedException();

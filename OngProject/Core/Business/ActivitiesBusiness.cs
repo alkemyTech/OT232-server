@@ -29,6 +29,11 @@ namespace OngProject.Core.Business
 
         public async Task<Activity> GetById(int Id) => await _unitOfWork.ActivitiesRepository.GetById(Id);
 
+        public Task Insert()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Activity> Update(Activity model, UpdateActivityDto activity)
         {
             model.Name = activity.Name;
@@ -36,20 +41,6 @@ namespace OngProject.Core.Business
             var result = await _unitOfWork.ActivitiesRepository.Update(model);
             
             return result;
-        }
-
-        public async Task<Activity> Update(Activity model, UpdateActivityDto activity)
-        {
-
-            model.Name = activity.Name;
-            model.Content = activity.Content;
-            var result = await _unitOfWork.ActivitiesRepository.Update(model);
-            if (!result)
-            {
-                return null;
-
-            }
-            return model;
         }
     }
 }

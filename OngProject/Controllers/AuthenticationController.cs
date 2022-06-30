@@ -27,10 +27,9 @@ namespace OngProject.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequestDto request)
         {
-            //user.User = request.Email;
             request.Password = cryp.CreateHashPass(request.Password);
-            await _authenticationBusiness.UserRegister(request);
-
+            if(!await _authenticationBusiness.UserRegister(request)) return BadRequest();
+            
             return Ok("Usuario Registrado con éxito");
         }
     }

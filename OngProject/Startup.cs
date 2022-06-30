@@ -53,7 +53,7 @@ namespace OngProject
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
             services.AddScoped<ITestimonialsBusiness, TestimonialsBusiness>();
-            services.AddScoped<IMembersBussines, MembersBussines>();
+            services.AddScoped<IMembersBusiness, MembersBusiness>();
 
 
             //JWT

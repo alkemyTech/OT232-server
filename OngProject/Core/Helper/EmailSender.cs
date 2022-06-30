@@ -10,7 +10,7 @@ namespace OngProject.Core.Helper
 {
     public class EmailSender
     {
-        IConfiguration _config;
+        private readonly IConfiguration _config;
         public EmailSender(IConfiguration config)
         {
             _config = config;

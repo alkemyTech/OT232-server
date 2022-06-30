@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace OngProject.Core.Business
 {
-    public class MembersBussines : IMembersBussines
+    public class MembersBusiness : IMembersBusiness
     {
         private readonly IUnitOfWork _unitOfWork;
-        public MembersBussines(IUnitOfWork unitOfWork)
+        public MembersBusiness(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
 

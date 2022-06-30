@@ -19,5 +19,14 @@ namespace OngProject.Core.Mapper
             user.RoleID = registerDto.RoleID;
             return user;
         }
+        
+        public static LoginUserDto ToLoginUser(RegisterRequestDto registerDto)
+        {
+            LoginUserDto user = new LoginUserDto { 
+                Email = registerDto.Email,
+                Password = registerDto.Password
+            };
+            return user;
+        }
     }
 }

@@ -7,5 +7,6 @@ namespace OngProject.Repositories.Interfaces
         IGenericRepository<Category> CategoriesRepository { get; }
         IGenericRepository<News> NewsRepository { get; }
         IGenericRepository<Activity> ActivitiesRepository { get; }
+        IGenericRepository<Organization> OrganizationsRepository { get; }
     }
 }

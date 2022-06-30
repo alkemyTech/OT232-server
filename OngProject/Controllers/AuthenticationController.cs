@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Helper;
 using OngProject.Core.Interfaces;
@@ -13,6 +13,7 @@ using OngProject.Core.Interfaces;
 using OngProject.Core.Models.DTOs;
 
 using System.Threading.Tasks;
+using OngProject.Core.Mapper;
 
 namespace OngProject.Controllers
 {
@@ -43,21 +44,29 @@ namespace OngProject.Controllers
         public async Task<IActionResult> Register(RegisterRequestDto request)
         {
             request.Password = cryp.CreateHashPass(request.Password);
-            if(!await _authenticationBusiness.UserRegister(request)) return BadRequest();
+
+            var Exists = await _authenticationBusiness.UserExists(UserMapper.ToLoginUser(request));
+
+            if (Exists.Count > 0)
+                return BadRequest();
+
+            if (!await _authenticationBusiness.UserRegister(request))
+                return NotFound();
             
-            return Ok(await _authenticationBusiness.GetToken());
+            return Ok(await _authenticationBusiness.GetToken(UserMapper.ToLoginUser(request)));
         }
 
         [HttpPost("login")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Login([FromBody] LoginUserDto user)
         {
-            //user.Password = CryptographyHelper.CreateHashPass(user.Password);
+            user.Password = cryp.CreateHashPass(user.Password);
             var Exists = await _authenticationBusiness.UserExists(user);
 
             if (Exists.Count > 0)
             {
                 return Ok(await _authenticationBusiness.GetToken(user));
-            }
+
             return NotFound();
         }
     }

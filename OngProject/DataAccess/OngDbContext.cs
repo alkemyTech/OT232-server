@@ -29,14 +29,14 @@ namespace OngProject.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.TestimonialsSeed();
-            modelBuilder.ActivitiesSeed();
             modelBuilder.CategoriesSeed();
             modelBuilder.MembersSeed();
-            modelBuilder.SeedNews();
+            modelBuilder.NewsSeed();
+            modelBuilder.RolesSeed();
+            modelBuilder.ActivitiesSeed();
+            modelBuilder.UsersSeed();
         }
 
-
-       
     }
 
 }

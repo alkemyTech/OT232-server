@@ -45,8 +45,8 @@ namespace OngProject.Controllers
             request.Password = cryp.CreateHashPass(request.Password);
             if(!await _authenticationBusiness.UserRegister(request)) return BadRequest();
             
-            return Ok("Usuario Registrado con éxito");
-           }
+            return Ok(await _authenticationBusiness.GetToken());
+        }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserDto user)
@@ -59,7 +59,6 @@ namespace OngProject.Controllers
                 return Ok(await _authenticationBusiness.GetToken(user));
             }
             return NotFound();
-
         }
     }
 }

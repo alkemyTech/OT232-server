@@ -12,7 +12,7 @@ namespace OngProject.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
-        private OngDbContext _context;
+        private readonly OngDbContext _context;
 
         public GenericRepository(OngDbContext context)
         {
@@ -45,11 +45,8 @@ namespace OngProject.Repositories
 
         public async Task<T> GetById(int Id)
         {
-
-            var findGeneric = await _context.Set<T>().FindAsync(Id);
-
-            return findGeneric;
-
+            var entity = await _context.Set<T>().FindAsync(Id);
+            return entity;
 
         }
 
@@ -81,6 +78,38 @@ namespace OngProject.Repositories
                 return  entity;
             }
 
+        }
+        public Task<List<T>> GetAsync(QueryProperty<T> query)
+        {
+            try
+            {
+                var source = ApplyQuery(query, _context.Set<T>().AsQueryable());
+                return source.ToListAsync();
+            }
+            catch (Exception e) 
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        private static IQueryable<T> ApplyQuery(QueryProperty<T> query, IQueryable<T> source)
+        {
+            if (query is null)
+                return source;
+
+            if (query.Where is not null)
+                source = source.Where(query.Where);
+
+            foreach (var property in query.Includes)
+                source = source.Include(property);
+            
+            if (query.Skip > 0)
+                source = source.Skip(query.Skip);
+
+            if (query.Take > 0)
+                source = source.Take(query.Take);
+
+            return source;
         }
     }
 }

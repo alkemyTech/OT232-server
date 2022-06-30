@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OngProject.Core.Interfaces
 {
-    public interface IMembersBussines
+    public interface IMembersBusiness
     {
 
         public Task GetAll();

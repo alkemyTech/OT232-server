@@ -1,6 +1,12 @@
 using OngProject.Core.Models.DTOs;
+
+using System;
 using System.Collections.Generic;
+using System.Linq;
+
 using OngProject.Entities;
+using System.Collections.Generic;
+
 using System.Threading.Tasks;
 
 namespace OngProject.Core.Interfaces
@@ -11,6 +17,7 @@ namespace OngProject.Core.Interfaces
         Task<bool> UserRegister(RegisterRequestDto userRegister);
         Task<List<User>> UserExists(LoginUserDto user);
         Task<LoginResponseDto> GetToken(LoginUserDto user);
+        Task<List<User>> UserExists(LoginUserDto user);
 
     }
 }

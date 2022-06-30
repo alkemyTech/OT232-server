@@ -38,9 +38,18 @@ namespace OngProject.Core.Business
             return result;
         }
 
-        public Task Insert()
+        public async Task<Activity> Update(Activity model, UpdateActivityDto activity)
         {
-            throw new NotImplementedException();
+
+            model.Name = activity.Name;
+            model.Content = activity.Content;
+            var result = await _unitOfWork.ActivitiesRepository.Update(model);
+            if (!result)
+            {
+                return null;
+
+            }
+            return model;
         }
     }
 }

@@ -49,6 +49,7 @@ namespace OngProject.Controllers
             return Ok("Se actualizo correctamente el regitro" + Id);
         }
 
+
         [HttpDelete]
         public IActionResult Delete()
         {

@@ -1,10 +1,19 @@
+
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using OngProject.Core.Interfaces;
+using OngProject.Core.Mapper;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
+using OngProject.Repositories.Interfaces;
+using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,6 +23,18 @@ namespace OngProject.Core.Business
 {
     public class AuthenticationBusiness : IAuthenticationBusiness
     {
+        private readonly IUsersBusiness _usersBusiness;
+
+        public AuthenticationBusiness(IUsersBusiness usersBusiness)
+        {
+            _usersBusiness = usersBusiness;
+        }
+
+        public async Task<bool> UserRegister(RegisterRequestDto userRegister) => await _usersBusiness.Insert(userRegister);
+
+
+    public class AuthenticationBusiness : IAuthenticationBusiness 
+    { 
         private readonly IUsersBusiness _usersBusiness;
         private readonly IConfiguration _config;
 
@@ -59,11 +80,12 @@ namespace OngProject.Core.Business
                     ValidTo = token.ValidTo
                 };
             }
-            catch (Exception ex)
+            catch (Exception ex) 
             {
                 throw new Exception(ex.Message);
             }
         }
+
     }
 }
 

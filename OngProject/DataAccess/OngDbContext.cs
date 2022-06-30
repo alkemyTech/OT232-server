@@ -32,20 +32,13 @@ namespace OngProject.DataAccess
             modelBuilder.TestimonialsSeed();
             modelBuilder.NewsSeed();
             modelBuilder.ActivitiesSeed();
-<<<<<<< Updated upstream
             modelBuilder.MembersSeed();
-            modelBuilder.CategoriesSeeds();
-            modelBuilder.SeedNews();
-
-        }
-
-=======
             modelBuilder.CategoriesSeed();
             modelBuilder.UsersSeed();
             modelBuilder.RolesSeed();
             modelBuilder.MembersSeed();
+        
         }
->>>>>>> Stashed changes
     }
 
 }

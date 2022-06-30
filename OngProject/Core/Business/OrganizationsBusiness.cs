@@ -20,10 +20,7 @@ namespace OngProject.Core.Business
             throw new NotImplementedException();
         }
 
-        public Task GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        public Task<List<Organization>> GetAll()  => await _unitOfWork.OrganizationRepository.GetAll();
 
         public Task GetById(int id)
         {

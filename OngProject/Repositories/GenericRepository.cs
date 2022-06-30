@@ -37,11 +37,7 @@ namespace OngProject.Repositories
            
         }
 
-        public async Task<List<T>> GetAll()
-        {
-            var source = _context.Set<T>().Where(x => !x.IsDeleted);
-            return await source.ToListAsync();
-        }
+        public async Task<List<T>> GetAll() => await _context.Set<T>().Where(x => !x.IsDeleted).ToListAsync();
 
         public async Task<T> GetById(int Id)
         {

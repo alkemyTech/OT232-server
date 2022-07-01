@@ -29,14 +29,14 @@ namespace OngProject.Entities
 
         [Url]
         [Required]
-        public string FacebookUrl { get; set }
+        public string FacebookUrl { get; set; }
 
         [Url]
         [Required]
-        public string InstagramUrl { get; set }
+        public string InstagramUrl { get; set; }
 
         [Url]
         [Required]
-        public string LinkedinUrl { get; set }
+        public string LinkedinUrl { get; set; }
     }
 }

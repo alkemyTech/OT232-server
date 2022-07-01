@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace OngProject.Core.Helper
 {
-    public class CryptographyHelper
+    public static class CryptographyHelper
     {
         //Encripta Contraseña
-        public string CreateHashPass(string password)
+        public static string CreateHashPass(string password)
         {
             using (var hmac = SHA256.Create())
             {
@@ -25,7 +25,7 @@ namespace OngProject.Core.Helper
                 return sb.ToString();
             }
         }
-        public string DecryptHashPass(string password)
+        public static string DecryptHashPass(string password)
         {
             using (var hmac = SHA256.Create())
             {

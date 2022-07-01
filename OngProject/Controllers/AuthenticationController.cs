@@ -13,19 +13,19 @@ namespace OngProject.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        public readonly UserPasswordDto user = new UserPasswordDto();
-        private readonly CryptographyHelper cryp = new CryptographyHelper();
         private readonly IAuthenticationBusiness _authenticationBusiness;
+        private readonly IEmailSender _emailSender;
 
-        public AuthenticationController(IAuthenticationBusiness authenticationBusiness)
+        public AuthenticationController(IAuthenticationBusiness authenticationBusiness , IEmailSender emailSender)
         {
             _authenticationBusiness = authenticationBusiness;
+            _emailSender = emailSender;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequestDto request)
         {
-            request.Password = cryp.CreateHashPass(request.Password);
+            request.Password = CryptographyHelper.CreateHashPass(request.Password);
 
             var Exists = await _authenticationBusiness.UserExists(UserMapper.ToLoginUser(request));
 
@@ -35,21 +35,20 @@ namespace OngProject.Controllers
             if (!await _authenticationBusiness.UserRegister(request))
                 return NotFound();
 
+            await _emailSender.SendWelcomeEmailAsync(request.Email, "!");
+
             return Ok(await _authenticationBusiness.GetToken(UserMapper.ToLoginUser(request)));
         }
 
         [HttpPost("login")]
-        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Login([FromBody] LoginUserDto user)
         {
-            user.Password = cryp.CreateHashPass(user.Password);
+            user.Password = CryptographyHelper.CreateHashPass(user.Password);
             var Exists = await _authenticationBusiness.UserExists(user);
 
             if (Exists.Count > 0)
-            {
                 return Ok(await _authenticationBusiness.GetToken(user));
 
-            }
             return NotFound();
         }
     }

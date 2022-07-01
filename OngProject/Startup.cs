@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Amazon.S3;
-
+using OngProject.Core.Helper;
 
 namespace OngProject
 {
@@ -45,7 +45,7 @@ namespace OngProject
             services.AddScoped<ITestimonialsBusiness, TestimonialsBusiness>();
 
             services.AddAWSService<IAmazonS3>();
-
+            services.AddScoped<IEmailSender, EmailSender>();
 
             services.AddScoped<IMembersBusiness, MembersBusiness>();
             services.AddScoped<INewsBusiness, NewsBusiness>();

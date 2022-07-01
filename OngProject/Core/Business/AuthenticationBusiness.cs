@@ -40,7 +40,7 @@ namespace OngProject.Core.Business
             {
                 authClaims.Add(new Claim(type: "Id", userProperties.Id.ToString()));
                 authClaims.Add(new Claim(ClaimTypes.Email, user.Email));
-                authClaims.Add(new Claim(ClaimTypes.Role, userProperties.Roles.Description));
+                authClaims.Add(new Claim(ClaimTypes.Role, userProperties.Roles.Name));
                 authClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
 
                 var authSigingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtConfig:Secret"]));

@@ -53,6 +53,7 @@ namespace OngProject
             services.AddScoped<IOrganizationsBusiness, OrganizationsBusiness>();
             services.AddScoped<IUsersBusiness, UsersBusiness>();
             services.AddScoped<IAuthenticationBusiness, AuthenticationBusiness>();
+            services.AddScoped<IContactsBusiness, ContactsBusiness>();
 
             //JWT
             services.AddAuthentication(options =>

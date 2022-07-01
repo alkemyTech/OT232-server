@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models.DTOs;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
@@ -22,15 +27,19 @@ namespace OngProject.Controllers
         }
 
         [HttpGet("{Id})")]
-        public IActionResult GetById(int Id) 
+        public IActionResult GetById(int Id)
         {
             return Ok();
         }
-        
+
         [HttpPost]
-        public IActionResult Insert()
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        public async Task<IActionResult> Insert(List<InsertTestimonialDto> testimonialsDtos) 
         {
-            return Created("", null);
+            if (!await _testimonialsBusiness.Insert(testimonialsDtos))
+                return NotFound();
+
+            return Ok("El testimonio ha sido creado");
         }
         
         [HttpPut]

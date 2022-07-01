@@ -8,5 +8,6 @@ namespace OngProject.Repositories.Interfaces
         IGenericRepository<News> NewsRepository { get; }
         IGenericRepository<Activity> ActivitiesRepository { get; }
         IGenericRepository<Organization> OrganizationsRepository { get; }
+        IGenericRepository<Testimonial> TestimonialsRepository { get; }
     }
 }

@@ -131,7 +131,7 @@ namespace OngProject.Repositories
             }
         }
 
-        public IGenericRepository<Testimonial> TestimonialRepository
+        public IGenericRepository<Testimonial> TestimonialsRepository
         {
             get
             {

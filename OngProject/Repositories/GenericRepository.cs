@@ -32,19 +32,14 @@ namespace OngProject.Repositories
                 entity.LastModified = DateTime.Now;
                 _context.Set<T>().Update(entity);
                 await _context.SaveChangesAsync();
-                return await Task.FromResult(entity);
+                return entity;
             }
            
         }
 
         public async Task<List<T>> GetAll() => await _context.Set<T>().Where(x => !x.IsDeleted).ToListAsync();
 
-        public async Task<T> GetById(int Id)
-        {
-            var entity = await _context.Set<T>().FindAsync(Id);
-            return entity;
-
-        }
+        public async Task<T> GetById(int Id) => await _context.Set<T>().FindAsync(Id);
 
         public async Task<bool> Insert(T entity)
         {
@@ -54,9 +49,23 @@ namespace OngProject.Repositories
                 await _context.SaveChangesAsync();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<bool> InsertRange(List<T> entity)
+        {
+            await _context.Set<T>().AddRangeAsync(entity);
+            try
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
             }
         }
 

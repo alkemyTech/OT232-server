@@ -1,4 +1,6 @@
 ﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Mapper;
+using OngProject.Core.Models.DTOs;
 using OngProject.DataAccess;
 using OngProject.Repositories.Interfaces;
 using System;
@@ -32,10 +34,7 @@ namespace OngProject.Core.Business
             throw new NotImplementedException();
         }
 
-        public Task Insert()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<bool> Insert(List<InsertTestimonialDto> testimonialsDtos) => await _unitOfWork.TestimonialsRepository.InsertRange(TestimonialMapper.ToTestimonialsList(testimonialsDtos));
 
         public Task Update()
         {

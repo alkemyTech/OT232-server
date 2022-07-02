@@ -35,6 +35,7 @@ namespace OngProject.DataAccess
             modelBuilder.RolesSeed();
             modelBuilder.ActivitiesSeed();
             modelBuilder.UsersSeed();
+            modelBuilder.ContactsSeed();
         }
     }
 }

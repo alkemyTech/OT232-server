@@ -91,7 +91,7 @@ namespace OngProject.Repositories
             }
         }
 
-        public IGenericRepository<Contact> ContactRepository
+        public IGenericRepository<Contact> ContactsRepository
         {
             get
             {
@@ -103,6 +103,7 @@ namespace OngProject.Repositories
                 return _contactsRepository;
             }
         }
+
 
         public IGenericRepository<Member> MemberRepository
         {
@@ -168,6 +169,8 @@ namespace OngProject.Repositories
                 return _rolesRepository;
             }
         }
+
+
     }
 }
 

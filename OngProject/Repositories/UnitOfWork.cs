@@ -105,7 +105,7 @@ namespace OngProject.Repositories
         }
 
 
-        public IGenericRepository<Member> MemberRepository
+        public IGenericRepository<Member> MembersRepository
         {
             get
             {
@@ -144,7 +144,7 @@ namespace OngProject.Repositories
             }
         }
 
-        public IGenericRepository<Slide> SlideRepository
+        public IGenericRepository<Slide> SlidesRepository
         {
             get
             {

@@ -1,8 +1,9 @@
 ﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Mapper;
+using OngProject.Core.Models.DTOs;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace OngProject.Core.Business
@@ -20,10 +21,7 @@ namespace OngProject.Core.Business
             throw new NotImplementedException();
         }
 
-        public Task GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<List<MemberDto>> GetAll() => MemberMapper.ToMembersDtoList(await _unitOfWork.MembersRepository.GetAll());
 
         public Task GetById(int id)
         {

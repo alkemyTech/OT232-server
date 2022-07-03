@@ -1,7 +1,5 @@
-﻿using OngProject.Entities;
-using System;
+﻿using OngProject.Core.Models.DTOs;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace OngProject.Core.Interfaces
@@ -9,7 +7,7 @@ namespace OngProject.Core.Interfaces
     public interface IMembersBusiness
     {
 
-        public Task GetAll();
+        public Task<List<MemberDto>> GetAll();
 
         public Task GetById(int id);
 

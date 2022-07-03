@@ -1,6 +1,7 @@
 ﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Mapper;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
-using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -31,11 +32,7 @@ namespace OngProject.Core.Business
             return await _unitOfWork.CategoriesRepository.GetById(Id);
         }
 
-        public Task Insert()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        public async Task<bool> Insert(CategoryRequestDto dto) => await _unitOfWork.CategoriesRepository.Insert(CategoryMapper.ToCategory(dto));
         public Task Update()
         {
             throw new System.NotImplementedException();

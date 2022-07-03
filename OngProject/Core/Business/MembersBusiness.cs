@@ -27,7 +27,10 @@ namespace OngProject.Core.Business
             var response = new Response<List<MemberDto>>(MemberMapper.ToMembersDtoList(await _unitOfWork.MembersRepository.GetAll()));
 
             if (response.Data == null)
+            {
+                response.Succeeded = false;
                 response.Message = ResponseMessage.UnexpectedErrors;
+            }
 
             return response;
         }

@@ -1,4 +1,7 @@
 ﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Mapper;
+using OngProject.Core.Models;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System;
@@ -34,10 +37,17 @@ namespace OngProject.Core.Business
             return _unitOfWork.NewsRepository.GetById(Id);
         }
 
-        public Task Insert()
+        public async Task<Response<bool>> Insert(NewsDto news)
         {
-            throw new NotImplementedException();
+            var resp = new Response<bool>(await _unitOfWork.NewsRepository.Insert(NewsMapper.ToNewsModel(news)));
+            if (!resp.Data)
+            {
+                resp.Succeeded = false;
+                resp.Message = ResponseMessage.UnexpectedErrors;
+            }
+            return resp;
         }
+
 
         public Task Update()
         {

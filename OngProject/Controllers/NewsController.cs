@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using System;
 using System.Collections.Generic;
@@ -31,10 +32,7 @@ namespace OngProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult Insert()
-        {
-            return Created("", null);
-        }
+        public async Task<IActionResult> Insert(NewsDto dto) => Ok(await _newsBusiness.Insert(dto));
 
         [HttpPut]
         public IActionResult Update()

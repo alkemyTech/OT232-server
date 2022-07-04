@@ -21,10 +21,8 @@ namespace OngProject.Controllers
         }
 
         [HttpGet]
-            public IActionResult GetAll()
-            {
-                return Ok();
-            }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        public async Task<IActionResult> GetName() => Ok(await _categoryBusiness.GetAll());
 
         [HttpGet]
         [Route("{id}")]

@@ -22,17 +22,15 @@ namespace OngProject.Core.Business
             throw new System.NotImplementedException();
         }
 
-        public Task<List<Category>> GetAll()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        public async Task<List<CategoryRequestDto>> GetAll() => CategoryMapper.ToCategoryNameList(await _unitOfWork.CategoriesRepository.GetAll());
+   
         public async Task<Category> GetById(int Id)
         {
             return await _unitOfWork.CategoriesRepository.GetById(Id);
         }
 
         public async Task<bool> Insert(CategoryRequestDto dto) => await _unitOfWork.CategoriesRepository.Insert(CategoryMapper.ToCategory(dto));
+
         public Task Update()
         {
             throw new System.NotImplementedException();

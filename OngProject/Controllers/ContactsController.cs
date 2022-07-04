@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models.DTOs;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
@@ -25,10 +27,7 @@ namespace OngProject.Controllers
         public async Task<IActionResult> GetById(int Id) => Ok(await _contactsBusiness.GetById(Id));
 
         [HttpPost]
-        public IActionResult Insert()
-        {
-            return Created("", null);
-        }
+        public async Task<IActionResult> Insert(InsertContactDto contactsDto) => Ok(await _contactsBusiness.Insert(contactsDto));
 
         [HttpPut("{Id})")]
         public async Task<IActionResult> Update(int Id)

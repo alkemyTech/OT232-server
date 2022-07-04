@@ -1,6 +1,7 @@
 ﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Mapper;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
-using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,20 +22,14 @@ namespace OngProject.Core.Business
             throw new System.NotImplementedException();
         }
 
-        public Task<List<Category>> GetAll()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        public async Task<List<CategoryRequestDto>> GetAll() => CategoryMapper.ToCategoryNameList(await _unitOfWork.CategoriesRepository.GetAll());
+   
         public async Task<Category> GetById(int Id)
         {
             return await _unitOfWork.CategoriesRepository.GetById(Id);
         }
 
-        public Task Insert()
-        {
-            throw new System.NotImplementedException();
-        }
+        public async Task<bool> Insert(CategoryRequestDto dto) => await _unitOfWork.CategoriesRepository.Insert(CategoryMapper.ToCategory(dto));
 
         public Task Update()
         {

@@ -12,5 +12,6 @@ namespace OngProject.Repositories.Interfaces
         IGenericRepository<Testimonial> TestimonialsRepository { get; }
         IGenericRepository<Contact> ContactsRepository { get; }
         IGenericRepository<Member> MembersRepository { get; }
+        IGenericRepository<Slide> SlidesRepository { get; }
     }
 }

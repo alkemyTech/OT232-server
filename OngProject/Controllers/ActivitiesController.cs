@@ -1,59 +1,70 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
+using OngProject.Repositories.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-
 
 namespace OngProject.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class ActivitiesController : ControllerBase
+    [Route("api/[controller]")]
+    public class ActivitiesController : Controller
     {
         private readonly IActivitiesBusiness _activitiesBusiness;
-
-        public ActivitiesController(IActivitiesBusiness activitiesBusiness)
+        public ActivitiesController(IActivitiesBusiness activitiesBusiness, IUnitOfWork unitOfWork)
         {
             _activitiesBusiness = activitiesBusiness;
         }
-        
+
         [HttpGet]
-        public IActionResult GetAll()
-        {
-            return Ok();
-        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        public async Task<IActionResult> GetAll() => Ok(await _activitiesBusiness.GetAll());
 
         [HttpGet("{Id})")]
-        public async Task<IActionResult> GetById(int Id) => Ok(await _activitiesBusiness.GetById(Id));
+        public IActionResult GetById(int id)
+        {
+            return NoContent();
+        }
 
         [HttpPost]
-        public IActionResult Insert()
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
+        public async Task<IActionResult> Insert(List<InsertActivityDto> activity) => Ok(await _activitiesBusiness.Insert(activity));
+
+        [HttpPut]
+        public IActionResult Update(Activity entity)
         {
-            return Created("", null);
+            return NoContent();
         }
 
-        [HttpPut("{Id})")]
-        public async Task<IActionResult> Update(int Id, UpdateActivityDto activity)
+        [HttpDelete("{Id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
+        public async Task<IActionResult> Delete(int Id)
         {
-            var model = await _activitiesBusiness.GetById(Id);
-            if (model == null)
+            try
             {
-                return NotFound();
+                var result = await _activitiesBusiness.Delete(Id);
+                if (result.Succeeded == false)
+                {
+                    return StatusCode(403, result);
+                }
+                return Ok(result);
             }
-            var result = _activitiesBusiness.Update(model, activity);
-            if (result == null)
+            catch (Exception ex)
             {
-                return BadRequest();
+                var response = new Response<string>()
+                {
+                    Data = "Error - 404",
+                    Message = ex.Message,
+                    Succeeded = false
+                };
+                return StatusCode(404, response);
             }
-            return Ok("Se actualizo correctamente el regitro" + Id);
-        }
-
-
-        [HttpDelete]
-        public IActionResult Delete()
-        {
-            return Ok();
         }
     }
 }

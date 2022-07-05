@@ -44,9 +44,7 @@ namespace OngProject.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete()
-        {
-            return NoContent();
-        }
+    //    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        public async Task<IActionResult> Delete(int id) => Ok(await _slideBusiness.Delete(id));
     }
 }

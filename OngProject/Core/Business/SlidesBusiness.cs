@@ -19,9 +19,16 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
         }
 
-        public Task Delete()
+        public async Task<Response<bool>> Delete(int Id)
         {
-            throw new NotImplementedException();
+          
+            var response = new Response<bool>(await _unitOfWork.SlidesRepository.Delete(Id), true);
+            if (!response.Data)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.Error;
+            }
+                return response;
         }
 
         public async Task<Response<List<SlideDto>>> GetAll()

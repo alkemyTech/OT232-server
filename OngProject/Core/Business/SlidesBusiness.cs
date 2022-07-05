@@ -1,4 +1,7 @@
 ﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Mapper;
+using OngProject.Core.Models;
+using OngProject.Core.Models.DTOs;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -7,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace OngProject.Core.Business
 {
-    public class SlidesBussines : ISlidesBussines
+    public class SlidesBusiness : ISlidesBusiness
     {
 
         private readonly IUnitOfWork _unitOfWork;
-        public SlidesBussines(IUnitOfWork unitOfWork)
+        public SlidesBusiness(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -21,9 +24,19 @@ namespace OngProject.Core.Business
             throw new NotImplementedException();
         }
 
-        public Task GetAll()
+        public async Task<Response<List<SlideDto>>> GetAll()
         {
-            throw new NotImplementedException();
+            var slides = await _unitOfWork.SlidesRepository.GetAll();
+            var n = SlideMapper.ToSlideDtoList(slides);
+            var response = new Response<List<SlideDto>>(n);
+
+            if (response.Data == null)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
+            }
+
+            return response;
         }
 
         public Task GetById(int id)
@@ -35,6 +48,7 @@ namespace OngProject.Core.Business
         {
             throw new NotImplementedException();
         }
+
 
         public Task Update()
         {

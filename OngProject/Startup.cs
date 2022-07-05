@@ -15,7 +15,11 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Amazon.S3;
 using OngProject.Core.Helper;
+
+using System.Collections.Generic;
+
 using Microsoft.AspNetCore.Http;
+
 
 namespace OngProject
 {
@@ -37,7 +41,9 @@ namespace OngProject
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OngProject", Version = "v1" });
+
             });
+        
 
             //declaro un servicio para hacerlo funcionar en todo el proyecto
 
@@ -57,6 +63,7 @@ namespace OngProject
             services.AddScoped<IUsersBusiness, UsersBusiness>();
             services.AddScoped<IAuthenticationBusiness, AuthenticationBusiness>();
             services.AddScoped<IContactsBusiness, ContactsBusiness>();
+            services.AddScoped<ISlidesBusiness, SlidesBusiness>();
 
             //JWT
             services.AddAuthentication(options =>

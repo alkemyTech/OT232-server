@@ -1,5 +1,9 @@
-﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Interfaces;
+using OngProject.Core.Mapper;
+using OngProject.Core.Models;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
+using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -29,19 +33,46 @@ namespace OngProject.Core.Business
             throw new NotImplementedException();
         }
 
-        public Task GetById(int Id)
+        public async Task<Response<NewsDto>> GetById(int Id)
         {
-            return _unitOfWork.NewsRepository.GetById(Id);
+            var response = new Response<NewsDto>(NewsMapper.ToNewsDto(await _unitOfWork.NewsRepository.GetById(Id)));
+            if (response.Data == null)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
+            }
+            return response;
         }
 
-        public Task Insert()
+        public async Task<Response<bool>> Insert(InsertNewsDto news)
         {
-            throw new NotImplementedException();
+            var resp = new Response<bool>(await _unitOfWork.NewsRepository.Insert(NewsMapper.InsertToNewsModel(news)));
+            if (!resp.Data)
+            {
+                resp.Succeeded = false;
+                resp.Message = ResponseMessage.UnexpectedErrors;
+            }
+            return resp;
         }
+
 
         public Task Update()
         {
             throw new NotImplementedException();
         }
+        public async Task<List<CommentDto>> GetComments(int newsId)
+        {
+            var news = await _unitOfWork.NewsRepository.GetById(newsId);
+            if (news == null)
+            {
+                return null;
+            }               
+            var query = new QueryProperty<Comment>();
+            query.Where = x => x.NewsID == newsId;
+            var comments = await _unitOfWork.CommentsRepository.GetAsync(query);
+
+            return comments.Select(x => x.CommentDto()).ToList();
+        }
+
     }
 }

@@ -16,6 +16,11 @@ using Microsoft.IdentityModel.Tokens;
 using Amazon.S3;
 using OngProject.Core.Helper;
 
+using System.Collections.Generic;
+
+using Microsoft.AspNetCore.Http;
+
+
 namespace OngProject
 {
     public class Startup
@@ -37,15 +42,17 @@ namespace OngProject
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OngProject", Version = "v1" });
             });
+        
 
             //declaro un servicio para hacerlo funcionar en todo el proyecto
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
             services.AddScoped<ITestimonialsBusiness, TestimonialsBusiness>();
-
+            services.AddHttpContextAccessor();
             services.AddAWSService<IAmazonS3>();
             services.AddScoped<IEmailSender, EmailSender>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<ICommentsBusiness, CommentsBusiness>();
             services.AddScoped<IMembersBusiness, MembersBusiness>();
@@ -55,6 +62,7 @@ namespace OngProject
             services.AddScoped<IUsersBusiness, UsersBusiness>();
             services.AddScoped<IAuthenticationBusiness, AuthenticationBusiness>();
             services.AddScoped<IContactsBusiness, ContactsBusiness>();
+            services.AddScoped<ISlidesBusiness, SlidesBusiness>();
 
             //JWT
             services.AddAuthentication(options =>

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-
+using OngProject.Core.Models;
 using OngProject.DataAccess;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
@@ -36,6 +36,7 @@ namespace OngProject.Repositories
 
         public async Task<List<T>> GetAll() => await _context.Set<T>().Where(x => !x.IsDeleted).ToListAsync();
 
+      
         public async Task<T> GetById(int Id) => await _context.Set<T>().FindAsync(Id);
 
         public async Task<bool> Insert(T entity)
@@ -93,6 +94,8 @@ namespace OngProject.Repositories
                 throw new Exception(e.Message);
             }
         }
+        
+
 
         private static IQueryable<T> ApplyQuery(QueryProperty<T> query, IQueryable<T> source)
         {

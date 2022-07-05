@@ -50,7 +50,7 @@ namespace OngProject.Core.Business
                 response.Message = ResponseMessage.UnexpectedErrors;
             }
 
-            await _emailSender.SendWelcomeEmailAsync( contactDtos.Email , "!");
+            await _emailSender.SendContactEmailAsync( contactDtos.Email , "!");
 
             return response;
         }

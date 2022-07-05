@@ -17,9 +17,30 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
 
         }
-        public Task Delete()
+        public async Task<Response<string>> Delete(int id)
         {
-            throw new NotImplementedException();
+            var response = new Response<string>();
+            var member = await _unitOfWork.MembersRepository.GetById(id);
+            if (member == null)
+            {
+                throw new Exception("Comment does not exist.");
+            }
+            if (member.IsDeleted == true || member.Id != id)
+            {
+                throw new Exception("Comment does not exist or deleted.");
+            }
+            if (member != null)
+            {
+                await _unitOfWork.MembersRepository.Delete(id);
+
+                return new Response<string>("Success", message: "Entity Deleted");
+            }
+            else
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
+                return response;
+            }
         }
 
         public async Task<Response<List<MemberDto>>> GetAll() 

@@ -10,7 +10,7 @@ namespace OngProject.Core.Interfaces
         Task<Response<bool>> Insert(List<InsertTestimonialDto> testimonialsDto);
         List<Task> GetAll();
         Task GetById(int Id);
-        Task Delete(int Id);
+        Task<Response<bool>> Delete(int Id);
         Task Update();
     }
 }

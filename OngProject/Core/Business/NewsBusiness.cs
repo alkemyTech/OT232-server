@@ -1,5 +1,6 @@
-﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using OngProject.Repositories;
@@ -32,15 +33,28 @@ namespace OngProject.Core.Business
             throw new NotImplementedException();
         }
 
-        public Task GetById(int Id)
+        public async Task<Response<NewsDto>> GetById(int Id)
         {
-            return _unitOfWork.NewsRepository.GetById(Id);
+            var response = new Response<NewsDto>(NewsMapper.ToNewsDto(await _unitOfWork.NewsRepository.GetById(Id)));
+            if (response.Data == null)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
+            }
+            return response;
         }
 
-        public Task Insert()
+        public async Task<Response<bool>> Insert(InsertNewsDto news)
         {
-            throw new NotImplementedException();
+            var resp = new Response<bool>(await _unitOfWork.NewsRepository.Insert(NewsMapper.InsertToNewsModel(news)));
+            if (!resp.Data)
+            {
+                resp.Succeeded = false;
+                resp.Message = ResponseMessage.UnexpectedErrors;
+            }
+            return resp;
         }
+
 
         public Task Update()
         {

@@ -1,4 +1,5 @@
-﻿using OngProject.Entities;
+﻿using OngProject.Core.Models;
+using OngProject.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace OngProject.Repositories.Interfaces
         Task<bool> InsertRange(List<T> entity);
         Task<List<T>> GetAll();      
         Task<T> GetById(int Id);
-        Task<T>  Delete(int Id);
+        Task<bool>  Delete(int Id);
         Task<T> Update(T entity);
         Task<List<T>> GetAsync(QueryProperty<T> query);
     }

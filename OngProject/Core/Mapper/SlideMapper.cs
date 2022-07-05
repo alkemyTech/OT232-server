@@ -26,5 +26,19 @@ namespace OngProject.Core.Mapper
            
             return listSlideDto;
         }
+
+        public static SlideDto toSlideDto(Slide slide)
+        {
+            if (slide == null)
+                return null;
+
+            var slideDto = new SlideDto
+            {
+                ImageURL = slide.ImageURL,
+                Text = slide.Text,
+                Order = slide.Order
+            };
+            return slideDto;
+        }
     }
 }

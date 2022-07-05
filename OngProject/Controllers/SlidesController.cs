@@ -16,7 +16,7 @@ namespace OngProject.Controllers
     {
         private readonly ISlidesBusiness _slideBusiness;
 
-        public SlidesController(ISlidesBusiness slideBusiness, IUnitOfWork unitOfWork)
+        public SlidesController(ISlidesBusiness slideBusiness)
         {
             _slideBusiness = slideBusiness;
         }
@@ -25,11 +25,9 @@ namespace OngProject.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> GetAll() => Ok(await _slideBusiness.GetAll());
 
-        [HttpGet("{Id})")]
-        public IActionResult GetById()
-        {
-            return NoContent();
-        }
+        [HttpGet("{Id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        public async Task<IActionResult> GetById(int Id) => Ok(await _slideBusiness.GetById(Id));
 
         [HttpPost]
         public IActionResult Insert()

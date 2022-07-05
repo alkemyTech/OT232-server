@@ -39,9 +39,19 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public Task GetById(int id)
+        public async Task<Response<SlideDto>> GetById(int id)
         {
-            throw new NotImplementedException();
+            var response = new Response<SlideDto>(SlideMapper.toSlideDto(await _unitOfWork.SlidesRepository.GetById(id)));
+
+            
+            if (response.Data == null)
+            {
+                response.Succeeded = false;
+                response.Errors = new string[] { "Error - 404" };
+                response.Message = ResponseMessage.NotFound;
+            }
+
+            return response;
         }
 
         public Task Insert()

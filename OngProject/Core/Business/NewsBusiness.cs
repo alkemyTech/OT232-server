@@ -37,9 +37,9 @@ namespace OngProject.Core.Business
             return _unitOfWork.NewsRepository.GetById(Id);
         }
 
-        public async Task<Response<bool>> Insert(NewsDto news)
+        public async Task<Response<bool>> Insert(InsertNewsDto news)
         {
-            var resp = new Response<bool>(await _unitOfWork.NewsRepository.Insert(NewsMapper.ToNewsModel(news)));
+            var resp = new Response<bool>(await _unitOfWork.NewsRepository.Insert(NewsMapper.InsertToNewsModel(news)));
             if (!resp.Data)
             {
                 resp.Succeeded = false;

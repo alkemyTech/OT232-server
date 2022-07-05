@@ -67,9 +67,7 @@ namespace OngProject.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(int id)
-        {
-            return Ok();
-        }
+        public async Task<IActionResult> Delete(int id) => Ok(await _categoryBusiness.Delete(id));
+  
     }
 }

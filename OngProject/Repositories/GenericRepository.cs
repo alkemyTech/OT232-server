@@ -21,25 +21,16 @@ namespace OngProject.Repositories
 
         public async Task<bool> Delete(int Id)
         {
-            try
-            {
-                T entity = await _context.Set<T>().FindAsync(Id);
-                if (entity == null || entity.IsDeleted == true)
-                {
-                    return false;
-                }
-                else
-                {
-                    entity.IsDeleted = true;
-                    entity.LastModified = DateTime.Now;
-                    _context.Set<T>().Update(entity);
-                    await _context.SaveChangesAsync();
-                    return true;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+            T entity = await _context.Set<T>().FindAsync(Id);
+            if(entity == null || entity.IsDeleted){
+                return false;
+            }   
+            else{
+                entity.IsDeleted = true;
+                entity.LastModified = DateTime.Now;
+                _context.Set<T>().Update(entity);
+                await _context.SaveChangesAsync();
+                return true;
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using OngProject.Core.Models.DTOs;
+﻿using OngProject.Core.Models;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,6 +14,6 @@ namespace OngProject.Core.Interfaces
         Task GetById(int Id);
         Task<bool> Insert(RegisterRequestDto dto);
         Task Update();
-        Task Delete(int Id);
+        Task<Response<bool>> Delete(int Id);
     }
 }

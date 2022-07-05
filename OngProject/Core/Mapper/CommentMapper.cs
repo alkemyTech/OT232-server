@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace OngProject.Core.Mapper
 {
-    public class CommentMapper
+    public static class CommentMapper
     {
         public static Comment ToComment(InsertCommentDto commentDto)
         {
@@ -32,5 +32,15 @@ namespace OngProject.Core.Mapper
             }
             return comments;
         }
+        public static CommentDto CommentDto(this Comment entity)
+        {
+            return new CommentDto
+            {
+                Body = entity.Body,
+                News = entity.News.Name,
+                User = entity.UserId
+            };
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,5 +15,7 @@ namespace OngProject.Core.Interfaces
         Task<Response<NewsDto>> GetById(int Id); 
         Task<News> Delete(int Id);
         Task Update();
+
+        Task<List<CommentDto>> GetComments(int newsId);
     }
 }

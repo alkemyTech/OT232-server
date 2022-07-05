@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using System;
@@ -60,6 +61,21 @@ namespace OngProject.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex);
+            }
+        }
+        [HttpGet("{id}/[Action]")]
+        public async Task<Response<List<CommentDto>>> Comments(int id)
+        {
+            try
+            {
+                var entity = await _newsBusiness.GetComments(id);
+                if (entity == null)
+                    return new Response<List<CommentDto>>(entity, false, null, ResponseMessage.NotFound);
+                return new Response<List<CommentDto>>(entity, true, null, ResponseMessage.Success);
+            }
+            catch (Exception ex)
+            {
+                return new Response<List<CommentDto>>(null, false, null, ResponseMessage.UnexpectedErrors);
             }
         }
     }

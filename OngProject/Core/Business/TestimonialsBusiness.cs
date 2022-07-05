@@ -20,9 +20,16 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
         }
 
-        public Task Delete(int Id)
+        public async Task<Response<bool>> Delete(int Id)
         {
-            throw new NotImplementedException();
+            var response = new Response<bool>(await _unitOfWork.TestimonialsRepository.Delete(Id));
+            if (!response.Data)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.Error;
+
+            }
+            return response;
         }
 
         public List<Task> GetAll()

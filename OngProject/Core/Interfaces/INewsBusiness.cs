@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 
 namespace OngProject.Core.Interfaces
@@ -13,5 +14,7 @@ namespace OngProject.Core.Interfaces
         Task GetById(int Id);
         Task<News> Delete(int Id);
         Task Update();
+
+        Task<List<CommentDto>> GetComments(int newsId);
     }
 }

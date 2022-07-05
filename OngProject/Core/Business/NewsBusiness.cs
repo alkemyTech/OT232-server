@@ -1,5 +1,8 @@
 ﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Mapper;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
+using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -43,5 +46,19 @@ namespace OngProject.Core.Business
         {
             throw new NotImplementedException();
         }
+        public async Task<List<CommentDto>> GetComments(int newsId)
+        {
+            var news = await _unitOfWork.NewsRepository.GetById(newsId);
+            if (news == null)
+            {
+                return null;
+            }               
+            var query = new QueryProperty<Comment>();
+            query.Where = x => x.NewsID == newsId;
+            var comments = await _unitOfWork.CommentsRepository.GetAsync(query);
+
+            return comments.Select(x => x.CommentDto()).ToList();
+        }
+
     }
 }

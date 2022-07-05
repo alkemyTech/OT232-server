@@ -27,11 +27,9 @@ namespace OngProject.Controllers
             return Ok();
         }
 
-        [HttpGet("{Id})")]
-        public IActionResult GetById(int Id)
-        {
-            return Ok();
-        }
+        [HttpGet("{Id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        public async Task<IActionResult> GetById(int Id) => Ok(await _newsBusiness.GetById(Id));
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]

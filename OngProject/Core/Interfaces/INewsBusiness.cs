@@ -12,7 +12,7 @@ namespace OngProject.Core.Interfaces
     {
         Task<Response<bool>> Insert(InsertNewsDto news);
         List<Task> GetAll();
-        Task GetById(int Id);
+        Task<Response<NewsDto>> GetById(int Id); 
         Task<News> Delete(int Id);
         Task Update();
     }

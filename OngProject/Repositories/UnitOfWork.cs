@@ -78,7 +78,7 @@ namespace OngProject.Repositories
             }
         }
 
-        public IGenericRepository<Comment> CommentRepository
+        public IGenericRepository<Comment> CommentsRepository
         {
             get
             {

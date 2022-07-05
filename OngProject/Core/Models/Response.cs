@@ -24,6 +24,7 @@
         public const string Success = "Success";
         public const string Error = "Error";
         public const string NotFound = "Record not found";
+        public const string NotFoundOrDeleted = "Entity not found or deleted";
         public const string ValidationErrors = "Validations errors found";
         public const string UnexpectedErrors = "An unexpected error occurred, try again later";
     }

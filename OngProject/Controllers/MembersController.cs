@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -40,10 +42,29 @@ namespace OngProject.Controllers
             return NoContent();
         }
 
-        [HttpDelete]
-        public IActionResult Delete(Member entity)
+        [HttpDelete("{Id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
+        public async Task<IActionResult> Delete(int Id)
         {
-            return NoContent();
+            try
+            {
+                var result = await _membersBusiness.Delete(Id);
+                if (result.Succeeded == false)
+                {
+                    return StatusCode(403, result);
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                var response = new Response<string>()
+                {
+                    Data = "Error - 404",
+                    Message = ex.Message,
+                    Succeeded = false
+                };
+                return StatusCode(404, response);
+            }
         }
     }
 }

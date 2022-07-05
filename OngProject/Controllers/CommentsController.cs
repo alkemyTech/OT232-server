@@ -43,6 +43,7 @@ namespace OngProject.Controllers
         }
 
         [HttpDelete("{Id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int Id)
         {
             try

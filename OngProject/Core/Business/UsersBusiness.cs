@@ -23,21 +23,14 @@ namespace OngProject.Core.Business
 
         public async Task<Response<bool>> Delete(int Id)
         {
-            try
+            var response = new Response<bool>(await _unitOfWork.UsersRepository.Delete(Id));
+            response.Message = ResponseMessage.Success;
+            if(!response.Data)
             {
-                var response = new Response<bool>(await _unitOfWork.UsersRepository.Delete(Id));
-                response.Message = ResponseMessage.Success;
-                return response;
-
+                response.Message = ResponseMessage.NotFoundOrDeleted;
+                response.Succeeded = false;
             }
-            catch (Exception ex)
-            {
-                var response = new Response<bool>(false,false);
-                response.Message = ex.Message;
-                return response;
-
-            }
-
+            return response;
         }
 
         public async Task<List<User>> GetAsync(LoginUserDto userDto)

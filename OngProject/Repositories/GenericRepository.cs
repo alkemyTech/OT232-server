@@ -26,7 +26,7 @@ namespace OngProject.Repositories
                 T entity = await _context.Set<T>().FindAsync(Id);
                 if (entity == null || entity.IsDeleted == true)
                 {
-                    throw new Exception("Entity not found or already deleted.");
+                    return false;
                 }
                 else
                 {

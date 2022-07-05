@@ -1,4 +1,7 @@
 ﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Mapper;
+using OngProject.Core.Models;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System.Collections.Generic;
@@ -9,10 +12,11 @@ namespace OngProject.Core.Business
     public class ContactsBusiness : IContactsBusiness
     {
         public readonly IUnitOfWork _unitOfWork;
-
-        public ContactsBusiness(IUnitOfWork unitOfWork)
+        private readonly IEmailSender _emailSender;
+        public ContactsBusiness(IUnitOfWork unitOfWork, IEmailSender emailSender)
         {
             _unitOfWork = unitOfWork;
+            _emailSender = emailSender;
         }
 
         public Task Delete(int Id)
@@ -36,9 +40,19 @@ namespace OngProject.Core.Business
             throw new System.NotImplementedException();
         }
 
-        public Task Insert()
+        public async Task<Response<bool>> Insert(InsertContactDto contactDtos)
         {
-            throw new System.NotImplementedException();
+            var response = new Response<bool>(await _unitOfWork.ContactsRepository.Insert(ContactMapper.ToContact(contactDtos)));
+
+            if (!response.Data)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
+            }
+
+            await _emailSender.SendContactEmailAsync( contactDtos.Email , "!");
+
+            return response;
         }
 
         public Task<Contact> Update()

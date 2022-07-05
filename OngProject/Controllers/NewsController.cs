@@ -27,16 +27,13 @@ namespace OngProject.Controllers
             return Ok();
         }
 
-        [HttpGet("{Id})")]
+        [HttpGet("{Id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> GetById(int Id) => Ok(await _newsBusiness.GetById(Id));
 
-
         [HttpPost]
-        public async Task<IActionResult> Insert(NewsDto dto)
-        {
-            return Ok();
-        } 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        public async Task<IActionResult> Insert(InsertNewsDto dto) => Ok(await _newsBusiness.Insert(dto));
 
         [HttpPut]
         public IActionResult Update()

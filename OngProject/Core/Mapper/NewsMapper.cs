@@ -26,5 +26,16 @@ namespace OngProject.Core.Mapper
             };
             return model;
         }
+        public static News InsertToNewsModel(InsertNewsDto dto)
+        {
+            var model = new News
+            {
+                Description = dto.Description,
+                Image = dto.Image,
+                Name = dto.Name,
+                CategoryId = dto.CategoryId
+            };
+            return model;
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace OngProject.Core.Interfaces
 {
     public interface INewsBusiness
     {
-        Task<Response<bool>> Insert(NewsDto dto);
+        Task<Response<bool>> Insert(InsertNewsDto news);
         List<Task> GetAll();
         Task<Response<NewsDto>> GetById(int Id); 
         Task<News> Delete(int Id);

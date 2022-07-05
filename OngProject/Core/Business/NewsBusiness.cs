@@ -43,10 +43,17 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public async Task<Response<bool>> Insert(NewsDto news)
+        public async Task<Response<bool>> Insert(InsertNewsDto news)
         {
-            throw new NotImplementedException();
+            var resp = new Response<bool>(await _unitOfWork.NewsRepository.Insert(NewsMapper.InsertToNewsModel(news)));
+            if (!resp.Data)
+            {
+                resp.Succeeded = false;
+                resp.Message = ResponseMessage.UnexpectedErrors;
+            }
+            return resp;
         }
+
 
         public Task Update()
         {

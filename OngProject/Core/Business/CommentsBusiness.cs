@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Http;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
@@ -40,7 +41,7 @@ namespace OngProject.Core.Business
 
                 var role = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
                 var user = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst(x => x.Type == "Id").Value);
-                if (role == "Administrator" || user == comments.UserId)
+                if (role == "Administrador" || user == comments.UserId)
                 {
                     await _unitOfWork.CommentsRepository.Delete(id);
                     

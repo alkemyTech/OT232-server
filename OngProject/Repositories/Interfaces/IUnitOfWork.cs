@@ -4,6 +4,7 @@ namespace OngProject.Repositories.Interfaces
     public interface IUnitOfWork
     {
         IGenericRepository<User> UsersRepository { get; }
+        IGenericRepository<Comment> CommentsRepository { get; }
         IGenericRepository<Category> CategoriesRepository { get; }
         IGenericRepository<News> NewsRepository { get; }
         IGenericRepository<Activity> ActivitiesRepository { get; }

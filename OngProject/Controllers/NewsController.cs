@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
@@ -26,13 +28,17 @@ namespace OngProject.Controllers
         }
 
         [HttpGet("{Id})")]
-        public IActionResult GetById(int Id)
-        {
-            return Ok();
-        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        public async Task<IActionResult> GetById(int Id) => Ok(await _newsBusiness.GetById(Id));
+
 
         [HttpPost]
+
         public async Task<IActionResult> Insert(NewsDto dto) => Ok(await _newsBusiness.Insert(dto));
+        {
+            return Ok();
+        } 
+
 
         [HttpPut]
         public IActionResult Update()

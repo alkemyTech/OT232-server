@@ -43,7 +43,7 @@ namespace OngProject
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
             services.AddScoped<ITestimonialsBusiness, TestimonialsBusiness>();
-
+            services.AddHttpContextAccessor();
             services.AddAWSService<IAmazonS3>();
             services.AddScoped<IEmailSender, EmailSender>();
 

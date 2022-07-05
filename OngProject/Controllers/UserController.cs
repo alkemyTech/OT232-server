@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,9 +54,10 @@ namespace OngProject.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(int id)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        public async Task<Response<bool>> Delete(int id)
         {
-            return Ok();
+            return await _userBusiness.Delete(id);
         }
     }
 }

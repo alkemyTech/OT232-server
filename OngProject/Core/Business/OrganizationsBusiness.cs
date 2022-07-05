@@ -28,7 +28,7 @@ namespace OngProject.Core.Business
             var result = await _unitOfWork.OrganizationsRepository.GetAll();
 
             foreach (var o in result)
-                dtos.Add(new OrganizationDto{ Name = o.Name, Address = o.Address, Image = o.Image, Phone = o.Phone });
+                dtos.Add(new OrganizationDto{ Name = o.Name, Address = o.Address, Image = o.Image, Phone = o.Phone, WelcomeText = o.WelcomeText, AboutUsText = o.AboutUsText, LinkedinUrl = o.LinkedinUrl, FacebookUrl = o.FacebookUrl, InstagramUrl = o.InstagramUrl });
 
             return dtos;
         }

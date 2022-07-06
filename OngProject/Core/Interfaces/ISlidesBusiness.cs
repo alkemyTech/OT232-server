@@ -14,10 +14,10 @@ namespace OngProject.Core.Interfaces
 
         Task<Response<SlideDto>> GetById(int id);
 
-        public Task Insert();
+        Task Insert();
 
         Task Update();
 
-        Task Delete();
+        Task<Response<bool>> Delete(int Id);
     }
 }

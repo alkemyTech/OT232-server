@@ -1,5 +1,5 @@
-﻿using OngProject.Core.Models.DTOs;
-using OngProject.Entities;
+﻿using OngProject.Core.Models;
+using OngProject.Core.Models.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,10 +7,16 @@ namespace OngProject.Core.Interfaces
 {
     public interface IActivitiesBusiness
     {
-        Task Insert();
-        List<Task> GetAll();
-        Task<Activity> GetById(int Id);
-        Task Delete(int Id);
-        Task<Activity> Update(Activity model, UpdateActivityDto activity); 
+
+        Task<Response<List<ActivitiesDto>>> GetAll();
+
+        Task GetById(int id);
+
+        Task<Response<bool>> Insert(List<InsertActivityDto> activitiesDtos);
+
+        Task Update();
+
+        Task<Response<string>> Delete(int id);
+
     }
 }

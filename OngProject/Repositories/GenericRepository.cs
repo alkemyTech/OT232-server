@@ -82,12 +82,12 @@ namespace OngProject.Repositories
             }
 
         }
-        public Task<List<T>> GetAsync(QueryProperty<T> query)
+        public async Task<List<T>> GetAsync(QueryProperty<T> query)
         {
             try
             {
                 var source = ApplyQuery(query, _context.Set<T>().AsQueryable());
-                return source.ToListAsync();
+                return await source.ToListAsync();
             }
             catch (Exception e) 
             {

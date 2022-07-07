@@ -6,6 +6,7 @@ using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.DataAccess;
 using OngProject.Entities;
+using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -58,9 +59,20 @@ namespace OngProject.Core.Business
                
         }
 
-        public Task GetAll()
+        public async Task<Response<List<GetCommentDto>>> GetAll()
         {
-            throw new NotImplementedException();
+            var query = new QueryProperty<Comment>();
+            query.OrderBy = x => x.LastModified;
+            var response = new Response<List<GetCommentDto>>(CommentMapper.
+                               ToOrderedDtoList(await _unitOfWork.CommentsRepository.
+                               GetAsync(query)));
+            if(response.Data is null)
+            {
+                response.Message = ResponseMessage.Error;
+                response.Succeeded = false;
+                response.Errors = new string[] { "Error - 500" };
+            }
+            return response;
         }
 
         public Task GetById(int id)

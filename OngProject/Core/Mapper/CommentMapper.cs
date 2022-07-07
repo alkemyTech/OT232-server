@@ -42,5 +42,18 @@ namespace OngProject.Core.Mapper
             };
         }
 
+        public static List<GetCommentDto> ToOrderedDtoList(List<Comment> commentList)
+        {
+            List<GetCommentDto> commentDtoList = new();
+            foreach(var c in commentList)
+            {
+                commentDtoList.Add(new GetCommentDto
+                {
+                    Body = c.Body,
+                });
+            }
+            return commentDtoList;
+        }
+
     }
 }

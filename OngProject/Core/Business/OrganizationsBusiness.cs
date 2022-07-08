@@ -1,4 +1,6 @@
 using OngProject.Core.Interfaces;
+using OngProject.Core.Mapper;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
@@ -38,14 +40,21 @@ namespace OngProject.Core.Business
             throw new NotImplementedException();
         }
 
-        public Task Insert()
+        public async Task<Response<bool>> Insert(InsertOrganizationDto organization)
         {
-            throw new NotImplementedException();
+            var resp = new Response<bool>(await _unitOfWork.OrganizationsRepository.Insert(OrganizationMapper.InsertToModel(organization)));
+            if (!resp.Data)
+            {
+                resp.Succeeded = false;
+                resp.Message = ResponseMessage.UnexpectedErrors;
+            }
+            return resp;
         }
 
         public Task Update()
         {
             throw new NotImplementedException();
         }
+
     }
 }

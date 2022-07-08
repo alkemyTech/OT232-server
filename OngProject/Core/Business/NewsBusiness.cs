@@ -25,7 +25,7 @@ namespace OngProject.Core.Business
         {
             var model = await _unitOfWork.NewsRepository.Delete(id);
 
-            return model;
+            return null;
         }
 
         public List<Task> GetAll()

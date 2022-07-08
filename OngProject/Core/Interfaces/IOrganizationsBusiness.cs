@@ -1,3 +1,4 @@
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using System;
@@ -11,14 +12,9 @@ namespace OngProject.Core.Interfaces
     {
 
         public Task<List<OrganizationDto>> GetAll();
-
         public Task<Organization> GetById(int id);
-
-        public Task Insert();
-
+        Task<Response<bool>> Insert(InsertOrganizationDto organization);
         public Task Update();
-
         public Task Delete();
-
     }
 }

@@ -39,9 +39,24 @@ namespace OngProject.Core.Business
 
         public async Task<bool> Insert(CategoryRequestDto dto) => await _unitOfWork.CategoriesRepository.Insert(CategoryMapper.ToCategory(dto));
 
-        public Task Update()
+        public async Task<Response<bool>> Update(UpdateCategoryDto category, int Id)
         {
-            throw new System.NotImplementedException();
+            var response = new Response<bool>();
+
+            var find = await _unitOfWork.CategoriesRepository.GetById(Id);
+            
+            if (find != null)
+            {
+                response.Data = await _unitOfWork.CategoriesRepository.Update(CategoryMapper.UpdateToCategory(category));
+
+                return response;
+                
+            }
+
+            response.Message = ResponseMessage.NotFoundOrDeleted;
+            response.Succeeded = false;
+
+            return response;
         }
     }
 }

@@ -37,7 +37,13 @@ namespace OngProject.Repositories
         public async Task<List<T>> GetAll() => await _context.Set<T>().Where(x => !x.IsDeleted).ToListAsync();
 
       
-        public async Task<T> GetById(int Id) => await _context.Set<T>().FindAsync(Id);
+        public async Task<T> GetById(int Id)
+        {
+            var model = await (from t in _context.Set<T>()
+                               where t.Id == Id && !t.IsDeleted
+                               select t).FirstOrDefaultAsync();
+            return model;
+        }
 
         public async Task<bool> Insert(T entity)
         {
@@ -67,18 +73,18 @@ namespace OngProject.Repositories
             }
         }
 
-        public async Task<T> Update(T entity)
+        public async Task<bool> Update(T entity)
         {
-            var model = await _context.Set<T>().FindAsync(entity);
-            if (model == null || model.IsDeleted == true)
+
+            if (entity == null)
             {
-                return null;
+                return false;
             }
             else
             {
-                _context.Entry(model).CurrentValues.SetValues(entity);
+                _context.Set<T>().Update(entity);
                 await _context.SaveChangesAsync();
-                return entity;
+                return true;
             }
 
         }

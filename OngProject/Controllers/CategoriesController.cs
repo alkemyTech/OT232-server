@@ -61,10 +61,8 @@ namespace OngProject.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update()
-        {
-            return Ok();
-        }
+        [Route("{Id}")]
+        public async Task<IActionResult> Update(UpdateCategoryDto category, int Id) => Ok(await _categoryBusiness.Update(category, Id));
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id) => Ok(await _categoryBusiness.Delete(id));

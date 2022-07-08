@@ -12,6 +12,6 @@ namespace OngProject.Core.Interfaces
         Task<List<CategoryRequestDto>> GetAll();
         Task<Category> GetById(int Id);
         Task<Response<bool>> Delete(int Id);
-        Task Update();
+        Task<Response<bool>> Update(UpdateCategoryDto category, int Id);
     }
 }

@@ -20,5 +20,6 @@ namespace OngProject.Core.Interfaces
 
         public Task Delete();
 
+        Task<List<SlideOrganizationDto>> GetSlides(int Id);
     }
 }

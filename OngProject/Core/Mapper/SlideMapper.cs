@@ -40,5 +40,16 @@ namespace OngProject.Core.Mapper
             };
             return slideDto;
         }
+
+        public static SlideOrganizationDto SlideDto(this Slide entity)
+        {
+            return new SlideOrganizationDto
+            {
+                ImageURL = entity.ImageURL,
+                Order = entity.Order,
+                Text = entity.Text
+                
+            };
+        }
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
@@ -21,16 +22,34 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<News> Delete(int id)
+        public async Task<Response<bool>> Delete(int Id)
         {
-            var model = await _unitOfWork.NewsRepository.Delete(id);
-
-            return model;
+            var response = new Response<bool>(await _unitOfWork.NewsRepository.Delete(Id));
+            if (!response.Data)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.NotFoundOrDeleted;
+            }
+            return response;
         }
 
-        public List<Task> GetAll()
+        public async Task<Response<List<NewsDto>>> GetAll(int Page = 1)
         {
-            throw new NotImplementedException();
+            //var paged = new PagedList<NewsDto>();
+            //var paged = new PagedList<NewsDto>( NewsMapper.ToNewsDtoList(await _unitOfWork.NewsRepository.GetAll()), 10, Page, 10);
+            //var response = new Response<PagedList<NewsDto>>(paged.Create(NewsMapper.ToNewsDtoList(await _unitOfWork.NewsRepository.GetAll()).AsQueryable(), Page, ItemsPerPage));
+
+            var query = new QueryProperty<News>(Page, 10);
+            var response = new Response<List<NewsDto>>(NewsMapper.ToNewsDtoList(await _unitOfWork.NewsRepository.GetAsync(query)));
+
+            if (response.Data == null)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.NotFound;
+                response.Errors = new string[] { "404" };
+            }
+
+            return response;
         }
 
         public async Task<Response<NewsDto>> GetById(int Id)
@@ -60,6 +79,7 @@ namespace OngProject.Core.Business
         {
             throw new NotImplementedException();
         }
+
         public async Task<List<CommentDto>> GetComments(int newsId)
         {
             var news = await _unitOfWork.NewsRepository.GetById(newsId);

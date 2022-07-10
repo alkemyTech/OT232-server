@@ -33,10 +33,11 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public async Task<Response<List<NewsDto>>> GetAll(int Page = 1)
+        public async Task<Response<PagedData<List<NewsDto>>>> GetAll(int Page = 1)
         {
             var query = new QueryProperty<News>(Page, 10);
-            var response = new Response<List<NewsDto>>(NewsMapper.ToNewsDtoList(await _unitOfWork.NewsRepository.GetAsync(query)));
+            var paged = new PagedData<List<NewsDto>>(NewsMapper.ToNewsDtoList(await _unitOfWork.NewsRepository.GetAsync(query)), await CountElements(), Page, 10);
+            var response = new Response<PagedData<List<NewsDto>>>(paged);
 
             if (response.Data == null)
             {
@@ -90,5 +91,6 @@ namespace OngProject.Core.Business
             return comments.Select(x => x.CommentDto()).ToList();
         }
 
+        public async Task<int> CountElements() => await _unitOfWork.NewsRepository.CountElements();
     }
 }

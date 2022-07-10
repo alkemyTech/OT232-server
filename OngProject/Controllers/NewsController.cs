@@ -8,6 +8,7 @@ using OngProject.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
@@ -58,5 +59,11 @@ namespace OngProject.Controllers
                 return new Response<List<CommentDto>>(null, false, null, ResponseMessage.UnexpectedErrors);
             }
         }
+
+        /*private async Task AddPagination(int Page, int PageSize)
+        {
+            var pagination = new PaginationMetadata(await _newsBusiness.CountElements(), Page, PageSize);
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagination));
+        }*/
     }
 }

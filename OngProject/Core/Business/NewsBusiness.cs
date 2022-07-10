@@ -35,10 +35,6 @@ namespace OngProject.Core.Business
 
         public async Task<Response<List<NewsDto>>> GetAll(int Page = 1)
         {
-            //var paged = new PagedList<NewsDto>();
-            //var paged = new PagedList<NewsDto>( NewsMapper.ToNewsDtoList(await _unitOfWork.NewsRepository.GetAll()), 10, Page, 10);
-            //var response = new Response<PagedList<NewsDto>>(paged.Create(NewsMapper.ToNewsDtoList(await _unitOfWork.NewsRepository.GetAll()).AsQueryable(), Page, ItemsPerPage));
-
             var query = new QueryProperty<News>(Page, 10);
             var response = new Response<List<NewsDto>>(NewsMapper.ToNewsDtoList(await _unitOfWork.NewsRepository.GetAsync(query)));
 

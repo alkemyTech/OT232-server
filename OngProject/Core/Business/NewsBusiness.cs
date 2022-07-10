@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
@@ -21,16 +22,31 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<News> Delete(int id)
+        public async Task<Response<bool>> Delete(int Id)
         {
-            var model = await _unitOfWork.NewsRepository.Delete(id);
-
-            return model;
+            var response = new Response<bool>(await _unitOfWork.NewsRepository.Delete(Id));
+            if (!response.Data)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.NotFoundOrDeleted;
+            }
+            return response;
         }
 
-        public List<Task> GetAll()
+        public async Task<Response<PagedData<List<NewsDto>>>> GetAll(int Page = 1)
         {
-            throw new NotImplementedException();
+            var query = new QueryProperty<News>(Page, 10);
+            var paged = new PagedData<List<NewsDto>>(NewsMapper.ToNewsDtoList(await _unitOfWork.NewsRepository.GetAsync(query)), await CountElements(), Page, 10);
+            var response = new Response<PagedData<List<NewsDto>>>(paged);
+
+            if (response.Data == null)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.NotFound;
+                response.Errors = new string[] { "404" };
+            }
+
+            return response;
         }
 
         public async Task<Response<NewsDto>> GetById(int Id)
@@ -60,6 +76,7 @@ namespace OngProject.Core.Business
         {
             throw new NotImplementedException();
         }
+
         public async Task<List<CommentDto>> GetComments(int newsId)
         {
             var news = await _unitOfWork.NewsRepository.GetById(newsId);
@@ -74,5 +91,6 @@ namespace OngProject.Core.Business
             return comments.Select(x => x.CommentDto()).ToList();
         }
 
+        public async Task<int> CountElements() => await _unitOfWork.NewsRepository.CountElements();
     }
 }

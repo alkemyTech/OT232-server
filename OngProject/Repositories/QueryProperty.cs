@@ -1,10 +1,11 @@
-﻿using System;
+﻿using OngProject.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace OngProject.Repositories
 {
-    public class QueryProperty<T> where T : Entities.BaseEntity
+    public class QueryProperty<T> where T : BaseEntity
     {
         public QueryProperty()
         {

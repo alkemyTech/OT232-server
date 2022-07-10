@@ -8,6 +8,7 @@ using OngProject.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
@@ -23,10 +24,8 @@ namespace OngProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
-        {
-            return Ok();
-        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
+        public async Task<IActionResult> GetAll(int Page = 1) => Ok(await _newsBusiness.GetAll(Page));
 
         [HttpGet("{Id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
@@ -42,27 +41,9 @@ namespace OngProject.Controllers
             return Created("", null);
         }
 
-        [HttpDelete]      
-        public async Task<IActionResult> Delete(int id)
-        {
-            try
-            {   
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int Id) => Ok(await _newsBusiness.Delete(Id));
 
-                var model = await _newsBusiness.Delete(id);
-                if (model == null)
-                {
-                    return NotFound("no se encuentra el registro");
-                }else
-                { 
-                return Ok("se borro el registro correctamente");
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
         [HttpGet("{id}/[Action]")]
         public async Task<Response<List<CommentDto>>> Comments(int id)
         {

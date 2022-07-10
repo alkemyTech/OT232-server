@@ -47,7 +47,8 @@ namespace OngProject.Core.Mapper
             {
                 ImageURL = entity.ImageURL,
                 Order = entity.Order,
-                Text = entity.Text
+                Text = entity.Text,
+                Organization = entity.Organization
                 
             };
         }

@@ -1,4 +1,4 @@
-﻿using OngProject.Core.Models.DTOs;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using System.Collections.Generic;
 
@@ -6,40 +6,46 @@ namespace OngProject.Core.Mapper
 {
     public class ContactMapper
     {
-
-        public static Contact ToContact(InsertContactDto contactDto)
-        {
-            Contact contact = new()
-            {
-                Name = contactDto.Name,
-                Email = contactDto.Email,
-                Phone = contactDto.Phone,
-                Message = contactDto.Message
-            };
-
-            return contact;
-        }
-
-
         public static List<Contact> ToContactList(List<InsertContactDto> contactDtos)
         {
-            List<Contact> contacts = new();
+            List<Contact> contact = new();
 
-            foreach (var c in contactDtos)
+            foreach (var m in contactDtos)
             {
-                contacts.Add
+                contact.Add
                 (
                     new Contact
                     {
-                        Name = c.Name,
-                        Email = c.Email,
-                        Phone = c.Phone,
-                        Message = c.Message
+                        Name = m.Name,
+                        Email = m.Email,
+                        Phone = m.Phone,
+                        Message = m.Message
                     }
                 );
             }
 
-            return contacts;
+            return contact;
+        }
+
+        public static List<ContactsDto> ToContactsDtoList(List<Contact> contacts)
+        {
+            List<ContactsDto> contactDtos = new();
+
+            foreach (var m in contacts)
+            {
+                contactDtos.Add
+                (
+                    new ContactsDto
+                    {
+                        Name = m.Name,
+                        Email = m.Email,
+                        Phone = m.Phone,
+                        Message = m.Message
+                    }
+                );
+            }
+
+            return contactDtos;
         }
     }
 }

@@ -24,6 +24,11 @@ namespace OngProject.Core.Business
 
         public async Task<Response<bool>> Delete(int Id)
         {
+
+            var model = await _unitOfWork.NewsRepository.Delete(id);
+
+            return null;
+
             var response = new Response<bool>(await _unitOfWork.NewsRepository.Delete(Id));
             if (!response.Data)
             {

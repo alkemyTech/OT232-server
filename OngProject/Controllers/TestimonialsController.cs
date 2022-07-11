@@ -34,14 +34,8 @@ namespace OngProject.Controllers
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
-        public async Task<IActionResult> Insert(List<InsertTestimonialDto> testimonialsDtos) 
-        {
-            if (!await _testimonialsBusiness.Insert(testimonialsDtos))
-                return NotFound();
+        public async Task<IActionResult> Insert(List<InsertTestimonialDto> testimonialsDtos) => Ok(await _testimonialsBusiness.Insert(testimonialsDtos));
 
-            return Ok("El testimonio ha sido creado");
-        }
-        
         [HttpPut]
         public IActionResult Update()
         {
@@ -49,9 +43,7 @@ namespace OngProject.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete()
-        {
-            return Ok();
-        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        public async Task<IActionResult> Delete(int id) => Ok(await _testimonialsBusiness.Delete(id));
     }
 }

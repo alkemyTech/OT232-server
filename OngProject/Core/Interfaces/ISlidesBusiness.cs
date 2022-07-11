@@ -1,19 +1,23 @@
 ﻿using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OngProject.Core.Interfaces
 {
-    public interface IUsersBusiness
+    public interface ISlidesBusiness
     {
+        Task<Response<List<SlideDto>>> GetAll();
 
-        Task<List<User>> GetAsync(LoginUserDto userDto);
-        Task<List<UserDto>> GetAll();
-        Task GetById(int Id);
-        Task<bool> Insert(RegisterRequestDto dto);
+        Task<Response<SlideDto>> GetById(int id);
+
+        Task Insert();
+
         Task Update();
+
         Task<Response<bool>> Delete(int Id);
     }
 }

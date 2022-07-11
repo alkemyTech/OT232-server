@@ -1,54 +1,55 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OngProject.Core.Business;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
-using OngProject.Entities;
-using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ContactsController : Controller
+    public class CommentsController : Controller
     {
-        private readonly IContactsBusiness _contactsBusiness;
-        public ContactsController(IContactsBusiness contactsBusiness, IUnitOfWork unitOfWork)
+        private readonly ICommentsBusiness _commentsBusiness;
+        public CommentsController(ICommentsBusiness commentsBusiness)
         {
-            _contactsBusiness = contactsBusiness;
+            _commentsBusiness = commentsBusiness;
         }
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
-        public async Task<IActionResult> GetAll() => Ok(await _contactsBusiness.GetAll());
+
+        public async Task<IActionResult> GetAll() => Ok(await _commentsBusiness.GetAll());
+
 
         [HttpGet("{Id})")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(int Id)
         {
             return NoContent();
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
-        public async Task<IActionResult> Insert(List<InsertContactDto> contact) => Ok(await _contactsBusiness.Insert(contact));
+        public async Task<IActionResult> Insert(List<InsertCommentDto> commentDtos) => Ok(await _commentsBusiness.Insert(commentDtos));
 
         [HttpPut]
-        public IActionResult Update(Contact entity)
+        public IActionResult Update()
         {
             return NoContent();
         }
 
         [HttpDelete("{Id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
+        [Authorize]
         public async Task<IActionResult> Delete(int Id)
         {
             try
             {
-                var result = await _contactsBusiness.Delete(Id);
+                var result = await _commentsBusiness.Delete(Id);
                 if (result.Succeeded == false)
                 {
                     return StatusCode(403, result);

@@ -16,6 +16,11 @@ using Microsoft.IdentityModel.Tokens;
 using Amazon.S3;
 using OngProject.Core.Helper;
 
+using System.Collections.Generic;
+
+using Microsoft.AspNetCore.Http;
+
+
 namespace OngProject
 {
     public class Startup
@@ -36,17 +41,43 @@ namespace OngProject
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OngProject", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Introduzca 'Bearer' [space] y después un token válido.",
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                          new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[] {}
+                    }
+                });
             });
+        
 
             //declaro un servicio para hacerlo funcionar en todo el proyecto
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IActivitiesBusiness, ActivitiesBusiness>();
             services.AddScoped<ITestimonialsBusiness, TestimonialsBusiness>();
-
+            services.AddHttpContextAccessor();
             services.AddAWSService<IAmazonS3>();
             services.AddScoped<IEmailSender, EmailSender>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            services.AddScoped<ICommentsBusiness, CommentsBusiness>();
             services.AddScoped<IMembersBusiness, MembersBusiness>();
             services.AddScoped<INewsBusiness, NewsBusiness>();
             services.AddScoped<ICategoriesBusiness, CategoriesBusiness>();
@@ -54,6 +85,7 @@ namespace OngProject
             services.AddScoped<IUsersBusiness, UsersBusiness>();
             services.AddScoped<IAuthenticationBusiness, AuthenticationBusiness>();
             services.AddScoped<IContactsBusiness, ContactsBusiness>();
+            services.AddScoped<ISlidesBusiness, SlidesBusiness>();
 
             //JWT
             services.AddAuthentication(options =>
@@ -95,7 +127,7 @@ namespace OngProject
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+           
             app.UseAuthorization();
             app.UseAuthentication();
 
@@ -103,6 +135,7 @@ namespace OngProject
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

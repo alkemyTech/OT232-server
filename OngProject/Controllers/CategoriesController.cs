@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models.DTOs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
@@ -22,15 +21,13 @@ namespace OngProject.Controllers
         }
 
         [HttpGet]
-            public IActionResult GetAll()
-            {
-                return Ok();
-            }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        public async Task<IActionResult> GetName() => Ok(await _categoryBusiness.GetAll());
 
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetById(int id)
-            {
+        {
             try
             {
                 //IQueryable<CategorySearchIdDto> cat = _categoryBusiness.GetById(id);
@@ -53,22 +50,22 @@ namespace OngProject.Controllers
             }
         }
 
-            [HttpPost]
-            public IActionResult Insert()
-            {
-                return Ok();
-            }
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        public async Task<IActionResult> Categories(CategoryRequestDto request)
+        {
+            if (!await _categoryBusiness.Insert(request))
+                return NotFound();
 
-            [HttpPut]
-            public IActionResult Update()
-            {
-                return Ok();
-            }
+            return Ok("Categoria Añadida Correctamente");
+        }
 
-            [HttpDelete]
-            public IActionResult Delete(int id)
-            {
-                return Ok();
-            }
+        [HttpPut]
+        [Route("{Id}")]
+        public async Task<IActionResult> Update(UpdateCategoryDto category, int Id) => Ok(await _categoryBusiness.Update(category, Id));
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id) => Ok(await _categoryBusiness.Delete(id));
+  
     }
 }

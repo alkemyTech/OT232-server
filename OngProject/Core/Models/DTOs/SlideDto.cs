@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace OngProject.Core.Models.DTOs
 {
-    public class UserPasswordDto
+    public class SlideDto
     {
-        public string User { get; set; } = string.Empty;
-        public string PasswordEncrypted { get; set; }
+        public string ImageURL { get; set; }
+        public string Text { get; set; }
+        public int Order { get; set; }
     }
 }

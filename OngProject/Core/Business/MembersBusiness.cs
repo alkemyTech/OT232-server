@@ -1,5 +1,6 @@
 ﻿using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Repositories.Interfaces;
 using System;
@@ -16,21 +17,61 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
 
         }
-        public Task Delete()
+        public async Task<Response<string>> Delete(int id)
         {
-            throw new NotImplementedException();
+            var response = new Response<string>();
+            var member = await _unitOfWork.MembersRepository.GetById(id);
+            if (member == null)
+            {
+                throw new Exception("Comment does not exist.");
+            }
+            if (member.IsDeleted == true || member.Id != id)
+            {
+                throw new Exception("Comment does not exist or deleted.");
+            }
+            if (member != null)
+            {
+                await _unitOfWork.MembersRepository.Delete(id);
+
+                return new Response<string>("Success", message: "Entity Deleted");
+            }
+            else
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
+                return response;
+            }
         }
 
-        public async Task<List<MemberDto>> GetAll() => MemberMapper.ToMembersDtoList(await _unitOfWork.MembersRepository.GetAll());
+        public async Task<Response<List<MemberDto>>> GetAll() 
+        {
+            var response = new Response<List<MemberDto>>(MemberMapper.ToMembersDtoList(await _unitOfWork.MembersRepository.GetAll()));
+
+            if (response.Data == null)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
+            }
+
+            return response;
+        }
 
         public Task GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task Insert()
+        public async Task<Response<bool>> Insert(List<InsertMemberDto> memberDtos) 
         {
-            throw new NotImplementedException();
+            var response = new Response<bool>(await _unitOfWork.MembersRepository.InsertRange(MemberMapper.ToMemberList(memberDtos)));
+            
+            if (!response.Data) 
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
+            }
+
+            return response;
         }
 
         public Task Update()

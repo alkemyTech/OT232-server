@@ -22,7 +22,7 @@ namespace OngProject.Controllers
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
-        public async Task<IActionResult> GetName() => Ok(await _categoryBusiness.GetAll());
+        public async Task<IActionResult> GetAll(int Page = 1) => Ok(await _categoryBusiness.GetAll(Page));
 
         [HttpGet]
         [Route("{id}")]

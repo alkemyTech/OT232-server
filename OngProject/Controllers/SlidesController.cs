@@ -36,10 +36,9 @@ namespace OngProject.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update()
-        {
-            return NoContent();
-        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        [Route("{Id}")]
+        public async Task<IActionResult> Update(UpdateSlidesDto slides, int Id) => Ok(await _slideBusiness.Update(slides, Id));
 
         [HttpDelete]
        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]

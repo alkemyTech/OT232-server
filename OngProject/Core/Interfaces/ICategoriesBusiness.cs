@@ -9,9 +9,10 @@ namespace OngProject.Core.Interfaces
     public interface ICategoriesBusiness
     {
         Task<bool> Insert(CategoryRequestDto categoryAdd);
-        Task<List<CategoryRequestDto>> GetAll();
+        Task<Response<PagedData<List<CategoryRequestDto>>>> GetAll(int Page = 1);
         Task<Category> GetById(int Id);
         Task<Response<bool>> Delete(int Id);
-        Task Update();
+        Task<Response<bool>> Update(UpdateCategoryDto category, int Id);
+        Task<int> CountElements();
     }
 }

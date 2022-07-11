@@ -22,7 +22,7 @@ namespace OngProject.Controllers
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
-        public async Task<IActionResult> GetName() => Ok(await _categoryBusiness.GetAll());
+        public async Task<IActionResult> GetAll(int Page = 1) => Ok(await _categoryBusiness.GetAll(Page));
 
         [HttpGet]
         [Route("{id}")]
@@ -61,10 +61,8 @@ namespace OngProject.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update()
-        {
-            return Ok();
-        }
+        [Route("{Id}")]
+        public async Task<IActionResult> Update(UpdateCategoryDto category, int Id) => Ok(await _categoryBusiness.Update(category, Id));
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id) => Ok(await _categoryBusiness.Delete(id));

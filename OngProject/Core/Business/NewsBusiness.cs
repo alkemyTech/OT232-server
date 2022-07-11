@@ -36,6 +36,7 @@ namespace OngProject.Core.Business
                 response.Message = ResponseMessage.NotFoundOrDeleted;
             }
             return response;
+
         }
 
         public async Task<Response<PagedData<List<NewsDto>>>> GetAll(int Page = 1)

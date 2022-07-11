@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System.Threading.Tasks;
@@ -31,11 +34,11 @@ namespace OngProject.Controllers
             return NoContent();
         }
 
-        [HttpPut]
-        public IActionResult Update(Organization entity)
-        {
-            return NoContent();
-        }
+        [HttpPost("/Public")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        public async Task<IActionResult> Update (int Id, UpdateOrganizationDto organization) 
+            => Ok(await _organizationsBusiness.Update(Id, organization));
+        
 
         [HttpDelete]
         public IActionResult Delete(Organization entity)

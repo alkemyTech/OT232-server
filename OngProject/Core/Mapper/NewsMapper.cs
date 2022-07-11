@@ -58,5 +58,16 @@ namespace OngProject.Core.Mapper
             };
             return model;
         }
+        public static News UpdateToNews(UpdateToNewsDto newsDTO)
+        {
+            News news = new News();
+
+            news.Name = newsDTO.Name;
+            news.Description = newsDTO.Description;
+            news.Image = newsDTO.Image;
+            news.CategoryId = newsDTO.CategoryId;
+
+            return news;
+        }
     }
 }

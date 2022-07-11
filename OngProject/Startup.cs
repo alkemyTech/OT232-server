@@ -19,7 +19,9 @@ using OngProject.Core.Helper;
 using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Http;
-
+using System;
+using System.Reflection;
+using System.IO;
 
 namespace OngProject
 {
@@ -64,8 +66,12 @@ namespace OngProject
                             new string[] {}
                     }
                 });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
-        
+            
+
 
             //declaro un servicio para hacerlo funcionar en todo el proyecto
 

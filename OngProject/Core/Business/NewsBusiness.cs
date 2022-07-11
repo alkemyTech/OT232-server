@@ -77,9 +77,24 @@ namespace OngProject.Core.Business
         }
 
 
-        public Task Update()
+        public async Task<Response<bool>> Update(UpdateToNewsDto news, int Id)
         {
-            throw new NotImplementedException();
+            var response = new Response<bool>();
+
+            var find = await _unitOfWork.NewsRepository.GetById(Id);
+
+            if (find != null)
+            {
+                response.Data = await _unitOfWork.NewsRepository.Update(NewsMapper.UpdateToNews(news));
+
+                return response;
+                 
+            }
+
+            response.Message = ResponseMessage.NotFoundOrDeleted;
+            response.Succeeded = false;
+
+            return response;
         }
 
         public async Task<List<CommentDto>> GetComments(int newsId)

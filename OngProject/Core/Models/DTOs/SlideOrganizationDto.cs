@@ -7,6 +7,6 @@ namespace OngProject.Core.Models.DTOs
         public string ImageURL { get; set; }
         public string Text { get; set; }
         public int Order { get; set; }
-        public Organization Organization { get; set; }
+        public OrganizationDto Organization { get; set; }
     }
 }

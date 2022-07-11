@@ -47,7 +47,7 @@ namespace OngProject.Core.Business
             query.OrderBy = x => x.Order;
             var slides = await _unitOfWork.SlidesRepository.GetAsync(query);
 
-            return slides.Select(x => x.SlideDto()).ToList();
+            return SlideMapper.ToSlideOrganizationDto(slides);
         }
 
         public Task<Organization> GetById(int id)

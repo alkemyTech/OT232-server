@@ -1,8 +1,12 @@
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
+<<<<<<< Feature/US-406
+=======
 using OngProject.Core.Models;
+>>>>>>> dev
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
+using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -33,6 +37,21 @@ namespace OngProject.Core.Business
                 dtos.Add(new OrganizationDto{ Name = o.Name, Address = o.Address, Image = o.Image, Phone = o.Phone, WelcomeText = o.WelcomeText, AboutUsText = o.AboutUsText, LinkedinUrl = o.LinkedinUrl, FacebookUrl = o.FacebookUrl, InstagramUrl = o.InstagramUrl });
 
             return dtos;
+        }
+
+        public async Task<List<SlideOrganizationDto>> GetSlides(int Id)
+        {
+            var organization = await _unitOfWork.OrganizationsRepository.GetById(Id);
+            if (organization == null)
+            {
+                return null;
+            }
+            var query = new QueryProperty<Slide>();
+            query.Where = x => x.OrganizationID == Id;
+            query.OrderBy = x => x.Order;
+            var slides = await _unitOfWork.SlidesRepository.GetAsync(query);
+
+            return SlideMapper.ToSlideOrganizationDto(slides);
         }
 
         public Task<Organization> GetById(int id)

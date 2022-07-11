@@ -65,7 +65,7 @@ namespace OngProject.Core.Mapper
             };
             return model;
         }
-        public static Organization InsertToModel(InsertOrganizationDto orgdto)
+        public static Organization UpdateToModel(UpdateOrganizationDto orgdto)
         {
             var model = new Organization
             {
@@ -80,6 +80,21 @@ namespace OngProject.Core.Mapper
                 InstagramUrl = orgdto.InstagramUrl
             };
             return model;
+        }
+        public static Organization MixModels(UpdateOrganizationDto dto, Organization org)
+        {
+            if (org != null)
+            {
+                org.Address = dto.Address;
+                org.Image = dto.Image;
+                org.Phone = dto.Phone;
+                org.WelcomeText = dto.WelcomeText;
+                org.AboutUsText = dto.AboutUsText;
+                org.LinkedinUrl = dto.LinkedinUrl;
+                org.FacebookUrl = dto.FacebookUrl;
+                org.InstagramUrl = dto.InstagramUrl;
+            }
+            return org;
         }
     }
 }

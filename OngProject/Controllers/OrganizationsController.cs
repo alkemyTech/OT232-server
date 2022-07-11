@@ -28,15 +28,17 @@ namespace OngProject.Controllers
             return NoContent();
         }
 
-        [HttpPost("/Public")]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
-        public async Task<IActionResult> Insert(InsertOrganizationDto orgdto) => Ok(await _organizationsBusiness.Insert(orgdto));
-        
-        [HttpPut]
-        public IActionResult Update(Organization entity)
+        [HttpPost]
+        public IActionResult Insert(Organization entity)
         {
             return NoContent();
         }
+
+        [HttpPost("/Public")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        public async Task<IActionResult> Update (int Id, UpdateOrganizationDto organization) 
+            => Ok(await _organizationsBusiness.Update(Id, organization));
+        
 
         [HttpDelete]
         public IActionResult Delete(Organization entity)

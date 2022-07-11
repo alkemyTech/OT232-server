@@ -40,20 +40,22 @@ namespace OngProject.Core.Business
             throw new NotImplementedException();
         }
 
-        public async Task<Response<bool>> Insert(InsertOrganizationDto organization)
+        public Task Insert()
         {
-            var resp = new Response<bool>(await _unitOfWork.OrganizationsRepository.Insert(OrganizationMapper.InsertToModel(organization)));
+            throw new NotImplementedException();
+        }
+
+        public async Task<Response<bool>> Update(int Id, UpdateOrganizationDto organization)
+        {
+            var model = await _unitOfWork.OrganizationsRepository.GetById(Id);
+           
+            var resp = new Response<bool>(await _unitOfWork.OrganizationsRepository.Update(OrganizationMapper.MixModels(organization, model)));
             if (!resp.Data)
             {
                 resp.Succeeded = false;
                 resp.Message = ResponseMessage.UnexpectedErrors;
             }
             return resp;
-        }
-
-        public Task Update()
-        {
-            throw new NotImplementedException();
         }
 
     }

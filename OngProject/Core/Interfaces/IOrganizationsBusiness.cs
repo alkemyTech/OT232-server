@@ -13,8 +13,8 @@ namespace OngProject.Core.Interfaces
 
         public Task<List<OrganizationDto>> GetAll();
         public Task<Organization> GetById(int id);
-        Task<Response<bool>> Insert(InsertOrganizationDto organization);
-        public Task Update();
+        public Task Insert();
+        Task<Response<bool>> Update(int Id, UpdateOrganizationDto organization);
         public Task Delete();
     }
 }

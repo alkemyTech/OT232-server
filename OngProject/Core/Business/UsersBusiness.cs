@@ -57,8 +57,7 @@ namespace OngProject.Core.Business
 
             if(user !=null)
             {
-                var users = UserMapper.ToUpdateUserDto(userDto, user);
-                response.Data = await _unitOfWork.UsersRepository.Update(users);
+                response.Data = await _unitOfWork.UsersRepository.Update(UserMapper.ToUpdateUserDto(userDto, user));
                 return response;
             }
 

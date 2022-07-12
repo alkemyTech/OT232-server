@@ -13,7 +13,7 @@ namespace OngProject.Core.Interfaces
         Task<List<UserDto>> GetAll();
         Task GetById(int Id);
         Task<bool> Insert(RegisterRequestDto dto);
-        Task Update();
+        Task<Response<bool>> Update(UpdateUserDto userDto, int Id);
         Task<Response<bool>> Delete(int Id);
     }
 }

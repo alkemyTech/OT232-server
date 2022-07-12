@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -37,10 +39,9 @@ namespace OngProject.Controllers
         public async Task<IActionResult> Insert(List<InsertTestimonialDto> testimonialsDtos) => Ok(await _testimonialsBusiness.Insert(testimonialsDtos));
 
         [HttpPut]
-        public IActionResult Update()
-        {
-            return Created("", null);
-        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        [Route("{Id}")]
+        public async Task<IActionResult> Update(UpdateTestimonialDto testimonial, int Id) => Ok(await _testimonialsBusiness.Update(testimonial, Id));
 
         [HttpDelete]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]

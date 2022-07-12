@@ -1,5 +1,6 @@
 ﻿using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,6 +12,6 @@ namespace OngProject.Core.Interfaces
         List<Task> GetAll();
         Task GetById(int Id);
         Task<Response<bool>> Delete(int Id);
-        Task Update();
+        Task<Response<bool>> Update(UpdateTestimonialDto testimonial, int Id);
     }
 }

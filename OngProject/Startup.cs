@@ -19,7 +19,10 @@ using OngProject.Core.Helper;
 using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Http;
-
+using System.Reflection;
+using System.IO;
+using System;
+using OngProject.Middleware;
 
 namespace OngProject
 {
@@ -64,6 +67,9 @@ namespace OngProject
                             new string[] {}
                     }
                 });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         
 
@@ -122,7 +128,7 @@ namespace OngProject
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OngProject v1"));
             }
-
+            app.UseMiddleware<AuthenticationMiddleware>();
 
             app.UseHttpsRedirection();
 

@@ -8,9 +8,9 @@ namespace OngProject.Core.Interfaces
 {
     public interface ICategoriesBusiness
     {
-        Task<bool> Insert(CategoryRequestDto categoryAdd);
-        Task<List<CategoryRequestDto>> GetAll();
-        Task<Category> GetById(int Id);
+        Task<Response<bool>> Insert(CategoryRequestDto categoryAdd);
+        Task<Response<List<CategoryRequestDto>>> GetAll();
+        Task<Response<Category>> GetById(int Id);
         Task<Response<bool>> Delete(int Id);
         Task<Response<bool>> Update(UpdateCategoryDto category, int Id);
     }

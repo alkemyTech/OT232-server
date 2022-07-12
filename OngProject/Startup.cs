@@ -22,7 +22,6 @@ using System.Reflection;
 using System.IO;
 using System;
 using OngProject.Middleware;
-using Microsoft.AspNetCore.Authentication;
 
 
 namespace OngProject
@@ -52,28 +51,26 @@ namespace OngProject
                     Scheme = "Bearer",
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "Introduzca 'Bearer' [space] y después un token válido.",
+                    Description = "Introduzca 'Bearer' [space] y después un token válido."
                 });
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
-                          new OpenApiSecurityScheme
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
                             {
-                                Reference = new OpenApiReference
-                                {
-                                    Type = ReferenceType.SecurityScheme,
-                                    Id = "Bearer"
-                                }
-                            },
-                            new string[] {}
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {} 
                     }
                 });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
-            
-
 
             //declaro un servicio para hacerlo funcionar en todo el proyecto
 
@@ -84,7 +81,6 @@ namespace OngProject
             services.AddAWSService<IAmazonS3>();
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             services.AddScoped<ICommentsBusiness, CommentsBusiness>();
             services.AddScoped<IMembersBusiness, MembersBusiness>();
             services.AddScoped<INewsBusiness, NewsBusiness>();
@@ -130,12 +126,13 @@ namespace OngProject
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("v1/swagger.json", "OngProject v1"));
             }
-            app.UseMiddleware<AuthenticationMiddleware>();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
-           
+
+            app.UseMiddleware<UserAuthenticationMiddleware>();
+
             app.UseAuthorization();
             app.UseAuthentication();
             app.UseMiddleware<OwnershipMiddleware>();

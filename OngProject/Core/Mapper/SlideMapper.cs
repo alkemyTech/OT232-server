@@ -41,6 +41,21 @@ namespace OngProject.Core.Mapper
             return slideDto;
         }
 
+
+        public static Slide UpdateToSlide(UpdateSlidesDto slideDto)
+        {
+            Slide slide = new Slide();
+
+            slide.ImageURL = slideDto.ImageURL;
+            slide.Text = slideDto.Text;
+            slide.Order = slideDto.Order;
+            slide.OrganizationID = slideDto.OrganizationId;
+
+            return slide;
+        }
+
+
+
         public static List<SlideOrganizationDto> ToSlideOrganizationDto(List<Slide> listSlides)
         {
 
@@ -78,5 +93,6 @@ namespace OngProject.Core.Mapper
 
             return slideDto;
         }
+
     }
 }

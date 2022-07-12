@@ -67,9 +67,24 @@ namespace OngProject.Core.Business
         }
 
 
-        public Task Update()
+        public async Task<Response<bool>> Update(UpdateSlidesDto slide, int Id)
         {
-            throw new NotImplementedException();
+            var response = new Response<bool>();
+
+            var find = await _unitOfWork.SlidesRepository.GetById(Id);
+
+            if (find != null)
+            {
+                response.Data = await _unitOfWork.SlidesRepository.Update(SlideMapper.UpdateToSlide(slide));
+
+                return response;
+
+            }
+
+            response.Message = ResponseMessage.NotFoundOrDeleted;
+            response.Succeeded = false;
+
+            return response;
         }
     }
 }

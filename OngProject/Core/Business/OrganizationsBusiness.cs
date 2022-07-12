@@ -1,9 +1,6 @@
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
-<<<<<<< Feature/US-406
-=======
 using OngProject.Core.Models;
->>>>>>> dev
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using OngProject.Repositories;

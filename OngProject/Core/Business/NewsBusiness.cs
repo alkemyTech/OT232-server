@@ -24,6 +24,11 @@ namespace OngProject.Core.Business
 
         public async Task<Response<bool>> Delete(int Id)
         {
+
+            var model = await _unitOfWork.NewsRepository.Delete(Id);
+
+            return null;
+
             var response = new Response<bool>(await _unitOfWork.NewsRepository.Delete(Id));
             if (!response.Data)
             {
@@ -31,12 +36,14 @@ namespace OngProject.Core.Business
                 response.Message = ResponseMessage.NotFoundOrDeleted;
             }
             return response;
+
         }
 
-        public async Task<Response<List<NewsDto>>> GetAll(int Page = 1)
+        public async Task<Response<PagedData<List<NewsDto>>>> GetAll(int Page = 1)
         {
             var query = new QueryProperty<News>(Page, 10);
-            var response = new Response<List<NewsDto>>(NewsMapper.ToNewsDtoList(await _unitOfWork.NewsRepository.GetAsync(query)));
+            var paged = new PagedData<List<NewsDto>>(NewsMapper.ToNewsDtoList(await _unitOfWork.NewsRepository.GetAsync(query)), await CountElements(), Page, 10, "News");
+            var response = new Response<PagedData<List<NewsDto>>>(paged);
 
             if (response.Data == null)
             {
@@ -71,9 +78,24 @@ namespace OngProject.Core.Business
         }
 
 
-        public Task Update()
+        public async Task<Response<bool>> Update(UpdateToNewsDto news, int Id)
         {
-            throw new NotImplementedException();
+            var response = new Response<bool>();
+
+            var find = await _unitOfWork.NewsRepository.GetById(Id);
+
+            if (find != null)
+            {
+                response.Data = await _unitOfWork.NewsRepository.Update(NewsMapper.UpdateToNews(news));
+
+                return response;
+                 
+            }
+
+            response.Message = ResponseMessage.NotFoundOrDeleted;
+            response.Succeeded = false;
+
+            return response;
         }
 
         public async Task<List<CommentDto>> GetComments(int newsId)
@@ -90,5 +112,6 @@ namespace OngProject.Core.Business
             return comments.Select(x => x.CommentDto()).ToList();
         }
 
+        public async Task<int> CountElements() => await _unitOfWork.NewsRepository.CountElements();
     }
 }

@@ -15,9 +15,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Amazon.S3;
 using OngProject.Core.Helper;
-
-using System.Collections.Generic;
-
+using System.Collections.Generic
 using Microsoft.AspNetCore.Http;
 using System.Reflection;
 using System.IO;
@@ -51,7 +49,7 @@ namespace OngProject
                     Scheme = "Bearer",
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "Introduzca 'Bearer' [space] y despuÈs un token v·lido.",
+                    Description = "Introduzca 'Bearer' [space] y despu√©s un token v√°lido.",
                 });
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
@@ -71,7 +69,8 @@ namespace OngProject
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
-        
+            
+
 
             //declaro un servicio para hacerlo funcionar en todo el proyecto
 

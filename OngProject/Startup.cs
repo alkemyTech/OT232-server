@@ -15,12 +15,13 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Amazon.S3;
 using OngProject.Core.Helper;
-using System.Collections.Generic
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using System.Reflection;
 using System.IO;
 using System;
 using OngProject.Middleware;
+using Microsoft.AspNetCore.Authentication;
 
 namespace OngProject
 {

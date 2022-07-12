@@ -1,4 +1,5 @@
-﻿using OngProject.Core.Models.DTOs;
+﻿using OngProject.Core.Helper;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,12 @@ namespace OngProject.Core.Mapper
                 Email = registerDto.Email,
                 Password = registerDto.Password
             };
+            return user;
+        }
+
+        public static User ToUpdateUserDto(UpdateUserDto userDto, User user)
+        {
+            user.Password = CryptographyHelper.CreateHashPass(userDto.Password);
             return user;
         }
     }

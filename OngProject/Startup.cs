@@ -15,13 +15,12 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Amazon.S3;
 using OngProject.Core.Helper;
-
-using System.Collections.Generic;
-
+using System.Collections.Generic
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Reflection;
 using System.IO;
+using System;
+using OngProject.Middleware;
 
 namespace OngProject
 {
@@ -50,7 +49,7 @@ namespace OngProject
                     Scheme = "Bearer",
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "Introduzca 'Bearer' [space] y después un token válido.",
+                    Description = "Introduzca 'Bearer' [space] y despuÃ©s un token vÃ¡lido.",
                 });
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
@@ -128,7 +127,7 @@ namespace OngProject
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OngProject v1"));
             }
-
+            app.UseMiddleware<AuthenticationMiddleware>();
 
             app.UseHttpsRedirection();
 

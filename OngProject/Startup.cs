@@ -17,10 +17,12 @@ using Amazon.S3;
 using OngProject.Core.Helper;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
+using OngProject.Middleware;
 using System.Reflection;
 using System.IO;
 using System;
 using OngProject.Middleware;
+
 
 namespace OngProject
 {
@@ -133,6 +135,7 @@ namespace OngProject
 
             app.UseAuthorization();
             app.UseAuthentication();
+            app.UseMiddleware<OwnershipMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

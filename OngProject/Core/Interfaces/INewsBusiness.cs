@@ -12,7 +12,7 @@ namespace OngProject.Core.Interfaces
         Task<Response<NewsDto>> GetById(int Id); 
         Task<Response<bool>> Delete(int Id);
         Task<int> CountElements();
-        Task Update();
+        Task<Response<bool>> Update(UpdateToNewsDto news, int Id);
 
         Task<List<CommentDto>> GetComments(int newsId);
     }

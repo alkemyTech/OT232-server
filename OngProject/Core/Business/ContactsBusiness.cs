@@ -1,9 +1,9 @@
-﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
-using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,38 +11,59 @@ namespace OngProject.Core.Business
 {
     public class ContactsBusiness : IContactsBusiness
     {
-        public readonly IUnitOfWork _unitOfWork;
-        private readonly IEmailSender _emailSender;
-        public ContactsBusiness(IUnitOfWork unitOfWork, IEmailSender emailSender)
+        private readonly IUnitOfWork _unitOfWork;
+        public ContactsBusiness(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _emailSender = emailSender;
+
+        }
+        public async Task<Response<string>> Delete(int id)
+        {
+            var response = new Response<string>();
+            var contact = await _unitOfWork.ContactsRepository.GetById(id);
+            if (contact == null)
+            {
+                throw new Exception("Contact does not exist.");
+            }
+            if (contact.IsDeleted == true || contact.Id != id)
+            {
+                throw new Exception("Contact does not exist or deleted.");
+            }
+            if (contact != null)
+            {
+                await _unitOfWork.ContactsRepository.Delete(id);
+
+                return new Response<string>("Success", message: "Entity Deleted");
+            }
+            else
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
+                return response;
+            }
         }
 
-        public Task Delete(int Id)
+        public async Task<Response<List<ContactsDto>>> GetAll()
         {
-            throw new System.NotImplementedException();
+            var response = new Response<List<ContactsDto>>(ContactMapper.ToContactsDtoList(await _unitOfWork.ContactsRepository.GetAll()));
+
+            if (response.Data == null)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
+            }
+
+            return response;
         }
 
-        public async Task<List<Contact>> GetAll()
+        public Task GetById(int id)
         {
-            var contacts = new List<Contact>();
-            var result = await _unitOfWork.ContactsRepository.GetAll();
-
-            foreach (var o in result)
-                contacts.Add(new Contact { Id= o.Id, Name = o.Name, Email = o.Email, Phone = o.Phone, Message = o.Message, LastModified = o.LastModified });
-
-            return contacts;
+            throw new NotImplementedException();
         }
 
-        public Task<Contact> GetById(int Id)
+        public async Task<Response<bool>> Insert(List<InsertContactDto> contactsDtos)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public async Task<Response<bool>> Insert(InsertContactDto contactDtos)
-        {
-            var response = new Response<bool>(await _unitOfWork.ContactsRepository.Insert(ContactMapper.ToContact(contactDtos)));
+            var response = new Response<bool>(await _unitOfWork.ContactsRepository.InsertRange(ContactMapper.ToContactList(contactsDtos)));
 
             if (!response.Data)
             {
@@ -50,14 +71,12 @@ namespace OngProject.Core.Business
                 response.Message = ResponseMessage.UnexpectedErrors;
             }
 
-            await _emailSender.SendContactEmailAsync( contactDtos.Email , "!");
-
             return response;
         }
 
-        public Task<Contact> Update()
+        public Task Update()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

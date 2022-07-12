@@ -41,5 +41,17 @@ namespace OngProject.Core.Mapper
 
             return category;
         }
+
+        public static Category UpdateToCategory(UpdateCategoryDto dto, Category category)
+        {
+            if (category != null)
+            {
+                category.Description = dto.Description;
+                category.Name = dto.Name;
+                category.Image = dto.Image;
+                return category;
+            }
+            return null;
+        }
     }
 }

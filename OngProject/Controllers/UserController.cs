@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models;
+using OngProject.Core.Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,11 +48,8 @@ namespace OngProject.Controllers
             return Ok();
         }
 
-        [HttpPut]
-        public IActionResult Update()
-        {
-            return Ok();
-        }
+        [HttpPatch("{Id}")]
+        public async Task<IActionResult> Update(UpdateUserDto userDto, int Id) => Ok(await _userBusiness.Update(userDto, Id));
 
         [HttpDelete]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]

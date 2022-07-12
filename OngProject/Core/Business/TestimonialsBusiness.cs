@@ -3,6 +3,7 @@ using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.DataAccess;
+using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -55,9 +56,24 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public Task Update()
+        public async Task<Response<bool>> Update(UpdateTestimonialDto testimonial, int Id)
         {
-            throw new NotImplementedException();
+            var response = new Response<bool>();
+
+            var find = await _unitOfWork.TestimonialsRepository.GetById(Id);
+
+            if (find != null)
+            {
+                response.Data = await _unitOfWork.TestimonialsRepository.Update(TestimonialMapper.UpdateToTestimonial(testimonial));
+
+                return response;
+
+            }
+
+            response.Message = ResponseMessage.NotFoundOrDeleted;
+            response.Succeeded = false;
+
+            return response;
         }
     }
 }

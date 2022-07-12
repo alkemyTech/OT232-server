@@ -24,11 +24,9 @@ namespace OngProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromForm] IFormFile file)
+        public async Task<string> UploadFile(IFormFile file) 
         {
-            await _imageHelper.UploadFile(file);
-
-            return Ok("Imagen subida correctamente");
+            return await _imageHelper.UploadFile(file);
         }
     }
 }

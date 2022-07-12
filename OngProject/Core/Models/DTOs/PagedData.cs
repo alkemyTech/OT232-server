@@ -6,15 +6,15 @@ namespace OngProject.Core.Models.DTOs
 {
     public class PagedData<T> where T : class
     {
-        public PagedData(T items,int count, int pageNumber, int pageSize)
+        public PagedData(T items,int count, int pageNumber, int pageSize, string entity)
         {
             Items = items;
             TotalCount = count;
             PageSize = pageSize;
             CurrentPage = pageNumber;
             TotalPages = (int)Math.Ceiling(count / (double)PageSize);
-            NextPage = (HasNext) ? $"https://localhost:5001/api/News?Page={pageNumber + 1}" : string.Empty;
-            PreviousPage = (HasPrevious) ? $"https://localhost:5001/api/News?Page={pageNumber - 1}" : string.Empty;
+            NextPage = (HasNext) ? $"https://localhost:5001/api/{entity}?Page={pageNumber + 1}" : string.Empty;
+            PreviousPage = (HasPrevious) ? $"https://localhost:5001/api/{entity}?Page={pageNumber - 1}" : string.Empty;
         }
         
         public int CurrentPage { get; private set; }

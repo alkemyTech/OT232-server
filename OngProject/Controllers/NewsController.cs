@@ -35,11 +35,11 @@ namespace OngProject.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> Insert(InsertNewsDto dto) => Ok(await _newsBusiness.Insert(dto));
 
+
         [HttpPut]
-        public IActionResult Update()
-        {
-            return Created("", null);
-        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        [Route("{Id}")]
+        public async Task<IActionResult> Update(UpdateToNewsDto news, int Id) => Ok(await _newsBusiness.Update(news, Id));
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int Id) => Ok(await _newsBusiness.Delete(Id));

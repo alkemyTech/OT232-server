@@ -19,7 +19,7 @@ using OngProject.Core.Helper;
 using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Http;
-
+using OngProject.Middleware;
 
 namespace OngProject
 {
@@ -130,6 +130,7 @@ namespace OngProject
            
             app.UseAuthorization();
             app.UseAuthentication();
+            app.UseMiddleware<OwnershipMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

@@ -24,23 +24,13 @@ namespace OngProject.Controllers
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
-        public async Task<IActionResult> GetAll() => Ok(await _membersBusiness.GetAll());
+        public async Task<IActionResult> GetAll(int pageNumber = 1) => Ok(await _membersBusiness.GetAll(pageNumber));
 
-        [HttpGet("{Id})")]
-        public IActionResult GetById(int id)
-        {
-            return NoContent();
-        }
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
         public async Task<IActionResult> Insert(List<InsertMemberDto> member) => Ok(await _membersBusiness.Insert(member));
 
-        [HttpPut]
-        public IActionResult Update(Member entity)
-        {
-            return NoContent();
-        }
 
         [HttpDelete("{Id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]

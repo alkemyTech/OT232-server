@@ -9,9 +9,10 @@ namespace OngProject.Core.Interfaces
     public interface ITestimonialsBusiness
     {
         Task<Response<bool>> Insert(List<InsertTestimonialDto> testimonialsDto);
-        List<Task> GetAll();
+        Task<Response<PagedData<List<TestimonialDto>>>> GetAll(int Page = 1);
         Task GetById(int Id);
         Task<Response<bool>> Delete(int Id);
+        Task<int> CountElements()
         Task<Response<bool>> Update(UpdateTestimonialDto testimonial, int Id);
     }
 }

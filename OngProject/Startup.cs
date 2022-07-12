@@ -19,7 +19,9 @@ using OngProject.Core.Helper;
 using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Http;
-
+using System.Reflection;
+using System.IO;
+using System;
 
 namespace OngProject
 {
@@ -41,6 +43,9 @@ namespace OngProject
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OngProject", Version = "v1" });
+
+                
+               
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     Name = "Authorization",
@@ -64,6 +69,10 @@ namespace OngProject
                             new string[] {}
                     }
                 });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         
 

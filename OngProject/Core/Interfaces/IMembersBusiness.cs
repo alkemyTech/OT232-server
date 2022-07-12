@@ -8,7 +8,7 @@ namespace OngProject.Core.Interfaces
     public interface IMembersBusiness
     {
 
-        Task<Response<List<MemberDto>>> GetAll();
+        Task<Response<PagedData<List<MemberDto>>>> GetAll(int pageNumber);
 
         Task GetById(int id);
 
@@ -16,7 +16,7 @@ namespace OngProject.Core.Interfaces
 
         Task Update();
 
-        Task<Response<string>> Delete(int id);
+        Task<Response<bool>> Delete(int Id);
 
     }
 }

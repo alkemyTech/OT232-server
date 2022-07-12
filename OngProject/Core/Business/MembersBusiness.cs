@@ -2,6 +2,8 @@
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
+using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,36 +19,23 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
 
         }
-        public async Task<Response<string>> Delete(int id)
+        public async Task<Response<bool>> Delete(int Id)
         {
-            var response = new Response<string>();
-            var member = await _unitOfWork.MembersRepository.GetById(id);
-            if (member == null)
-            {
-                throw new Exception("Comment does not exist.");
-            }
-            if (member.IsDeleted == true || member.Id != id)
-            {
-                throw new Exception("Comment does not exist or deleted.");
-            }
-            if (member != null)
-            {
-                await _unitOfWork.MembersRepository.Delete(id);
-
-                return new Response<string>("Success", message: "Entity Deleted");
-            }
-            else
+            var response = new Response<bool>(await _unitOfWork.MembersRepository.Delete(Id));
+            if (!response.Data)
             {
                 response.Succeeded = false;
-                response.Message = ResponseMessage.UnexpectedErrors;
-                return response;
+                response.Message = ResponseMessage.Error;
+
             }
+            return response;
         }
 
-        public async Task<Response<List<MemberDto>>> GetAll() 
+        public async Task<Response<PagedData<List<MemberDto>>>> GetAll(int pageNumber) 
         {
-            var response = new Response<List<MemberDto>>(MemberMapper.ToMembersDtoList(await _unitOfWork.MembersRepository.GetAll()));
-
+            var query = new QueryProperty<Member>(pageNumber, 10);
+            var pgData = new PagedData<List<MemberDto>>(MemberMapper.ToMembersDtoList(await _unitOfWork.MembersRepository.GetAsync(query)), await CountElements(), pageNumber, 10);
+            var response = new Response<PagedData<List<MemberDto>>>(pgData);
             if (response.Data == null)
             {
                 response.Succeeded = false;
@@ -78,5 +67,7 @@ namespace OngProject.Core.Business
         {
             throw new NotImplementedException();
         }
+
+        public async Task<int> CountElements() => await _unitOfWork.MembersRepository.CountElements();
     }
 }

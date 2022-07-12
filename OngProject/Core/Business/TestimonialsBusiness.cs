@@ -70,9 +70,24 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public Task Update()
+        public async Task<Response<bool>> Update(UpdateTestimonialDto testimonial, int Id)
         {
-            throw new NotImplementedException();
+            var response = new Response<bool>();
+
+            var find = await _unitOfWork.TestimonialsRepository.GetById(Id);
+
+            if (find != null)
+            {
+                response.Data = await _unitOfWork.TestimonialsRepository.Update(TestimonialMapper.UpdateToTestimonial(testimonial));
+
+                return response;
+
+            }
+
+            response.Message = ResponseMessage.NotFoundOrDeleted;
+            response.Succeeded = false;
+
+            return response;
         }
 
         public async Task<int> CountElements() => await _unitOfWork.TestimonialsRepository.CountElements();

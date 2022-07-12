@@ -50,9 +50,23 @@ namespace OngProject.Core.Business
 
         public async Task<bool> Insert(RegisterRequestDto dto) => await _unitOfWork.UsersRepository.Insert(UserMapper.ToUser(dto));
 
-        public Task Update()
+        public async Task<Response<bool>> Update(UpdateUserDto userDto, int Id)
         {
-            throw new System.NotImplementedException();
+            var response = new Response<bool>();
+            var user = await _unitOfWork.UsersRepository.GetById(Id);
+
+            if (user != null)
+            {
+                var users = UserMapper.ToUpdateUserDto(userDto, user);
+                response.Data = await _unitOfWork.UsersRepository.Update(users);
+                return response;
+            }
+
+            response.Succeeded = false;
+            response.Errors = new string[] { "Error - 404" };
+            response.Message = ResponseMessage.NotFound;
+
+            return response;
         }
 
         public async Task<List<UserDto>> GetAll()

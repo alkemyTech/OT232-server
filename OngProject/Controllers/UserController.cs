@@ -52,7 +52,6 @@ namespace OngProject.Controllers
         public async Task<IActionResult> Update(UpdateUserDto userDto, int Id) => Ok(await _userBusiness.Update(userDto, Id));
 
         [HttpDelete]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> Delete(int id) => Ok(await _userBusiness.Delete(id));
 
     }

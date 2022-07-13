@@ -25,6 +25,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
     <PackageReference Include="NSwag.Annotations" Version="13.16.1" />
     <PackageReference Include="SendGrid" Version="9.28.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />

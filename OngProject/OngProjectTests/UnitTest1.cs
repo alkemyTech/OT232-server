@@ -14,7 +14,7 @@ namespace OngProjectTests
             using (var sw = new StringWriter())
             {
                 Console.SetOut(sw);
-                HelloWorld.Program.Main();
+                //HelloWorld.Program.Main();
 
                 var result = sw.ToString().Trim();
                 Assert.AreEqual(Expected, result);

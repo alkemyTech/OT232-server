@@ -34,7 +34,7 @@ namespace OngProject.Core.Business
         public async Task<Response<PagedData<List<MemberDto>>>> GetAll(int pageNumber) 
         {
             var query = new QueryProperty<Member>(pageNumber, 10);
-            var pgData = new PagedData<List<MemberDto>>(MemberMapper.ToMembersDtoList(await _unitOfWork.MembersRepository.GetAsync(query)), await CountElements(), pageNumber, 10);
+            var pgData = new PagedData<List<MemberDto>>(MemberMapper.ToMembersDtoList(await _unitOfWork.MembersRepository.GetAsync(query)), await CountElements(), pageNumber,10, "Members");
             var response = new Response<PagedData<List<MemberDto>>>(pgData);
             if (response.Data == null)
             {

@@ -55,5 +55,12 @@ namespace OngProject.Core.Mapper
             return commentDtoList;
         }
 
+        public static Comment ToDtoComment(UpdateCommentDto commentDto, Comment comment)
+        {
+            comment.UserId = commentDto.UserId;
+            comment.Body = commentDto.Body;
+            return comment;
+        }
+
     }
 }

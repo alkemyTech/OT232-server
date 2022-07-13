@@ -11,6 +11,6 @@ namespace OngProject.Core.Interfaces
         Task<Response<List<GetCommentDto>>> GetAll();
         Task GetById(int Id);
         Task<Response<string>> Delete(int Id);
-        Task Update();
+        Task<Response<bool>> Update(UpdateCommentDto commentDto, int Id);
     }
 }

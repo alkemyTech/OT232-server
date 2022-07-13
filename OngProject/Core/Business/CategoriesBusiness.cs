@@ -1,8 +1,9 @@
-﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
+using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -30,33 +31,57 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public async Task<List<CategoryRequestDto>> GetAll() => CategoryMapper.ToCategoryNameList(await _unitOfWork.CategoriesRepository.GetAll());
-   
-        public async Task<Category> GetById(int Id)
+        public async Task<Response<PagedData<List<CategoryRequestDto>>>> GetAll(int Page = 1)
         {
-            return await _unitOfWork.CategoriesRepository.GetById(Id);
-        }
+            var query = new QueryProperty<Category>(Page, 10);
+            var paged = new PagedData<List<CategoryRequestDto>>(CategoryMapper.ToCategoryNameList(await _unitOfWork.CategoriesRepository.GetAsync(query)), await CountElements(), Page, 10, "Categories");
+            var response = new Response<PagedData<List<CategoryRequestDto>>>(paged);
 
-        public async Task<bool> Insert(CategoryRequestDto dto) => await _unitOfWork.CategoriesRepository.Insert(CategoryMapper.ToCategory(dto));
-
-        public async Task<Response<bool>> Update(UpdateCategoryDto category, int Id)
-        {
-            var response = new Response<bool>();
-
-            var find = await _unitOfWork.CategoriesRepository.GetById(Id);
-            
-            if (find != null)
+            if (response.Data == null)
             {
-                response.Data = await _unitOfWork.CategoriesRepository.Update(CategoryMapper.UpdateToCategory(category));
-
-                return response;
-                
+                response.Succeeded = false;
+                response.Message = ResponseMessage.NotFound;
+                response.Errors = new string[] { "404" };
             }
-
-            response.Message = ResponseMessage.NotFoundOrDeleted;
-            response.Succeeded = false;
 
             return response;
         }
+
+        public async Task<Response<Category>> GetById(int Id)
+        {
+            var response = new Response<Category>(await _unitOfWork.CategoriesRepository.GetById(Id));
+            if (response.Data == null)
+            {
+                response.Message = ResponseMessage.NotFoundOrDeleted;
+                response.Succeeded = false;
+            }
+            return response;
+        }
+
+        public async Task<Response<bool>> Insert(CategoryRequestDto dto) 
+        {
+            var response = new Response<bool>(await _unitOfWork.CategoriesRepository.Insert(CategoryMapper.ToCategory(dto)));
+            if (!response.Data)
+            {
+                response.Message = ResponseMessage.NotFoundOrDeleted;
+                response.Succeeded = false;
+            }
+            return response;
+        }
+
+        public async Task<Response<bool>> Update(UpdateCategoryDto dto, int Id)
+        {
+            var category = await _unitOfWork.CategoriesRepository.GetById(Id);
+            var response = new Response<bool>(await _unitOfWork.CategoriesRepository.Update(CategoryMapper.UpdateToCategory(dto, category)));
+
+            if (!response.Data)
+            {
+                response.Message = ResponseMessage.NotFoundOrDeleted;
+                response.Succeeded = false;
+            }
+            return response;
+        }
+
+        public async Task<int> CountElements() => await _unitOfWork.CategoriesRepository.CountElements();
     }
 }

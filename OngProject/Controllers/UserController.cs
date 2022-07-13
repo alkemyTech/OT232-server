@@ -54,7 +54,6 @@ namespace OngProject.Controllers
         }
 
         [HttpDelete]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> Delete(int id) => Ok(await _userBusiness.Delete(id));
 
     }

@@ -92,9 +92,45 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public Task Update()
+        public async Task<Response<bool>> Update(UpdateCommentDto commentDto, int Id)
         {
-            throw new NotImplementedException();
+            var response = new Response<bool>();
+
+            var comment = await _unitOfWork.CommentsRepository.GetById(Id);
+
+
+            if (comment != null)
+            {
+                var user = await _unitOfWork.UsersRepository.GetById(comment.UserId);
+
+                if (user.RoleID == 1)
+                {
+                    response.Data = await _unitOfWork.CommentsRepository.Update(CommentMapper.ToDtoComment(commentDto, comment));
+                    return response;
+                }
+                else
+                {
+                    if (user.Id == commentDto.UserId)
+                    {
+                        response.Data = await _unitOfWork.CommentsRepository.Update(CommentMapper.ToDtoComment(commentDto, comment));
+                        return response;
+                    }
+                    else
+                    {
+                        response.Succeeded = false;
+                        response.Errors = new string[] { "Error - 403" };
+                        response.Message = "Usuario no tiene permiso";
+                        return response;
+                    }
+
+                }
+            }
+
+            response.Succeeded = false;
+            response.Errors = new string[] { "Error - 404" };
+            response.Message = ResponseMessage.NotFound;
+
+            return response;
         }
 
     }

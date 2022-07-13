@@ -38,10 +38,9 @@ namespace OngProject.Controllers
         public async Task<IActionResult> Insert(List<InsertCommentDto> commentDtos) => Ok(await _commentsBusiness.Insert(commentDtos));
 
         [HttpPut]
-        public IActionResult Update()
-        {
-            return NoContent();
-        }
+        [Route("{Id}")]
+
+        public async Task<IActionResult> Update(UpdateCommentDto commentDto, int Id) => Ok(await _commentsBusiness.Update(commentDto, Id));
 
         [HttpDelete("{Id}")]
         [Authorize]

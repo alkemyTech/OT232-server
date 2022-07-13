@@ -49,7 +49,7 @@ namespace OngProject.Middleware
 
             if (methods.Contains(method) && containsPath)
             {
-                if (!context.User.IsInRole("Administrador") || !context.User.Identity.IsAuthenticated)
+                if (!context.User.IsInRole("Administrador"))
                 {
                     context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 }

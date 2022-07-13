@@ -94,5 +94,21 @@ namespace OngProject.Core.Mapper
             return slideDto;
         }
 
+        public static Slide toDtoInsertSlide(InsertSlideDto insertSlideDto, string order)
+        {
+            if (insertSlideDto == null)
+                return null;
+
+            var slide = new Slide
+            {
+                ImageURL = insertSlideDto.ImageURL,
+                Text = insertSlideDto.Text,
+                Order = int.Parse(order),
+                OrganizationID = insertSlideDto.OrganizationID
+            };
+
+            return slide;
+        }
+
     }
 }

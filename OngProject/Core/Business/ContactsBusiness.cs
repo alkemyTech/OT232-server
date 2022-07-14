@@ -1,4 +1,4 @@
-﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;

@@ -1,4 +1,6 @@
-﻿using OngProject.Core.Models.DTOs;
+﻿using OngProject.Core.Models;
+using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,10 +8,11 @@ namespace OngProject.Core.Interfaces
 {
     public interface ITestimonialsBusiness
     {
-        Task<bool> Insert(List<InsertTestimonialDto> testimonialsDto);
-        List<Task> GetAll();
+        Task<Response<bool>> Insert(List<InsertTestimonialDto> testimonialsDto);
+        Task<Response<PagedData<List<TestimonialDto>>>> GetAll(int Page = 1);
         Task GetById(int Id);
-        Task Delete(int Id);
-        Task Update();
+        Task<Response<bool>> Delete(int Id);
+        Task<int> CountElements();
+        Task<Response<bool>> Update(UpdateTestimonialDto testimonial, int Id);
     }
 }

@@ -1,7 +1,11 @@
-﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Interfaces;
+using OngProject.Core.Mapper;
+using OngProject.Core.Models;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,29 +20,68 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
         }
 
-        public Task Delete(int Id)
+        public async Task<Response<bool>> Delete(int Id)
         {
-            throw new System.NotImplementedException();
+            var response = new Response<bool>(await _unitOfWork.CategoriesRepository.Delete(Id));
+            if (!response.Data)
+            {
+                response.Message = ResponseMessage.NotFoundOrDeleted;
+                response.Succeeded = false;
+            }
+            return response;
         }
 
-        public Task<List<Category>> GetAll()
+        public async Task<Response<PagedData<List<CategoryRequestDto>>>> GetAll(int Page = 1)
         {
-            throw new System.NotImplementedException();
+            var query = new QueryProperty<Category>(Page, 10);
+            var paged = new PagedData<List<CategoryRequestDto>>(CategoryMapper.ToCategoryNameList(await _unitOfWork.CategoriesRepository.GetAsync(query)), await CountElements(), Page, 10, "Categories");
+            var response = new Response<PagedData<List<CategoryRequestDto>>>(paged);
+
+            if (response.Data == null)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.NotFound;
+                response.Errors = new string[] { "404" };
+            }
+
+            return response;
         }
 
-        public async Task<Category> GetById(int Id)
+        public async Task<Response<Category>> GetById(int Id)
         {
-            return await _unitOfWork.CategoriesRepository.GetById(Id);
+            var response = new Response<Category>(await _unitOfWork.CategoriesRepository.GetById(Id));
+            if (response.Data == null)
+            {
+                response.Message = ResponseMessage.NotFoundOrDeleted;
+                response.Succeeded = false;
+            }
+            return response;
         }
 
-        public Task Insert()
+        public async Task<Response<bool>> Insert(CategoryRequestDto dto) 
         {
-            throw new System.NotImplementedException();
+            var response = new Response<bool>(await _unitOfWork.CategoriesRepository.Insert(CategoryMapper.ToCategory(dto)));
+            if (!response.Data)
+            {
+                response.Message = ResponseMessage.NotFoundOrDeleted;
+                response.Succeeded = false;
+            }
+            return response;
         }
 
-        public Task Update()
+        public async Task<Response<bool>> Update(UpdateCategoryDto dto, int Id)
         {
-            throw new System.NotImplementedException();
+            var category = await _unitOfWork.CategoriesRepository.GetById(Id);
+            var response = new Response<bool>(await _unitOfWork.CategoriesRepository.Update(CategoryMapper.UpdateToCategory(dto, category)));
+
+            if (!response.Data)
+            {
+                response.Message = ResponseMessage.NotFoundOrDeleted;
+                response.Succeeded = false;
+            }
+            return response;
         }
+
+        public async Task<int> CountElements() => await _unitOfWork.CategoriesRepository.CountElements();
     }
 }

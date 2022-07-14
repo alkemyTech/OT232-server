@@ -1,17 +1,19 @@
-﻿using System;
+using OngProject.Core.Models;
+using OngProject.Core.Models.DTOs;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using OngProject.Entities;
 
 namespace OngProject.Core.Interfaces
 {
     public interface INewsBusiness
     {
-        Task Insert();
-        List<Task> GetAll();
-        Task GetById(int Id);
-        Task<News> Delete(int Id);
-        Task Update();
+        Task<Response<bool>> Insert(InsertNewsDto news);
+        Task<Response<PagedData<List<NewsDto>>>> GetAll(int Page = 1);
+        Task<Response<NewsDto>> GetById(int Id); 
+        Task<Response<bool>> Delete(int Id);
+        Task<int> CountElements();
+        Task<Response<bool>> Update(UpdateToNewsDto news, int Id);
+
+        Task<List<CommentDto>> GetComments(int newsId);
     }
 }

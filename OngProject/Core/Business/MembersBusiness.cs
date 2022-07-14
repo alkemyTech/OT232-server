@@ -1,6 +1,9 @@
 ﻿using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
+using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,26 +19,55 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
 
         }
-        public Task Delete()
+        public async Task<Response<bool>> Delete(int Id)
         {
-            throw new NotImplementedException();
+            var response = new Response<bool>(await _unitOfWork.MembersRepository.Delete(Id));
+            if (!response.Data)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.Error;
+
+            }
+            return response;
         }
 
-        public async Task<List<MemberDto>> GetAll() => MemberMapper.ToMembersDtoList(await _unitOfWork.MembersRepository.GetAll());
+        public async Task<Response<PagedData<List<MemberDto>>>> GetAll(int pageNumber) 
+        {
+            var query = new QueryProperty<Member>(pageNumber, 10);
+            var pgData = new PagedData<List<MemberDto>>(MemberMapper.ToMembersDtoList(await _unitOfWork.MembersRepository.GetAsync(query)), await CountElements(), pageNumber,10, "Members");
+            var response = new Response<PagedData<List<MemberDto>>>(pgData);
+            if (response.Data == null)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
+            }
+
+            return response;
+        }
 
         public Task GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task Insert()
+        public async Task<Response<bool>> Insert(List<InsertMemberDto> memberDtos) 
         {
-            throw new NotImplementedException();
+            var response = new Response<bool>(await _unitOfWork.MembersRepository.InsertRange(MemberMapper.ToMemberList(memberDtos)));
+            
+            if (!response.Data) 
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
+            }
+
+            return response;
         }
 
         public Task Update()
         {
             throw new NotImplementedException();
         }
+
+        public async Task<int> CountElements() => await _unitOfWork.MembersRepository.CountElements();
     }
 }

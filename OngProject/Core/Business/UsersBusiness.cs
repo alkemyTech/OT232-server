@@ -1,9 +1,11 @@
 ﻿using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,9 +21,16 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
         }
 
-        public Task Delete(int Id)
+        public async Task<Response<bool>> Delete(int Id)
         {
-            throw new System.NotImplementedException();
+            var response = new Response<bool>(await _unitOfWork.UsersRepository.Delete(Id));
+            response.Message = ResponseMessage.Success;
+            if(!response.Data)
+            {
+                response.Message = ResponseMessage.NotFoundOrDeleted;
+                response.Succeeded = false;
+            }
+            return response;
         }
 
         public async Task<List<User>> GetAsync(LoginUserDto userDto)
@@ -41,9 +50,23 @@ namespace OngProject.Core.Business
 
         public async Task<bool> Insert(RegisterRequestDto dto) => await _unitOfWork.UsersRepository.Insert(UserMapper.ToUser(dto));
 
-        public Task Update()
+        public async Task<Response<bool>> Update(UpdateUserDto userDto, int Id)
         {
-            throw new System.NotImplementedException();
+            var response = new Response<bool>();
+            var user = await _unitOfWork.UsersRepository.GetById(Id);
+
+            if (user != null)
+            {
+                var users = UserMapper.ToUpdateUserDto(userDto, user);
+                response.Data = await _unitOfWork.UsersRepository.Update(users);
+                return response;
+            }
+
+            response.Succeeded = false;
+            response.Errors = new string[] { "Error - 404" };
+            response.Message = ResponseMessage.NotFound;
+
+            return response;
         }
 
         public async Task<List<UserDto>> GetAll()

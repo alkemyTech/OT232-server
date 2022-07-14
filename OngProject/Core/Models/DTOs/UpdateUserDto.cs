@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace OngProject.Core.Models.DTOs
 {
-    public class UserPasswordDto
+    public class UpdateUserDto
     {
-        public string User { get; set; } = string.Empty;
-        public string PasswordEncrypted { get; set; }
+        public string Password { get; set; }
     }
 }

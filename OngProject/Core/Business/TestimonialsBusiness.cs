@@ -1,7 +1,10 @@
 ﻿using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.DataAccess;
+using OngProject.Entities;
+using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,26 +22,74 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
         }
 
-        public Task Delete(int Id)
+        public async Task<Response<bool>> Delete(int Id)
         {
-            throw new NotImplementedException();
+            var response = new Response<bool>(await _unitOfWork.TestimonialsRepository.Delete(Id));
+            if (!response.Data)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.Error;
+
+            }
+            return response;
         }
 
-        public List<Task> GetAll()
+        public async Task<Response<PagedData<List<TestimonialDto>>>> GetAll(int Page = 1)
         {
-            throw new NotImplementedException();
+            var query = new QueryProperty<Testimonial>(Page, 10);
+            var paged = new PagedData<List<TestimonialDto>>(TestimonialMapper.ToListTestimonial
+                (await _unitOfWork.TestimonialsRepository.GetAsync(query)), await CountElements(), Page, 10, "News");
+            var response = new Response<PagedData<List<TestimonialDto>>>(paged);
+
+            if (response.Data == null)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.NotFound;
+                response.Errors = new string[] { "404" };
+            }
+
+            return response;
         }
+
 
         public Task GetById(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<bool> Insert(List<InsertTestimonialDto> testimonialsDtos) => await _unitOfWork.TestimonialsRepository.InsertRange(TestimonialMapper.ToTestimonialsList(testimonialsDtos));
-
-        public Task Update()
+        public async Task<Response<bool>> Insert(List<InsertTestimonialDto> testimonialsDtos)
         {
-            throw new NotImplementedException();
+            var response = new Response<bool>(await _unitOfWork.TestimonialsRepository.InsertRange(TestimonialMapper.ToTestimonialsList(testimonialsDtos)));
+
+            if (!response.Data)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
+            }
+
+            return response;
         }
+
+        public async Task<Response<bool>> Update(UpdateTestimonialDto testimonial, int Id)
+        {
+            var response = new Response<bool>();
+
+            var find = await _unitOfWork.TestimonialsRepository.GetById(Id);
+
+            if (find != null)
+            {
+                response.Data = await _unitOfWork.TestimonialsRepository.Update(TestimonialMapper.UpdateToTestimonial(testimonial));
+
+                return response;
+
+            }
+
+            response.Message = ResponseMessage.NotFoundOrDeleted;
+            response.Succeeded = false;
+
+            return response;
+        }
+
+        public async Task<int> CountElements() => await _unitOfWork.TestimonialsRepository.CountElements();
     }
 }

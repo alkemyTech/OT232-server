@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-
+using OngProject.Core.Models;
 using OngProject.DataAccess;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
@@ -19,27 +19,23 @@ namespace OngProject.Repositories
             _context = context;
         }
 
-        public async Task<T> Delete(int Id)
+        public async Task<bool> Delete(int Id)
         {
-            T entity = await _context.Set<T>().FindAsync(Id);
-            if(entity == null || entity.IsDeleted == true)
-            {
-                return null;
-            }
-            else
+            var entity = await GetById(Id);
+            if(entity != null)
             {
                 entity.IsDeleted = true;
                 entity.LastModified = DateTime.Now;
                 _context.Set<T>().Update(entity);
                 await _context.SaveChangesAsync();
-                return entity;
+                return true;
             }
-           
+            return false;
         }
 
         public async Task<List<T>> GetAll() => await _context.Set<T>().Where(x => !x.IsDeleted).ToListAsync();
 
-        public async Task<T> GetById(int Id) => await _context.Set<T>().FindAsync(Id);
+        public async Task<T> GetById(int Id) => await (from t in _context.Set<T>() where t.Id == Id && !t.IsDeleted select t).FirstOrDefaultAsync();
 
         public async Task<bool> Insert(T entity)
         {
@@ -69,33 +65,38 @@ namespace OngProject.Repositories
             }
         }
 
-        public async Task<T> Update(T entity)
-        {
-            var model = await _context.Set<T>().FindAsync(entity);
-            if (model == null || model.IsDeleted == true)
-            {
-                return null;
-            }
-            else
-            {
-                _context.Entry(model).CurrentValues.SetValues(entity);
-                await _context.SaveChangesAsync();
-                return entity;
-            }
-
-        }
-        public Task<List<T>> GetAsync(QueryProperty<T> query)
+        public async Task<bool> Update(T entity)
         {
             try
             {
-                var source = ApplyQuery(query, _context.Set<T>().AsQueryable());
-                return source.ToListAsync();
+                if (entity != null)
+                {
+                    _context.Set<T>().Update(entity);
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex) 
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<T>> GetAsync(QueryProperty<T> query)
+        {
+            try
+            {
+                var source = ApplyQuery(query, _context.Set<T>().AsQueryable().Where(x => !x.IsDeleted));
+                return await source.ToListAsync();
             }
             catch (Exception e) 
             {
                 throw new Exception(e.Message);
             }
         }
+
+        public async Task<int> CountElements() => await _context.Set<T>().CountAsync();
 
         private static IQueryable<T> ApplyQuery(QueryProperty<T> query, IQueryable<T> source)
         {

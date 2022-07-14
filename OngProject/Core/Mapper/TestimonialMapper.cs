@@ -37,5 +37,36 @@ namespace OngProject.Core.Mapper
             
             return testimonials;
         }
+      
+        public static List<TestimonialDto> ToListTestimonial(List<Testimonial> testimonial)
+        {
+            List<TestimonialDto> testimonialsdto = new();
+
+            foreach (var t in testimonial)
+            {
+                testimonialsdto.Add
+                (
+                    new TestimonialDto
+                    {
+                        Content = t.Content,
+                        Name = t.Name,
+                        Image = t.Image
+                    }
+                );
+            }
+
+            return testimonialsdto;
+        }
+      
+        public static Testimonial UpdateToTestimonial(UpdateTestimonialDto testimonialDto)
+        {
+            Testimonial testimonial = new Testimonial();
+
+            testimonial.Name = testimonialDto.Name;
+            testimonial.Content = testimonialDto.Content;
+            testimonial.Image = testimonialDto.Image;
+
+            return testimonial;
+        }
     }
 }

@@ -24,6 +24,12 @@ namespace OngProject.Core.Helper
                 "Su usuario ha sido creado con éxito", "somosmas@email.com");
         }
 
+        private static string GetContactEmail()
+        {
+            return GetEmailForTemplate("Contacto Somos Mas",
+                "Recibimos su contacto", "somosmas@email.com");
+        }
+
         private static string GetEmailForTemplate(string title, string message, string contact = "somosmas@email.com")
         {
             try
@@ -50,6 +56,22 @@ namespace OngProject.Core.Helper
                 var from = new EmailAddress("admapi07@gmail.com", "admapi07@gmail.com");
                 var to = new EmailAddress(email, email);
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, String.Empty, GetWelcomeEmail());
+                var response = await client.SendEmailAsync(msg);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task SendContactEmailAsync(string email, string subject)
+        {
+            try
+            {
+                var client = new SendGridClient(_config["SendGridToken"]);
+                var from = new EmailAddress("admapi07@gmail.com", "admapi07@gmail.com");
+                var to = new EmailAddress(email, email);
+                var msg = MailHelper.CreateSingleEmail(from, to, subject, String.Empty, GetContactEmail());
                 var response = await client.SendEmailAsync(msg);
             }
             catch (Exception)

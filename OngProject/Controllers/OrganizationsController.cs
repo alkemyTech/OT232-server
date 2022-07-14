@@ -47,8 +47,9 @@ namespace OngProject.Controllers
 
         [HttpPost("/Public")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
-        public async Task<IActionResult> Update (int Id, UpdateOrganizationDto organization) 
+        public async Task<IActionResult> Update (int Id, UpdateOrganizationDto organization)
             => Ok(await _organizationsBusiness.Update(Id, organization));
+            
         
 
         [HttpDelete]
@@ -56,7 +57,5 @@ namespace OngProject.Controllers
         {
             return NoContent();
         }
-
-
     }
 }

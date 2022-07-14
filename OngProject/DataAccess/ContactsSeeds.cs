@@ -15,7 +15,7 @@ namespace OngProject.DataAccess
                 IsDeleted = false,
                 Name = @"First Contact",
                 Email = @"firstcontact@example.com",
-                Phone = 1111111111,
+                Phone = "1111111111",
                 Message = @"This is the first contact",
                 LastModified = DateTime.Now,
             },
@@ -25,7 +25,7 @@ namespace OngProject.DataAccess
                 IsDeleted = false,
                 Name = @"Second Contact",
                 Email = @"secondcontact@example.com",
-                Phone = 1111111112,
+                Phone = "1111111112",
                 Message = @"This is the Second contact",
                 LastModified = DateTime.Now,
             });

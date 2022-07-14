@@ -13,7 +13,7 @@ namespace OngProject.Core.Models.DTOs
         public string Address { get; set; }
 
         [Required(ErrorMessage = "El Phone es obligatorio.")]
-        public int Phone { get; set; }
+        public string Phone { get; set; }
 
         [Required(ErrorMessage = "El Email es obligatorio.")]
         public string Email { get; set; }

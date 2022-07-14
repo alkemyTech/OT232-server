@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -20,6 +21,7 @@ namespace OngProject.Middleware
             bool containsPath = false;
             var method = context.Request.Method;
             var path = context.Request.Path.ToString();
+            var role = context.User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.Role);
 
             List<string> methods = new()
             {
@@ -49,7 +51,7 @@ namespace OngProject.Middleware
 
             if (methods.Contains(method) && containsPath)
             {
-                if (!context.User.IsInRole("Administrador") || !context.User.Identity.IsAuthenticated)
+                if (!role.Value.Equals("Administrador"))
                 {
                     context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 }

@@ -23,7 +23,7 @@ namespace OngProject.Middleware
         {
             if (context.Request.Method == HttpMethod.Put.Method || context.Request.Method == HttpMethod.Delete.Method)
             {
-                var role = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+                var role = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
                 var claimId = context.User.Claims.FirstOrDefault(c => c.Type == "Id").Value;
                 var paramId = (string)context.Request.Query["id"];
                 if (paramId != null && paramId != "")
@@ -34,7 +34,7 @@ namespace OngProject.Middleware
                     {
                         if (currentPath.Contains(path))
                         {
-                            if (Int32.Parse(claimId) != Int32.Parse(paramId) && !role.Value.Equals("Administrator"))
+                            if (Int32.Parse(claimId) != Int32.Parse(paramId) && !role.Equals("Administrador"))
                             {
                                 context.Response.StatusCode = 403;
                                 return;

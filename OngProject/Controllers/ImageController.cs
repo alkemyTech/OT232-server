@@ -14,26 +14,19 @@ namespace OngProject.Controllers
     [ApiController]
     public class ImageController : ControllerBase
     {
-        private readonly IAmazonS3 amazons3;
+        private readonly IAmazonS3 _amazons3;
+        private readonly IImageHelper _imageHelper;
 
-        public ImageController(IAmazonS3 amazonS3)
+        public ImageController(IAmazonS3 amazonS3, IImageHelper imageHelper)
         {
-            this.amazons3 = amazonS3;
+            _amazons3 = amazonS3;
+            _imageHelper = imageHelper;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromForm] IFormFile file)
+        public async Task<string> UploadFile(IFormFile file) 
         {
-            var putRequest = new PutObjectRequest()
-            {
-                BucketName = "g232alkemy",
-                Key = file.FileName,
-                InputStream = file.OpenReadStream(),
-                ContentType = file.ContentType,
-
-            };
-            var result = await this.amazons3.PutObjectAsync(putRequest);
-            return Ok("Imagen subida correctamente");
+            return await _imageHelper.UploadFile(file);
         }
     }
 }

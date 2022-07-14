@@ -4,6 +4,7 @@ using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.DataAccess;
 using OngProject.Entities;
+using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -33,10 +34,23 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public List<Task> GetAll()
+        public async Task<Response<PagedData<List<TestimonialDto>>>> GetAll(int Page = 1)
         {
-            throw new NotImplementedException();
+            var query = new QueryProperty<Testimonial>(Page, 10);
+            var paged = new PagedData<List<TestimonialDto>>(TestimonialMapper.ToListTestimonial
+                (await _unitOfWork.TestimonialsRepository.GetAsync(query)), await CountElements(), Page, 10, "News");
+            var response = new Response<PagedData<List<TestimonialDto>>>(paged);
+
+            if (response.Data == null)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.NotFound;
+                response.Errors = new string[] { "404" };
+            }
+
+            return response;
         }
+
 
         public Task GetById(int Id)
         {
@@ -75,5 +89,7 @@ namespace OngProject.Core.Business
 
             return response;
         }
+
+        public async Task<int> CountElements() => await _unitOfWork.TestimonialsRepository.CountElements();
     }
 }

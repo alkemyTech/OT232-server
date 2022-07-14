@@ -2,6 +2,7 @@
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -61,11 +62,24 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public Task Insert()
+        public async Task<Response<bool>> Insert(InsertSlideDto slideDto)
         {
-            throw new NotImplementedException();
-        }
+            List<Slide> listSlide = await _unitOfWork.SlidesRepository.GetAll();
 
+            var response = new Response<bool>();
+
+            var order = String.IsNullOrEmpty(slideDto.Order) ? (listSlide.Count() + 1).ToString() : slideDto.Order;
+
+            response.Data = await _unitOfWork.SlidesRepository.Insert(SlideMapper.toDtoInsertSlide(slideDto, order));
+
+            if (!response.Data)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.Error;
+
+            }
+            return response;
+        }
 
         public async Task<Response<bool>> Update(UpdateSlidesDto slide, int Id)
         {

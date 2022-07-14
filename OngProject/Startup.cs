@@ -90,6 +90,7 @@ namespace OngProject
             services.AddScoped<IAuthenticationBusiness, AuthenticationBusiness>();
             services.AddScoped<IContactsBusiness, ContactsBusiness>();
             services.AddScoped<ISlidesBusiness, SlidesBusiness>();
+            services.AddScoped<IImageHelper, ImageHelper>();
 
             //JWT
             services.AddAuthentication(options =>
@@ -130,7 +131,6 @@ namespace OngProject
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
 
             app.UseAuthorization();
             app.UseAuthentication();

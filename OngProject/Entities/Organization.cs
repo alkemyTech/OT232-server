@@ -17,7 +17,7 @@ namespace OngProject.Entities
 
         public string Address { get; set; }
 
-        [StringLength(255)]
+        [Phone]
         public int Phone { get; set; }
 
         [StringLength(255)]

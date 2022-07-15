@@ -30,16 +30,14 @@ namespace OngProject.Controllers
         public async Task<IActionResult> GetById(int Id) => Ok(await _slideBusiness.GetById(Id));
 
         [HttpPost]
-        public IActionResult Insert()
-        {
-            return NoContent();
-        }
+        [HttpPost]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        public async Task<IActionResult> Insert(InsertSlideDto slideDto) => Ok(await _slideBusiness.Insert(slideDto));
 
         [HttpPut]
-        public IActionResult Update()
-        {
-            return NoContent();
-        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        [Route("{Id}")]
+        public async Task<IActionResult> Update(UpdateSlidesDto slides, int Id) => Ok(await _slideBusiness.Update(slides, Id));
 
         [HttpDelete]
        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]

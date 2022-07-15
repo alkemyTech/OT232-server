@@ -39,7 +39,9 @@ namespace OngProject.Controllers
         /// <returns></returns>
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
-        public async Task<IActionResult> GetAll() => Ok(await _membersBusiness.GetAll());
+        public async Task<IActionResult> GetAll(int pageNumber = 1) => Ok(await _membersBusiness.GetAll(pageNumber));
+
+
 
         // GET: /Members/2
         /// <summary>
@@ -60,6 +62,8 @@ namespace OngProject.Controllers
         {
             return NoContent();
         }
+        
+        
         // POST: /Members
         /// <summary>
         /// Crea un Miembro en la BD.
@@ -89,6 +93,8 @@ namespace OngProject.Controllers
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
         public async Task<IActionResult> Insert(List<InsertMemberDto> member) => Ok(await _membersBusiness.Insert(member));
+        
+        
         // PUT: /Members/2
         /// <summary>
         /// Actualiza un Miembro en la BD.

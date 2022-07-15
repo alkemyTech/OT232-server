@@ -8,7 +8,7 @@ namespace OngProject.Core.Interfaces
     public interface IMembersBusiness
     {
 
-        Task<Response<List<MemberDto>>> GetAll();
+        Task<Response<PagedData<List<MemberDto>>>> GetAll(int pageNumber);
 
         Task GetById(int id);
 

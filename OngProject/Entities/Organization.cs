@@ -18,7 +18,8 @@ namespace OngProject.Entities
         public string Address { get; set; }
 
         [Phone]
-        public int Phone { get; set; }
+        public string Phone { get; set; }
+
 
         [StringLength(255)]
         public string Email { get; set; }

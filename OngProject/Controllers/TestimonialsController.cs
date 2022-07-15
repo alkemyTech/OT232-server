@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -24,6 +26,7 @@ namespace OngProject.Controllers
         {
             _testimonialsBusiness = testimonialsBusiness;
         }
+
         // GET: /testimonials
         /// <summary>
         /// Obtiene una lista de  testimonios.
@@ -38,14 +41,9 @@ namespace OngProject.Controllers
         /// <response code="404">NotFound. No se ha encontrado el objeto solicitado.</response>
         /// <returns></returns>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult GetAll()
-        {
-            return Ok();
-        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
+        public async Task<IActionResult> GetAll(int Page = 1) => Ok(await _testimonialsBusiness.GetAll(Page));
+
         // GET: /testimonials/5
         /// <summary>
         /// Obtiene un testimonio por su Id.
@@ -70,6 +68,7 @@ namespace OngProject.Controllers
         {
             return Ok();
         }
+
         // POST: /testimonials
         /// <summary>
         /// Crea un testimonio en la BD.
@@ -100,6 +99,8 @@ namespace OngProject.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Insert(List<InsertTestimonialDto> testimonialsDtos) => Ok(await _testimonialsBusiness.Insert(testimonialsDtos));
+
+
         // PUT: /Activities/5
         /// <summary>
         /// Actualiza una actividad en la BD.
@@ -124,14 +125,12 @@ namespace OngProject.Controllers
         /// <response code="500">InternalServerError, Error del servidor</response>
         /// <returns></returns>
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult Update()
-        {
-            return Created("", null);
-        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        [Route("{Id}")]
+        public async Task<IActionResult> Update(UpdateTestimonialDto testimonial, int Id) => Ok(await _testimonialsBusiness.Update(testimonial, Id));
+
+
+
         // DELETE: api/Testimonial/5
         /// <summary>
         /// Elimina una actividad por su Id.

@@ -1,4 +1,5 @@
-﻿using OngProject.Core.Models.DTOs;
+﻿using Newtonsoft.Json;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using System.Collections.Generic;
 
@@ -83,6 +84,7 @@ namespace OngProject.Core.Mapper
         }
         public static Organization MixModels(UpdateOrganizationDto dto, Organization org)
         {
+            JsonConvert.SerializeObject(dto);
             if (org != null)
             {
                 org.Address = dto.Address;
@@ -94,6 +96,7 @@ namespace OngProject.Core.Mapper
                 org.FacebookUrl = dto.FacebookUrl;
                 org.InstagramUrl = dto.InstagramUrl;
             }
+             
             return org;
         }
     }

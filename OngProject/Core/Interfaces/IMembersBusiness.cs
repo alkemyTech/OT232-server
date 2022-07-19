@@ -14,7 +14,7 @@ namespace OngProject.Core.Interfaces
 
         Task<Response<bool>> Insert(List<InsertMemberDto> memberDtos);
 
-        Task Update();
+        Task<Response<bool>> Update(UpdateMemberDto member, int Id);
 
         Task<Response<bool>> Delete(int Id);
 

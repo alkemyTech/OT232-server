@@ -93,8 +93,8 @@ namespace OngProject.Controllers
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
         public async Task<IActionResult> Insert(List<InsertMemberDto> member) => Ok(await _membersBusiness.Insert(member));
-        
-        
+
+
         // PUT: /Members/2
         /// <summary>
         /// Actualiza un Miembro en la BD.
@@ -120,11 +120,12 @@ namespace OngProject.Controllers
         /// <response code="404">NotFound. No se ha encontrado el objeto solicitado.</response>
         /// <response code="500">InternalServerError, Error del servidor</response>
         /// <returns></returns>
+        /// 
         [HttpPut]
-        public IActionResult Update(Member entity)
-        {
-            return NoContent();
-        }
+        [Route("{Id}")]
+        public async Task<IActionResult> Update(UpdateMemberDto member, int Id) => Ok(await _membersBusiness.Update(member, Id));
+
+
         // DELETE: api/Members/5
         /// <summary>
         /// Elimina a un miembro por su Id.

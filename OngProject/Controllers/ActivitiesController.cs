@@ -90,7 +90,7 @@ namespace OngProject.Controllers
         /// <response code="500">InternalServerError, Error del servidor</response>
         /// <response code="404">NotFound. No se ha encontrado el objeto solicitado.</response>
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> Insert(List<InsertActivityDto> activity) => Ok(await _activitiesBusiness.Insert(activity));
 
         // PUT: /activities

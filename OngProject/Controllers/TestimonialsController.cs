@@ -27,6 +27,7 @@ namespace OngProject.Controllers
             _testimonialsBusiness = testimonialsBusiness;
         }
 
+
         // GET: /testimonials
         /// <summary>
         /// Obtiene una lista de  testimonios.
@@ -44,30 +45,6 @@ namespace OngProject.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
         public async Task<IActionResult> GetAll(int Page = 1) => Ok(await _testimonialsBusiness.GetAll(Page));
 
-        // GET: /testimonials/5
-        /// <summary>
-        /// Obtiene un testimonio por su Id.
-        /// </summary>
-        /// <remarks>
-        /// Obtiene un testimonio por su Id especificada en la url.
-        /// </remarks>
-        /// <param name="Id">Id del objeto.</param>
-        /// <response code="401">Unauthorized.El Token JWT de acceso es incorrecto o no esta indicado.</response>              
-        /// <response code="200">OK. Devuelve el objeto solicitado.</response>        
-        /// <response code="404">NotFound. No se ha encontrado el objeto solicitado.</response>
-        /// <response code="400">BadRequest. Ha ocurrido un error y no se pudo llevar a cabo la peticion.</response>
-        /// <response code="500">InternalServerError, Error del servidor</response>
-        /// <returns></returns>
-        [HttpGet("{Id}")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult GetById(int Id)
-        {
-            return Ok();
-        }
 
         // POST: /testimonials
         /// <summary>
@@ -128,7 +105,6 @@ namespace OngProject.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         [Route("{Id}")]
         public async Task<IActionResult> Update(UpdateTestimonialDto testimonial, int Id) => Ok(await _testimonialsBusiness.Update(testimonial, Id));
-
 
 
         // DELETE: api/Testimonial/5

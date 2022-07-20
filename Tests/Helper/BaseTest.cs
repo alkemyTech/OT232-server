@@ -25,7 +25,6 @@ namespace Tests.Helper
             OrganizationsSeed.Seed(context);
             RolesSeed.Seed(context);
             SlidesSeed.Seed(context);
-            TestimonialsSeed.Seed(context);
             UsersSeed.Seed(context);
 
             context.SaveChanges();

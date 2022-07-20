@@ -17,30 +17,16 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
 
         }
-        public async Task<Response<string>> Delete(int id)
+        public async Task<Response<bool>> Delete(int id)
         {
-            var response = new Response<string>();
-            var contact = await _unitOfWork.ContactsRepository.GetById(id);
-            if (contact == null)
-            {
-                throw new Exception("Contact does not exist.");
-            }
-            if (contact.IsDeleted == true || contact.Id != id)
-            {
-                throw new Exception("Contact does not exist or deleted.");
-            }
-            if (contact != null)
-            {
-                await _unitOfWork.ContactsRepository.Delete(id);
-
-                return new Response<string>("Success", message: "Entity Deleted");
-            }
-            else
+            var response = new Response<bool>(await _unitOfWork.ContactsRepository.Delete(id));
+            if (!response.Data)
             {
                 response.Succeeded = false;
-                response.Message = ResponseMessage.UnexpectedErrors;
-                return response;
+                response.Message = ResponseMessage.Error;
+
             }
+            return response;
         }
 
         public async Task<Response<List<ContactsDto>>> GetAll()

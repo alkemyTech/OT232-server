@@ -16,7 +16,7 @@ namespace OngProject.Core.Interfaces
 
         Task Update();
 
-        Task<Response<string>> Delete(int id);
+        Task<Response<bool>> Delete(int id);
 
     }
 }

@@ -58,6 +58,12 @@ namespace Tests.Helper
             return new MembersBusiness(unitOfWork);
         }
 
+        protected static IAuthenticationBusiness BuildAuthenticationBusiness()
+        {
+            var unitOfWork = BuildUnitOfWork();
+            return new AuthenticationBusiness(BuildUsersBusiness(), null ,unitOfWork);
+        }
+
         protected static void BuildSender()
         {
         }

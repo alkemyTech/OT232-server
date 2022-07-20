@@ -39,11 +39,6 @@ namespace Tests.Helper
             var context = BuildContext();
             return new UnitOfWork(context);
         }
-        protected static IUsersBusiness BuildUsersBusiness()
-        {
-            var unitOfWork = BuildUnitOfWork();
-            return new UsersBusiness(unitOfWork);
-        }
         protected static IContactsBusiness BuildContactBussines()
         {
             var unitOfWork = BuildUnitOfWork();
@@ -69,6 +64,12 @@ namespace Tests.Helper
         {
             var unitOfWork = BuildUnitOfWork();
             return new AuthenticationBusiness(BuildUsersBusiness(), null ,unitOfWork);
+        }
+
+        protected static IUsersBusiness BuildUsersBusiness()
+        {
+            var unitOfWork = BuildUnitOfWork();
+            return new UsersBusiness(unitOfWork);
         }
 
         protected static void BuildSender()

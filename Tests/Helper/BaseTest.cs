@@ -57,7 +57,11 @@ namespace Tests.Helper
             var unitOfWork = BuildUnitOfWork();
             return new MembersBusiness(unitOfWork);
         }
-
+        protected static INewsBusiness BuildNewsBusiness()
+        {
+            var unitOfWork = BuildUnitOfWork();
+            return new NewsBusiness(unitOfWork);
+        }
         protected static void BuildSender()
         {
         }

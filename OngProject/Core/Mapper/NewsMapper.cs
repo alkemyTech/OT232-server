@@ -8,14 +8,17 @@ namespace OngProject.Core.Mapper
     {
         public static NewsDto ToNewsDto(News news)
         {
-            var dto = new NewsDto
-            {
-                Description = news.Description,
-                Image = news.Image,
-                Name = news.Name
-            };    
+            if (news != null) { 
+                var dto = new NewsDto
+                {
+                    Description = news.Description,
+                    Image = news.Image,
+                    Name = news.Name
+                };
 
-            return dto; 
+            return dto;
+        }
+            return null;
         }
 
         public static List<NewsDto> ToNewsDtoList(List<News> newsList) 
@@ -39,35 +42,48 @@ namespace OngProject.Core.Mapper
 
         public static News ToNewsModel(NewsDto dto) 
         {
-            var model = new News
+            if (dto != null)
             {
-                Description = dto.Description,
-                Image = dto.Image,
-                Name = dto.Name
-            };
-            return model;
+                var model = new News
+                {
+                    Description = dto.Description,
+                    Image = dto.Image,
+                    Name = dto.Name
+                };
+                return model;
+            }
+            return null;
         }
         public static News InsertToNewsModel(InsertNewsDto dto)
         {
-            var model = new News
+            if (dto != null)
             {
-                Description = dto.Description,
-                Image = dto.Image,
-                Name = dto.Name,
-                CategoryId = dto.CategoryId
-            };
-            return model;
+                var model = new News
+                {
+                    Description = dto.Description,
+                    Image = dto.Image,
+                    Name = dto.Name,
+                    CategoryId = dto.CategoryId
+                };
+                return model;
+            }
+            return null;
+
         }
         public static News UpdateToNews(UpdateToNewsDto newsDTO)
         {
-            News news = new News();
+            if (newsDTO != null)
+            {
+                News news = new News();
 
-            news.Name = newsDTO.Name;
-            news.Description = newsDTO.Description;
-            news.Image = newsDTO.Image;
-            news.CategoryId = newsDTO.CategoryId;
+                news.Name = newsDTO.Name;
+                news.Description = newsDTO.Description;
+                news.Image = newsDTO.Image;
+                news.CategoryId = newsDTO.CategoryId;
 
-            return news;
+                return news;
+            }
+            return null;
         }
     }
 }

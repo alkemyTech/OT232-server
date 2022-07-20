@@ -34,7 +34,7 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public async Task<Response<PagedData<List<TestimonialDto>>>> GetAll(int Page = 1)
+        public async Task<Response<PagedData<List<TestimonialDto>>>> GetAll(int Page)
         {
             var query = new QueryProperty<Testimonial>(Page, 10);
             var paged = new PagedData<List<TestimonialDto>>(TestimonialMapper.ToListTestimonial
@@ -49,12 +49,6 @@ namespace OngProject.Core.Business
             }
 
             return response;
-        }
-
-
-        public Task GetById(int Id)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<Response<bool>> Insert(List<InsertTestimonialDto> testimonialsDtos)

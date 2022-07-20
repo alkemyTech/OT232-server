@@ -13,8 +13,8 @@ namespace OngProject.Core.Models.DTOs
             PageSize = pageSize;
             CurrentPage = pageNumber;
             TotalPages = (int)Math.Ceiling(count / (double)PageSize);
-            NextPage = (HasNext) ? $"https://localhost:5001/api/{entity}?Page={pageNumber + 1}" : string.Empty;
-            PreviousPage = (HasPrevious) ? $"https://localhost:5001/api/{entity}?Page={pageNumber - 1}" : string.Empty;
+            NextPage = (HasNext && count > pageSize) ? $"https://localhost:5001/api/{entity}?Page={pageNumber + 1}" : string.Empty;
+            PreviousPage = (HasPrevious && count > pageSize) ? $"https://localhost:5001/api/{entity}?Page={pageNumber - 1}" : string.Empty;
         }
         
         public int CurrentPage { get; private set; }

@@ -33,7 +33,6 @@ namespace OngProject.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
         public async Task<IActionResult> Insert(List<InsertContactDto> contact) => Ok(await _contactsBusiness.Insert(contact));
 
         [HttpPut]
@@ -46,25 +45,7 @@ namespace OngProject.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
         public async Task<IActionResult> Delete(int Id)
         {
-            try
-            {
-                var result = await _contactsBusiness.Delete(Id);
-                if (result.Succeeded == false)
-                {
-                    return StatusCode(403, result);
-                }
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                var response = new Response<string>()
-                {
-                    Data = "Error - 404",
-                    Message = ex.Message,
-                    Succeeded = false
-                };
-                return StatusCode(404, response);
-            }
+          return Ok(await _contactsBusiness.Delete(Id));
         }
     }
 }

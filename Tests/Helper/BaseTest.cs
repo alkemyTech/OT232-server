@@ -53,6 +53,13 @@ namespace Tests.Helper
             var unitOfWork = BuildUnitOfWork();
             return new TestimonialsBusiness(unitOfWork);
         }
+
+        protected static IOrganizationsBusiness BuildOrganizationsBusiness()
+        {
+            var unitOfWork = BuildUnitOfWork();
+            return new OrganizationsBusiness(unitOfWork);
+        }
+
         protected static IMembersBusiness BuildMembersBusiness()
         {
             var unitOfWork = BuildUnitOfWork();
@@ -82,6 +89,7 @@ namespace Tests.Helper
         protected static void BuildSender()
         {
         }
+
         protected IFormFile GetMockJPG()
         {
             var content = new byte[] { 0xFF, 0xD8 };
@@ -91,5 +99,6 @@ namespace Tests.Helper
             //create FormFile with desired data
             return new FormFile(stream, 0, stream.Length, "id_from_form", fileName);
         }
+
     }
 }

@@ -6,6 +6,8 @@ using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using OngProject.Core.Business;
 using Microsoft.Extensions.Configuration;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace Tests.Helper
 {
@@ -47,6 +49,11 @@ namespace Tests.Helper
             var unitOfWork = BuildUnitOfWork();
             return new ContactsBusiness(unitOfWork);
         }
+        protected static IActivitiesBusiness BuildActivitiesBusiness()
+        {
+            var unitOfWork = BuildUnitOfWork();
+            return new ActivitiesBusiness(unitOfWork);
+        }
         protected static ITestimonialsBusiness BuildTestimonialsBusiness()
         {
             var unitOfWork = BuildUnitOfWork();
@@ -55,6 +62,15 @@ namespace Tests.Helper
 
         protected static void BuildSender()
         {
+        }
+        protected IFormFile GetMockJPG()
+        {
+            var content = new byte[] { 0xFF, 0xD8 };
+            var fileName = "test.jpg";
+            var stream = new MemoryStream(content);
+
+            //create FormFile with desired data
+            return new FormFile(stream, 0, stream.Length, "id_from_form", fileName);
         }
     }
 }

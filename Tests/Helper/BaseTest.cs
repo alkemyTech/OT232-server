@@ -52,6 +52,11 @@ namespace Tests.Helper
             var unitOfWork = BuildUnitOfWork();
             return new TestimonialsBusiness(unitOfWork);
         }
+        protected static IMembersBusiness BuildMembersBusiness()
+        {
+            var unitOfWork = BuildUnitOfWork();
+            return new MembersBusiness(unitOfWork);
+        }
 
         protected static IAuthenticationBusiness BuildAuthenticationBusiness()
         {

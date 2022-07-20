@@ -21,14 +21,7 @@ namespace OngProject.Core.Business
         {
             var response = new Response<string>();
             var activity = await _unitOfWork.ActivitiesRepository.GetById(id);
-            if (activity == null)
-            {
-                throw new Exception("Activity does not exist.");
-            }
-            if (activity.IsDeleted == true || activity.Id != id)
-            {
-                throw new Exception("Activity does not exist or deleted.");
-            }
+           
             if (activity != null)
             {
                 await _unitOfWork.ActivitiesRepository.Delete(id);

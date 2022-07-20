@@ -40,10 +40,7 @@ namespace OngProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult Insert(Organization entity)
-        {
-            return NoContent();
-        }
+        public async Task<IActionResult> Insert(List<InsertOrganizationDto> org) => Ok(await _organizationsBusiness.Insert(org));
 
         [HttpPost("/Public")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]

@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using OngProject.Core.Models;
+using OngProject.Repositories.Interfaces;
 
 namespace OngProject.Core.Business
 {
@@ -17,11 +18,13 @@ namespace OngProject.Core.Business
     {
         private readonly IUsersBusiness _usersBusiness;
         private readonly IConfiguration _config;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AuthenticationBusiness(IUsersBusiness usersBusiness, IConfiguration config)
+        public AuthenticationBusiness(IUsersBusiness usersBusiness, IConfiguration config, IUnitOfWork unitOfWork)
         {
             _usersBusiness = usersBusiness;
             _config = config;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<List<User>> UserExists(LoginUserDto user) => await _usersBusiness.GetAsync(user);

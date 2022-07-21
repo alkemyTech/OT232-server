@@ -96,8 +96,34 @@ namespace OngProject.Core.Mapper
                 org.FacebookUrl = dto.FacebookUrl;
                 org.InstagramUrl = dto.InstagramUrl;
             }
-             
+
             return org;
         }
+        public static List<Organization> ToOrganizationList(List<InsertOrganizationDto> orgDtos)
+        {
+            
+            List<Organization> organizations = new List<Organization>();
+
+            foreach (var m in orgDtos)
+            {
+                organizations.Add
+                (
+                    new Organization
+                    {
+                        Address = m.Address,
+                        Image = m.Image,
+                        Phone = m.Phone,
+                        WelcomeText = m.WelcomeText,
+                        AboutUsText = m.AboutUsText,
+                        LinkedinUrl = m.LinkedinUrl,
+                        FacebookUrl = m.FacebookUrl,
+                        InstagramUrl = m.InstagramUrl
+                     });
+            }
+            return organizations;
+        }
+
+           
     }
 }
+

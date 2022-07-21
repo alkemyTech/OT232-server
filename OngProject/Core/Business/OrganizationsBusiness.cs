@@ -56,11 +56,18 @@ namespace OngProject.Core.Business
             throw new NotImplementedException();
         }
 
-        public Task Insert()
+        public async Task<Response<bool>> Insert(List<InsertOrganizationDto> orgDtos)
         {
-            throw new NotImplementedException();
-        }
+            var response = new Response<bool>(await _unitOfWork.OrganizationsRepository.InsertRange(OrganizationMapper.ToOrganizationList(orgDtos)));
 
+            if (!response.Data)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
+            }
+
+            return response;
+        }
         public async Task<Response<bool>> Update(int Id, UpdateOrganizationDto organization)
         {
             var model = await _unitOfWork.OrganizationsRepository.GetById(Id);

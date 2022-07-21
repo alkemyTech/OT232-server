@@ -35,10 +35,7 @@ namespace OngProject.Middleware
             {
                 "/api/Activities",
                 "/api/Categories",
-                "/api/Comments",
                 "/api/News",
-                "/api/Contacts",
-                "/api/Members",
                 "/api/Organizations",
                 "/api/Roles",
                 "/api/Slides",

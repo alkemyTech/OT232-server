@@ -43,9 +43,17 @@ namespace OngProject.Core.Business
             return await _unitOfWork.UsersRepository.GetAsync(query);
         }
 
-        public Task GetById(int Id)
+        public async Task<Response<RegisterRequestDto>> GetById(int Id)
         {
-            throw new System.NotImplementedException();
+            var response = new Response<RegisterRequestDto>(UserMapper.ToRegisterRequest(await _unitOfWork.UsersRepository.GetById(Id)));
+
+            if (response == null)
+            {
+                response.Succeeded = false;
+                response.Errors = new string[] { "Error - 404" };
+                response.Message = ResponseMessage.NotFound;
+            }
+            return response;
         }
 
         public async Task<bool> Insert(RegisterRequestDto dto) => await _unitOfWork.UsersRepository.Insert(UserMapper.ToUser(dto));

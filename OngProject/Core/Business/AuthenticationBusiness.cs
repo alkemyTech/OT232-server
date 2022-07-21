@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using OngProject.Core.Models;
 using OngProject.Repositories.Interfaces;
 
 namespace OngProject.Core.Business
@@ -67,6 +68,8 @@ namespace OngProject.Core.Business
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<Response<RegisterRequestDto>> GetById(int Id) => await _usersBusiness.GetById(Id);
     }
 }
 

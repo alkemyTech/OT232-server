@@ -98,7 +98,7 @@ namespace OngProject.Controllers
         /// <remarks>
         /// Elimina de la BD un usuario por su Id especificada en la url. Realiza un SoftDelete, cambiando un tag a false.
         /// </remarks>
-        /// <param name="Id">Id del objeto.</param>
+        /// <param name="id">Id del objeto.</param>
         /// <response code="401">Unauthorized.El Token JWT de acceso es incorrecto o no esta indicado.</response>              
         /// <response code="200">OK. Objeto borrado correctamente.</response>        
         /// <response code="404">NotFound. No se ha encontrado el objeto solicitado.</response>

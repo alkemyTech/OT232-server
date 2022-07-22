@@ -10,11 +10,9 @@ namespace OngProject.Core.Interfaces
 
         Task<Response<List<ContactsDto>>> GetAll();
 
-        Task GetById(int id);
 
         Task<Response<bool>> Insert(List<InsertContactDto> contactsDtos);
 
-        Task Update();
 
         Task<Response<bool>> Delete(int id);
 

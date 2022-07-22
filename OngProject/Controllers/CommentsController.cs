@@ -27,13 +27,6 @@ namespace OngProject.Controllers
 
         public async Task<IActionResult> GetAll() => Ok(await _commentsBusiness.GetAll());
 
-
-        [HttpGet("{Id})")]
-        public IActionResult GetById(int Id)
-        {
-            return NoContent();
-        }
-
         [HttpPost]
         public async Task<IActionResult> Insert(List<InsertCommentDto> commentDtos) => Ok(await _commentsBusiness.Insert(commentDtos));
 

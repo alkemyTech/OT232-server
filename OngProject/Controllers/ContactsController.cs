@@ -26,20 +26,8 @@ namespace OngProject.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> GetAll() => Ok(await _contactsBusiness.GetAll());
 
-        [HttpGet("{Id})")]
-        public IActionResult GetById(int id)
-        {
-            return NoContent();
-        }
-
         [HttpPost]
         public async Task<IActionResult> Insert(List<InsertContactDto> contact) => Ok(await _contactsBusiness.Insert(contact));
-
-        [HttpPut]
-        public IActionResult Update(Contact entity)
-        {
-            return NoContent();
-        }
 
         [HttpDelete("{Id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]

@@ -76,7 +76,7 @@ namespace Tests.Helper
         protected static IAuthenticationBusiness BuildAuthenticationBusiness()
         {
             var unitOfWork = BuildUnitOfWork();
-            return new AuthenticationBusiness(BuildUsersBusiness(), null ,unitOfWork);
+            return new AuthenticationBusiness(BuildUsersBusiness(),null);
         }
 
         protected static IUsersBusiness BuildUsersBusiness()

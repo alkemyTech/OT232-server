@@ -42,11 +42,6 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public Task GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Response<bool>> Insert(List<InsertContactDto> contactsDtos)
         {
             var response = new Response<bool>(await _unitOfWork.ContactsRepository.InsertRange(ContactMapper.ToContactList(contactsDtos)));
@@ -60,9 +55,5 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public Task Update()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

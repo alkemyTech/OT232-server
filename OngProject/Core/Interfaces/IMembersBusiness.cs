@@ -10,8 +10,6 @@ namespace OngProject.Core.Interfaces
 
         Task<Response<PagedData<List<MemberDto>>>> GetAll(int pageNumber);
 
-        Task GetById(int id);
-
         Task<Response<bool>> Insert(List<InsertMemberDto> memberDtos);
 
         Task<Response<bool>> Update(UpdateMemberDto member, int Id);

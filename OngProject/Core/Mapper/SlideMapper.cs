@@ -11,9 +11,28 @@ namespace OngProject.Core.Mapper
     {
         public static List<SlideDto> ToSlideDtoList(List<Slide> listSlides)
         {
-            List<SlideDto> listSlideDto = new List<SlideDto>();
+            List<SlideDto> listSlideDto = new();
 
-            foreach (var slide in listSlides)
+            if(listSlides != null)
+            {
+                foreach (var slide in listSlides)
+                {
+                    var slideDto = new SlideDto
+                    {
+                        ImageURL = slide.ImageURL,
+                        Text = slide.Text,
+                        Order = slide.Order
+                    };
+                    listSlideDto.Add(slideDto);
+                }
+                return listSlideDto;
+            }
+            return null;
+        }
+
+        public static SlideDto ToSlideDto(Slide slide)
+        {
+            if (slide != null)
             {
                 var slideDto = new SlideDto
                 {
@@ -21,94 +40,78 @@ namespace OngProject.Core.Mapper
                     Text = slide.Text,
                     Order = slide.Order
                 };
-                listSlideDto.Add(slideDto);
+                return slideDto;
             }
-
-            return listSlideDto;
+            return null;
         }
-
-        public static SlideDto toSlideDto(Slide slide)
-        {
-            if (slide == null)
-                return null;
-
-            var slideDto = new SlideDto
-            {
-                ImageURL = slide.ImageURL,
-                Text = slide.Text,
-                Order = slide.Order
-            };
-            return slideDto;
-        }
-
 
         public static Slide UpdateToSlide(UpdateSlidesDto slideDto)
         {
-            Slide slide = new Slide();
-
-            slide.ImageURL = slideDto.ImageURL;
-            slide.Text = slideDto.Text;
-            slide.Order = slideDto.Order;
-            slide.OrganizationID = slideDto.OrganizationId;
-
-            return slide;
+            if(slideDto != null)
+            {
+                Slide slide = new()
+                {
+                    ImageURL = slideDto.ImageURL,
+                    Text = slideDto.Text,
+                    Order = slideDto.Order,
+                    OrganizationID = slideDto.OrganizationId
+                };
+                return slide;
+            }
+            return null;
         }
-
-
 
         public static List<SlideOrganizationDto> ToSlideOrganizationDto(List<Slide> listSlides)
         {
-
-            if (listSlides == null)
-                return null;
-
             var slideDto = new List<SlideOrganizationDto>();
 
-            foreach (var slide in listSlides)
+            if (listSlides != null) 
             {
-                slideDto.Add(
-                new SlideOrganizationDto
+                foreach (var slide in listSlides)
                 {
+                    slideDto.Add
+                    (
+                        new SlideOrganizationDto
+                        {
 
-                    ImageURL = slide.ImageURL,
-                    Text = slide.Text,
-                    Order = slide.Order,
-                    Organization = new OrganizationDto
-                    {
-                        Name = slide.Organization.Name,
-                        Image = slide.Organization.Image,
-                        Phone = slide.Organization.Phone,
-                        Address = slide.Organization.Address,
-                        WelcomeText = slide.Organization.WelcomeText,
-                        AboutUsText = slide.Organization.AboutUsText,
-                        LinkedinUrl = slide.Organization.LinkedinUrl,
-                        FacebookUrl = slide.Organization.FacebookUrl,
-                        InstagramUrl = slide.Organization.InstagramUrl
-                        
-                    }
+                            ImageURL = slide.ImageURL,
+                            Text = slide.Text,
+                            Order = slide.Order,
+                            Organization = new OrganizationDto
+                            {
+                                Name = slide.Organization.Name,
+                                Image = slide.Organization.Image,
+                                Phone = slide.Organization.Phone,
+                                Address = slide.Organization.Address,
+                                WelcomeText = slide.Organization.WelcomeText,
+                                AboutUsText = slide.Organization.AboutUsText,
+                                LinkedinUrl = slide.Organization.LinkedinUrl,
+                                FacebookUrl = slide.Organization.FacebookUrl,
+                                InstagramUrl = slide.Organization.InstagramUrl
 
-                });
-
+                            }
+                        }
+                    );
+                }
+                return slideDto;
             }
-
-            return slideDto;
+            return null;
         }
 
-        public static Slide toDtoInsertSlide(InsertSlideDto insertSlideDto, string order)
+        public static Slide ToDtoInsertSlide(InsertSlideDto insertSlideDto, string order)
         {
-            if (insertSlideDto == null)
-                return null;
-
-            var slide = new Slide
+            if (insertSlideDto != null) 
             {
-                ImageURL = insertSlideDto.ImageURL,
-                Text = insertSlideDto.Text,
-                Order = int.Parse(order),
-                OrganizationID = insertSlideDto.OrganizationID
-            };
-
-            return slide;
+                var slide = new Slide
+                {
+                    ImageURL = insertSlideDto.ImageURL,
+                    Text = insertSlideDto.Text,
+                    Order = int.Parse(order),
+                    OrganizationID = insertSlideDto.OrganizationID
+                };
+                return slide;
+            }
+            return null;
         }
-
     }
 }

@@ -37,7 +37,7 @@ namespace OngProject.Core.Business
         public async Task<Response<PagedData<List<TestimonialDto>>>> GetAll(int Page)
         {
             var query = new QueryProperty<Testimonial>(Page, 10);
-            var paged = new PagedData<List<TestimonialDto>>(TestimonialMapper.ToListTestimonial
+            var paged = new PagedData<List<TestimonialDto>>(TestimonialMapper.ToTestimonialsDtoList
                 (await _unitOfWork.TestimonialsRepository.GetAsync(query)), await CountElements(), Page, 10, "News");
             var response = new Response<PagedData<List<TestimonialDto>>>(paged);
 

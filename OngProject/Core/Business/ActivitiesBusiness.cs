@@ -49,11 +49,6 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public Task GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Response<bool>> Insert(List<InsertActivityDto> activityDtos)
         {
             var response = new Response<bool>(await _unitOfWork.ActivitiesRepository.InsertRange(ActivityMapper.ToActivityList(activityDtos)));
@@ -65,11 +60,6 @@ namespace OngProject.Core.Business
             }
 
             return response;
-        }
-
-        public Task Update()
-        {
-            throw new NotImplementedException();
         }
     }
 }

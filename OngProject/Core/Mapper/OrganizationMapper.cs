@@ -11,80 +11,76 @@ namespace OngProject.Core.Mapper
         {
             List<OrganizationDto> organizationDtos = new();
 
-            foreach (var m in organizations)
+            if (organizations != null)
             {
-                organizationDtos.Add
-                (
-                    new OrganizationDto
-                    {
+                foreach (var m in organizations)
+                {
+                    organizationDtos.Add
+                    (
+                        new OrganizationDto
+                        {
 
-                        Name = m.Name,
-                        Image = m.Image,
-                        Address = m.Address,
-                        Phone = m.Phone,
-                        WelcomeText = m.WelcomeText,
-                        AboutUsText = m.AboutUsText,
-                        LinkedinUrl = m.LinkedinUrl,
-                        FacebookUrl = m.FacebookUrl,
-                        InstagramUrl = m.InstagramUrl
-                    }
-                );
+                            Name = m.Name,
+                            Image = m.Image,
+                            Address = m.Address,
+                            Phone = m.Phone,
+                            WelcomeText = m.WelcomeText,
+                            AboutUsText = m.AboutUsText,
+                            LinkedinUrl = m.LinkedinUrl,
+                            FacebookUrl = m.FacebookUrl,
+                            InstagramUrl = m.InstagramUrl
+                        }
+                    );
+                }
+                return organizationDtos;
             }
-
-            return organizationDtos;
+            return null;
         }
-        public static OrganizationDto ToNewsDto(Organization org)
-        {
-            var organization = new OrganizationDto
-            {
-                Name = org.Name,
-                Image = org.Image,
-                Address = org.Address,
-                Phone = org.Phone,
-                WelcomeText = org.WelcomeText,
-                AboutUsText = org.AboutUsText,
-                LinkedinUrl = org.LinkedinUrl,
-                FacebookUrl = org.FacebookUrl,
-                InstagramUrl = org.InstagramUrl
-            };
 
-            return organization;
-        }
         public static Organization ToOrganizationModel(OrganizationDto orgdto)
         {
-            var model = new Organization
-            {
-                Name = orgdto.Name,
-                Image = orgdto.Image,
-                Address = orgdto.Address,
-                Phone = orgdto.Phone,
-                WelcomeText = orgdto.WelcomeText,
-                AboutUsText = orgdto.AboutUsText,
-                LinkedinUrl = orgdto.LinkedinUrl,
-                FacebookUrl = orgdto.FacebookUrl,
-                InstagramUrl = orgdto.InstagramUrl
-            };
-            return model;
+            if (orgdto != null) 
+            { 
+                var model = new Organization
+                {
+                    Name = orgdto.Name,
+                    Image = orgdto.Image,
+                    Address = orgdto.Address,
+                    Phone = orgdto.Phone,
+                    WelcomeText = orgdto.WelcomeText,
+                    AboutUsText = orgdto.AboutUsText,
+                    LinkedinUrl = orgdto.LinkedinUrl,
+                    FacebookUrl = orgdto.FacebookUrl,
+                    InstagramUrl = orgdto.InstagramUrl
+                };
+                return model;
+            }
+            return null;
         }
+
         public static Organization UpdateToModel(UpdateOrganizationDto orgdto)
         {
-            var model = new Organization
+            if(orgdto != null)
             {
-                Name = orgdto.Name,
-                Image = orgdto.Image,
-                Address = orgdto.Address,
-                Phone = orgdto.Phone,
-                WelcomeText = orgdto.WelcomeText,
-                AboutUsText = orgdto.AboutUsText,
-                LinkedinUrl = orgdto.LinkedinUrl,
-                FacebookUrl = orgdto.FacebookUrl,
-                InstagramUrl = orgdto.InstagramUrl
-            };
-            return model;
+                var model = new Organization
+                {
+                    Name = orgdto.Name,
+                    Image = orgdto.Image,
+                    Address = orgdto.Address,
+                    Phone = orgdto.Phone,
+                    WelcomeText = orgdto.WelcomeText,
+                    AboutUsText = orgdto.AboutUsText,
+                    LinkedinUrl = orgdto.LinkedinUrl,
+                    FacebookUrl = orgdto.FacebookUrl,
+                    InstagramUrl = orgdto.InstagramUrl
+                };
+                return model;
+            }
+            return null;
         }
+
         public static Organization MixModels(UpdateOrganizationDto dto, Organization org)
         {
-            JsonConvert.SerializeObject(dto);
             if (org != null)
             {
                 org.Address = dto.Address;
@@ -96,34 +92,36 @@ namespace OngProject.Core.Mapper
                 org.FacebookUrl = dto.FacebookUrl;
                 org.InstagramUrl = dto.InstagramUrl;
             }
-
             return org;
         }
+
         public static List<Organization> ToOrganizationList(List<InsertOrganizationDto> orgDtos)
         {
-            
-            List<Organization> organizations = new List<Organization>();
+            List<Organization> organizations = new();
 
-            foreach (var m in orgDtos)
-            {
-                organizations.Add
-                (
-                    new Organization
-                    {
-                        Address = m.Address,
-                        Image = m.Image,
-                        Phone = m.Phone,
-                        WelcomeText = m.WelcomeText,
-                        AboutUsText = m.AboutUsText,
-                        LinkedinUrl = m.LinkedinUrl,
-                        FacebookUrl = m.FacebookUrl,
-                        InstagramUrl = m.InstagramUrl
-                     });
+            if (orgDtos != null) 
+            { 
+                foreach (var m in orgDtos)
+                {
+                    organizations.Add
+                    (
+                        new Organization
+                        {
+                            Address = m.Address,
+                            Image = m.Image,
+                            Phone = m.Phone,
+                            WelcomeText = m.WelcomeText,
+                            AboutUsText = m.AboutUsText,
+                            LinkedinUrl = m.LinkedinUrl,
+                            FacebookUrl = m.FacebookUrl,
+                            InstagramUrl = m.InstagramUrl
+                        }
+                    );
+                }
+                return organizations;
             }
-            return organizations;
+            return null;
         }
-
-           
     }
 }
 

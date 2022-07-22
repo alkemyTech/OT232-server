@@ -8,65 +8,80 @@ namespace OngProject.Core.Mapper
     {
         public static Testimonial ToTestimonial(InsertTestimonialDto testimonialDto)
         {
-            Testimonial testimonial = new()
+            if (testimonialDto != null)
             {
-                Content = testimonialDto.Content,
-                Name = testimonialDto.Name,
-                Image = testimonialDto.Image
-            };
+                Testimonial testimonial = new()
+                {
+                    Content = testimonialDto.Content,
+                    Name = testimonialDto.Name,
+                    Image = testimonialDto.Image
+                };
 
-            return testimonial;
+                return testimonial;
+            }
+            return null;
         }
 
         public static List<Testimonial> ToTestimonialsList(List<InsertTestimonialDto> testimonialDtos)
         {
             List<Testimonial> testimonials = new();
 
-            foreach (var t in testimonialDtos) 
+            if (testimonialDtos != null)
             {
-                testimonials.Add
-                (
-                    new Testimonial
-                    {
-                        Content = t.Content,
-                        Name = t.Name,
-                        Image = t.Image
-                    }
-                );
+                foreach (var t in testimonialDtos)
+                {
+                    testimonials.Add
+                    (
+                        new Testimonial
+                        {
+                            Content = t.Content,
+                            Name = t.Name,
+                            Image = t.Image
+                        }
+                    );
+                }
+                return testimonials;
             }
-            
-            return testimonials;
+            return null;
         }
-      
-        public static List<TestimonialDto> ToListTestimonial(List<Testimonial> testimonial)
+
+        public static List<TestimonialDto> ToTestimonialsDtoList(List<Testimonial> testimonial)
         {
             List<TestimonialDto> testimonialsdto = new();
 
-            foreach (var t in testimonial)
+            if (testimonial != null)
             {
-                testimonialsdto.Add
-                (
-                    new TestimonialDto
-                    {
-                        Content = t.Content,
-                        Name = t.Name,
-                        Image = t.Image
-                    }
-                );
+                foreach (var t in testimonial)
+                {
+                    testimonialsdto.Add
+                    (
+                        new TestimonialDto
+                        {
+                            Content = t.Content,
+                            Name = t.Name,
+                            Image = t.Image
+                        }
+                    );
+                }
+                return testimonialsdto;
             }
+            return null;
 
-            return testimonialsdto;
         }
-      
+
         public static Testimonial UpdateToTestimonial(UpdateTestimonialDto testimonialDto)
         {
-            Testimonial testimonial = new Testimonial();
-
-            testimonial.Name = testimonialDto.Name;
-            testimonial.Content = testimonialDto.Content;
-            testimonial.Image = testimonialDto.Image;
-
-            return testimonial;
+            if (testimonialDto != null)
+            {
+                Testimonial testimonial = new()
+                {
+                    Name = testimonialDto.Name,
+                    Content = testimonialDto.Content,
+                    Image = testimonialDto.Image
+                };
+                return testimonial;
+            }
+            return null;
         }
     }
 }

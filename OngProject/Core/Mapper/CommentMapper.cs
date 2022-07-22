@@ -8,59 +8,84 @@ namespace OngProject.Core.Mapper
     {
         public static Comment ToComment(InsertCommentDto commentDto)
         {
-            Comment comment = new()
+            if (commentDto != null)
             {
-                NewsID = commentDto.NewsID,
-                UserId = commentDto.UserID,
-                Body = commentDto.Body 
-            };
-            return comment;
+                Comment comment = new()
+                {
+                    NewsID = commentDto.NewsID,
+                    UserId = commentDto.UserID,
+                    Body = commentDto.Body
+                };
+                return comment;
+            }
+            return null;
         }
+
         public static List<Comment> ToCommentsList(List<InsertCommentDto> commentDtos)
         {
             List<Comment> comments = new();
-            foreach (var c in commentDtos)
+
+            if (commentDtos != null)
             {
-                comments.Add(
-                    new Comment
-                    {
-                        NewsID = c.NewsID,
-                        UserId=c.UserID,
-                        Body=c.Body
-                    }
+                foreach (var c in commentDtos)
+                {
+                    comments.Add
+                    (
+                        new Comment
+                        {
+                            NewsID = c.NewsID,
+                            UserId = c.UserID,
+                            Body = c.Body
+                        }
                     );
+                }
+                return comments;
             }
-            return comments;
+            return null;
         }
+
         public static CommentDto CommentDto(this Comment entity)
         {
-            return new CommentDto
+            if (entity != null)
             {
-                Body = entity.Body,
-                News = entity.News.Name,
-                User = entity.UserId
-            };
+                CommentDto comment = new()
+                {
+                    Body = entity.Body,
+                    News = entity.News.Name,
+                    User = entity.UserId
+                };
+                return comment;
+            }
+            return null;
         }
 
         public static List<GetCommentDto> ToOrderedDtoList(List<Comment> commentList)
         {
             List<GetCommentDto> commentDtoList = new();
-            foreach(var c in commentList)
+
+            if (commentList != null)
             {
-                commentDtoList.Add(new GetCommentDto
+                foreach (var c in commentList)
                 {
-                    Body = c.Body,
-                });
+                    commentDtoList.Add(new GetCommentDto
+                    {
+                        Body = c.Body,
+                    });
+                }
+                return commentDtoList;
             }
-            return commentDtoList;
+            return null;
         }
 
         public static Comment ToDtoComment(UpdateCommentDto commentDto, Comment comment)
         {
-            comment.UserId = commentDto.UserId;
-            comment.Body = commentDto.Body;
-            return comment;
+            if(comment != null)
+            {
+                comment.UserId = commentDto.UserId;
+                comment.Body = commentDto.Body;
+                return comment;
+            }
+            return null;
         }
-
     }
 }

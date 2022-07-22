@@ -16,28 +16,16 @@ namespace OngProject.Controllers
     public class OrganizationsController : Controller
     {
         private readonly IOrganizationsBusiness _organizationsBusiness;
-        private readonly IUnitOfWork _unitOfWork;
-        public OrganizationsController(IOrganizationsBusiness organizationsBusiness, IUnitOfWork unitOfWork)
+        public OrganizationsController(IOrganizationsBusiness organizationsBusiness)
         {
             _organizationsBusiness = organizationsBusiness;
-            _unitOfWork = unitOfWork;
         }
 
-        [HttpGet]
+        [HttpGet("public")]
         public async Task<IActionResult> GetAll() => Ok(await _organizationsBusiness.GetAll());
 
-        [HttpGet("{Id}")]
-        public IActionResult GetById(int id)
-        {
-            return NoContent();
-        }
-
         [HttpGet("{Id}/[Action]")]
-        public async Task<List<SlideOrganizationDto>> Slides(int Id)
-        {
-            var entity = await _organizationsBusiness.GetSlides(Id);
-            return entity;
-        }
+        public async Task<IActionResult> Slides(int Id) => Ok(await _organizationsBusiness.GetSlides(Id));
 
         [HttpPost]
         public async Task<IActionResult> Insert(List<InsertOrganizationDto> org) => Ok(await _organizationsBusiness.Insert(org));
@@ -46,13 +34,5 @@ namespace OngProject.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> Update (int Id, UpdateOrganizationDto organization)
             => Ok(await _organizationsBusiness.Update(Id, organization));
-            
-        
-
-        [HttpDelete]
-        public IActionResult Delete(Organization entity)
-        {
-            return NoContent();
-        }
     }
 }

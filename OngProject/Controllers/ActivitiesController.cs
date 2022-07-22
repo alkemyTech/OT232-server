@@ -39,7 +39,6 @@ namespace OngProject.Controllers
         /// <response code="500">InternalServerError, Error del servidor</response>
         /// <response code="404">NotFound. No se ha encontrado el objeto solicitado.</response>
         /// <returns></returns>
-        [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

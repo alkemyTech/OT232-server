@@ -49,7 +49,7 @@ namespace OngProject.Core.Business
 
         public async Task<Response<SlideDto>> GetById(int id)
         {
-            var response = new Response<SlideDto>(SlideMapper.toSlideDto(await _unitOfWork.SlidesRepository.GetById(id)));
+            var response = new Response<SlideDto>(SlideMapper.ToSlideDto(await _unitOfWork.SlidesRepository.GetById(id)));
 
             
             if (response.Data == null)
@@ -70,7 +70,7 @@ namespace OngProject.Core.Business
 
             var order = String.IsNullOrEmpty(slideDto.Order) ? (listSlide.Count() + 1).ToString() : slideDto.Order;
 
-            response.Data = await _unitOfWork.SlidesRepository.Insert(SlideMapper.toDtoInsertSlide(slideDto, order));
+            response.Data = await _unitOfWork.SlidesRepository.Insert(SlideMapper.ToDtoInsertSlide(slideDto, order));
 
             if (!response.Data)
             {

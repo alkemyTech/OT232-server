@@ -9,7 +9,6 @@ namespace OngProject.Core.Interfaces
     {
         Task<Response<bool>> Insert(List<InsertCommentDto> commentDto);
         Task<Response<List<GetCommentDto>>> GetAll();
-        Task GetById(int Id);
         Task<Response<string>> Delete(int Id);
         Task<Response<bool>> Update(UpdateCommentDto commentDto, int Id);
     }

@@ -18,13 +18,11 @@ namespace OngProject.Core.Business
     {
         private readonly IUsersBusiness _usersBusiness;
         private readonly IConfiguration _config;
-        private readonly IUnitOfWork _unitOfWork;
 
-        public AuthenticationBusiness(IUsersBusiness usersBusiness, IConfiguration config, IUnitOfWork unitOfWork)
+        public AuthenticationBusiness(IUsersBusiness usersBusiness, IConfiguration config)
         {
             _usersBusiness = usersBusiness;
             _config = config;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<List<User>> UserExists(LoginUserDto user) => await _usersBusiness.GetAsync(user);

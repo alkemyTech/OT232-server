@@ -45,11 +45,6 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public Task GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Response<bool>> Insert(List<InsertMemberDto> memberDtos) 
         {
             var response = new Response<bool>(await _unitOfWork.MembersRepository.InsertRange(MemberMapper.ToMemberList(memberDtos)));

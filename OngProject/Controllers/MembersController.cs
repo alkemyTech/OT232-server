@@ -40,29 +40,6 @@ namespace OngProject.Controllers
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> GetAll(int pageNumber = 1) => Ok(await _membersBusiness.GetAll(pageNumber));
-
-
-
-        // GET: /Members/2
-        /// <summary>
-        /// Obtiene un Miembros por su Id.
-        /// </summary>
-        /// <remarks>
-        /// Obtiene un Miembro por su Id especificada en la url.
-        /// </remarks>
-        /// <param name="Id">Id del objeto.</param>
-        /// <response code="401">Unauthorized.El Token JWT de acceso es incorrecto o no esta indicado.</response>              
-        /// <response code="200">OK. Devuelve el objeto solicitado.</response>        
-        /// <response code="404">NotFound. No se ha encontrado el objeto solicitado.</response>
-        /// <response code="400">BadRequest. Ha ocurrido un error y no se pudo llevar a cabo la peticion.</response>
-        /// <response code="500">InternalServerError, Error del servidor</response>
-        /// <returns></returns>
-        [HttpGet("{Id}")]
-        public IActionResult GetById(int Id)
-        {
-            return NoContent();
-        }
-        
         
         // POST: /Members
         /// <summary>

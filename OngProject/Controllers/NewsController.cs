@@ -77,16 +77,14 @@ namespace OngProject.Controllers
         ///        "image": "imagen como string($binary)",
         ///        "categoryId": "Id de la categoría de la novedad (un entero)"
         ///     }
-        ///     
-    /// 
-    /// </remarks>
-    /// <param name="newsDtos">Objeto a crear a la base de datos.</param>
-    /// <response code="401">Unauthorized.El Token JWT de acceso es incorrecto o no está indicado.</response>
-    /// <response code="200">Ok. Objeto correctamente creado en la base de datos.</response>        
-    /// <response code="400">BadRequest. No se ha creado el objeto en la base de datos. Formato del objeto incorrecto.</response>
-    /// <response code="404">NotFound. No se ha encontrado el objeto solicitado.</response> 
-    /// <response code="500">InternalServerError. Error interno del servidor</response>
-    [HttpPost]
+        /// </remarks>
+        /// <param name="dto">Objeto a crear a la base de datos.</param>
+        /// <response code="401">Unauthorized.El Token JWT de acceso es incorrecto o no está indicado.</response>
+        /// <response code="200">Ok. Objeto correctamente creado en la base de datos.</response>        
+        /// <response code="400">BadRequest. No se ha creado el objeto en la base de datos. Formato del objeto incorrecto.</response>
+        /// <response code="404">NotFound. No se ha encontrado el objeto solicitado.</response> 
+        /// <response code="500">InternalServerError. Error interno del servidor</response>
+        [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> Insert(InsertNewsDto dto) => Ok(await _newsBusiness.Insert(dto));
 

@@ -75,11 +75,6 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public Task GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Response<bool>> Insert(List<InsertCommentDto> commentDtos)
         {
             var response = new Response<bool>(await _unitOfWork.CommentsRepository.InsertRange(CommentMapper.ToCommentsList(commentDtos)));

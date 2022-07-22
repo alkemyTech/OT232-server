@@ -70,11 +70,11 @@ namespace Tests
         public async Task Insert_ShouldThrowNullException()
         {
             //Arrange
-            var contact = new List<InsertContactDto>();
-            contact.Add(null);
+            var contacts = new List<InsertContactDto>();
+            contacts.Add(null);
 
             //Act
-            var response = await _business.Insert(contact);
+            var response = await _business.Insert(contacts);
 
             //Assert
             Assert.IsTrue(response.Data);

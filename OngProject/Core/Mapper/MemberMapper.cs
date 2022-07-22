@@ -10,67 +10,70 @@ namespace OngProject.Core.Mapper
         {
             List<Member> members = new();
 
-            foreach (var m in memberDtos)
+            if (memberDtos != null)
             {
-                members.Add
-                (
-                    new Member
-                    {
-                        Description = m.Description,
-                        Name = m.Name,
-                        Image = m.Image,
-                        LinkedinUrl = m.LinkedinUrl,
-                        FacebookUrl = m.FacebookUrl,
-                        InstagramUrl = m.InstagramUrl
-                    }
-                );
+                foreach (var m in memberDtos)
+                {
+                    members.Add
+                    (
+                        new Member
+                        {
+                            Description = m.Description,
+                            Name = m.Name,
+                            Image = m.Image,
+                            LinkedinUrl = m.LinkedinUrl,
+                            FacebookUrl = m.FacebookUrl,
+                            InstagramUrl = m.InstagramUrl
+                        }
+                    );
+                }
+                return members;
             }
-
-            return members;
+            return null;
         }
 
         public static List<MemberDto> ToMembersDtoList(List<Member> members)
         {
             List<MemberDto> memberDtos = new();
 
-            foreach (var m in members)
+            if(members != null)
             {
-                memberDtos.Add
-                (
-                    new MemberDto
-                    {
-                        Description = m.Description,
-                        Name = m.Name,
-                        Image = m.Image,
-                        LinkedinUrl = m.LinkedinUrl,
-                        FacebookUrl = m.FacebookUrl,
-                        InstagramUrl = m.InstagramUrl
-                    }
-                );
+                foreach (var m in members)
+                {
+                    memberDtos.Add
+                    (
+                        new MemberDto
+                        {
+                            Description = m.Description,
+                            Name = m.Name,
+                            Image = m.Image,
+                            LinkedinUrl = m.LinkedinUrl,
+                            FacebookUrl = m.FacebookUrl,
+                            InstagramUrl = m.InstagramUrl
+                        }
+                    );
+                }
+                return memberDtos;
             }
-
-            return memberDtos;
+            return null;
         }
+
         public static Member UpdateToMember(UpdateMemberDto memberDto)
         {
             if (memberDto != null)
             {
-                Member member = new Member();
-
-                member.Name = memberDto.Name;
-                member.Description = memberDto.Description;
-                member.Image = memberDto.Image;
-                member.FacebookUrl = memberDto.FacebookUrl;
-                member.InstagramUrl = memberDto.InstagramUrl;
-                member.LinkedinUrl = memberDto.LinkedinUrl;
-
-
+                Member member = new()
+                {
+                    Name = memberDto.Name,
+                    Description = memberDto.Description,
+                    Image = memberDto.Image,
+                    FacebookUrl = memberDto.FacebookUrl,
+                    InstagramUrl = memberDto.InstagramUrl,
+                    LinkedinUrl = memberDto.LinkedinUrl
+                };
                 return member;
-
             }
             return null;
-                
         }
-
     }
 }

@@ -10,42 +10,48 @@ namespace OngProject.Core.Mapper
         {
             List<Contact> contact = new();
 
-            foreach (var m in contactDtos)
+            if(contactDtos != null)
             {
-                contact.Add
-                (
-                    new Contact
-                    {
-                        Name = m.Name,
-                        Email = m.Email,
-                        Phone = m.Phone,
-                        Message = m.Message
-                    }
-                );
+                foreach (var m in contactDtos)
+                {
+                    contact.Add
+                    (
+                        new Contact
+                        {
+                            Name = m.Name,
+                            Email = m.Email,
+                            Phone = m.Phone,
+                            Message = m.Message
+                        }
+                    );
+                }
+                return contact;
             }
-
-            return contact;
+            return null;
         }
 
         public static List<ContactsDto> ToContactsDtoList(List<Contact> contacts)
         {
             List<ContactsDto> contactDtos = new();
 
-            foreach (var m in contacts)
+            if(contacts != null)
             {
-                contactDtos.Add
-                (
-                    new ContactsDto
-                    {
-                        Name = m.Name,
-                        Email = m.Email,
-                        Phone = m.Phone,
-                        Message = m.Message
-                    }
-                );
+                foreach (var m in contacts)
+                {
+                    contactDtos.Add
+                    (
+                        new ContactsDto
+                        {
+                            Name = m.Name,
+                            Email = m.Email,
+                            Phone = m.Phone,
+                            Message = m.Message
+                        }
+                    );
+                }
+                return contactDtos;
             }
-
-            return contactDtos;
+            return null;
         }
     }
 }

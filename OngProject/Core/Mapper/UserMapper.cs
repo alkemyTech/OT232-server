@@ -14,7 +14,7 @@ namespace OngProject.Core.Mapper
         {
             if (registerDto != null)
             {
-                User user = new User();
+                User user = new();
                 user.FirstName = registerDto.FirstName;
                 user.LastName = registerDto.LastName;
                 user.Email = registerDto.Email;
@@ -81,5 +81,26 @@ namespace OngProject.Core.Mapper
             return null;
         }
 
+        public static List<UserDto> ToUserDtoList(List<User> users)
+        {
+            var userDtoList = new List<UserDto>();
+
+            if (users != null)
+            {
+                foreach (var user in users)
+                {
+                    var userDto = new UserDto
+                    {
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        Photo = user.Photo
+                    };
+                    userDtoList.Add(userDto);
+                }
+                return userDtoList;
+            }
+            return null;
+        }
     }
 }

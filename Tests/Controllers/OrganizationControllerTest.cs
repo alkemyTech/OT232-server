@@ -45,7 +45,7 @@ namespace Tests.Controllers
 
 
             //ASSERT
-            Assert.IsInstanceOfType(result, typeof(List<OrganizationDto>));
+            Assert.IsInstanceOfType(result.Data, typeof(List<OrganizationDto>));
         }
 
         [TestMethod]
@@ -53,7 +53,7 @@ namespace Tests.Controllers
         {
             //ARRANGE
             var response = await _business.GetAll();
-            Assert.IsInstanceOfType(response, typeof(List<OrganizationDto>));
+            Assert.IsInstanceOfType(response.Data, typeof(List<OrganizationDto>));
         }
 
         [TestMethod]

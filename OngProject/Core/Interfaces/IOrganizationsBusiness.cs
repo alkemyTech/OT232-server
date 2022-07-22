@@ -11,14 +11,10 @@ namespace OngProject.Core.Interfaces
     public interface IOrganizationsBusiness
     {
 
-        public Task<List<OrganizationDto>> GetAll();
-        public Task<Organization> GetById(int id);
+        Task<Response<List<OrganizationDto>>> GetAll();
         Task<Response<bool>> Insert(List<InsertOrganizationDto> orgDtos);
         Task<Response<bool>> Update(int Id, UpdateOrganizationDto organization);
-        public Task Delete();
-
-
-        Task<List<SlideOrganizationDto>> GetSlides(int Id);
+        Task<Response<List<SlideOrganizationDto>>> GetSlides(int Id);
 
     }
 }

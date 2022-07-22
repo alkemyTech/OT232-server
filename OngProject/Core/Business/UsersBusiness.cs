@@ -77,15 +77,18 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public async Task<List<UserDto>> GetAll()
+        public async Task<Response<List<UserDto>>> GetAll()
         {
-            var listUserDto = new List<UserDto>();
-            var users = await _unitOfWork.UsersRepository.GetAll();
+            var response = new Response<List<UserDto>>(UserMapper.ToUserDtoList(await _unitOfWork.UsersRepository.GetAll()));
 
-            if(users != null)
-                listUserDto = ConvertUserToDto.ConvertUserDto(users);
+            if (response.Data == null) 
+            {
+                response.Succeeded = false;
+                response.Errors = new string[] { "Error - 404" };
+                response.Message = ResponseMessage.NotFound;
+            }
 
-            return listUserDto;
+            return response;
         }
     }
 }

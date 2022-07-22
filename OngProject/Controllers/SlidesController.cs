@@ -30,7 +30,6 @@ namespace OngProject.Controllers
         public async Task<IActionResult> GetById(int Id) => Ok(await _slideBusiness.GetById(Id));
 
         [HttpPost]
-        [HttpPost]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> Insert(InsertSlideDto slideDto) => Ok(await _slideBusiness.Insert(slideDto));
 
@@ -40,7 +39,7 @@ namespace OngProject.Controllers
         public async Task<IActionResult> Update(UpdateSlidesDto slides, int Id) => Ok(await _slideBusiness.Update(slides, Id));
 
         [HttpDelete]
-       [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> Delete(int id) => Ok(await _slideBusiness.Delete(id));
     }
 }

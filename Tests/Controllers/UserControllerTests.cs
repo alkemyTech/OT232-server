@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tests.Helper;
 
-namespace Tests
+namespace Tests.Controllers
 {
     [TestClass]
     public class UserControllerTests : BaseTest
@@ -34,7 +34,7 @@ namespace Tests
             var contacts = await _business.GetAll();
 
             //Assert
-            Assert.IsTrue(contacts.Count > 0);
+            Assert.IsTrue(contacts.Data.Count > 0);
         }
 
         [TestMethod]

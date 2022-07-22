@@ -20,40 +20,35 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
 
         }
-        public Task Delete()
+
+        public async Task<Response<List<OrganizationDto>>> GetAll()
         {
-            throw new NotImplementedException();
-        }
+            var response = new Response<List<OrganizationDto>> (OrganizationMapper.ToOrganizationsDtoList(await _unitOfWork.OrganizationsRepository.GetAll()));
 
-        public async Task<List<OrganizationDto>> GetAll() 
-        {
-            var dtos = new List<OrganizationDto>();
-            var result = await _unitOfWork.OrganizationsRepository.GetAll();
-
-            foreach (var o in result)
-                dtos.Add(new OrganizationDto{ Name = o.Name, Address = o.Address, Image = o.Image, Phone = o.Phone, WelcomeText = o.WelcomeText, AboutUsText = o.AboutUsText, LinkedinUrl = o.LinkedinUrl, FacebookUrl = o.FacebookUrl, InstagramUrl = o.InstagramUrl });
-
-            return dtos;
-        }
-
-        public async Task<List<SlideOrganizationDto>> GetSlides(int Id)
-        {
-            var organization = await _unitOfWork.OrganizationsRepository.GetById(Id);
-            if (organization == null)
+            if (response == null)
             {
-                return null;
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
             }
-            var query = new QueryProperty<Slide>();
-            query.Where = x => x.OrganizationID == Id;
-            query.OrderBy = x => x.Order;
-            var slides = await _unitOfWork.SlidesRepository.GetAsync(query);
-
-            return SlideMapper.ToSlideOrganizationDto(slides);
+            return response;
         }
 
-        public Task<Organization> GetById(int id)
+        public async Task<Response<List<SlideOrganizationDto>>> GetSlides(int Id)
         {
-            throw new NotImplementedException();
+            var query = new QueryProperty<Slide>
+            {
+                Where = x => x.OrganizationID == Id,
+                OrderBy = x => x.Order
+            };
+
+            var response = new Response<List<SlideOrganizationDto>>(SlideMapper.ToSlideOrganizationDto(await _unitOfWork.SlidesRepository.GetAsync(query)));
+            
+            if (response == null)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.UnexpectedErrors;
+            }
+            return response;
         }
 
         public async Task<Response<bool>> Insert(List<InsertOrganizationDto> orgDtos)
@@ -71,7 +66,7 @@ namespace OngProject.Core.Business
         public async Task<Response<bool>> Update(int Id, UpdateOrganizationDto organization)
         {
             var model = await _unitOfWork.OrganizationsRepository.GetById(Id);
-           
+
             var resp = new Response<bool>(await _unitOfWork.OrganizationsRepository.Update(OrganizationMapper.MixModels(organization, model)));
             if (!resp.Data)
             {

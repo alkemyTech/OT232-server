@@ -18,7 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tests.Helper;
 
-namespace Tests
+namespace Tests.Controllers
 {
     [TestClass]
     public class TestimonialsControllerTests : BaseTest

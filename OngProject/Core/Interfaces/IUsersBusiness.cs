@@ -10,7 +10,7 @@ namespace OngProject.Core.Interfaces
     {
 
         Task<List<User>> GetAsync(LoginUserDto userDto);
-        Task<List<UserDto>> GetAll();
+        Task<Response<List<UserDto>>> GetAll();
         Task<Response<RegisterRequestDto>> GetById(int Id);
         Task<bool> Insert(RegisterRequestDto dto);
         Task<Response<bool>> Update(UpdateUserDto userDto, int Id);

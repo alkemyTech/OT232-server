@@ -7,16 +7,8 @@ namespace OngProject.Core.Interfaces
 {
     public interface IActivitiesBusiness
     {
-
         Task<Response<List<ActivitiesDto>>> GetAll();
-
-        Task GetById(int id);
-
         Task<Response<bool>> Insert(List<InsertActivityDto> activitiesDtos);
-
-        Task Update();
-
         Task<Response<string>> Delete(int id);
-
     }
 }

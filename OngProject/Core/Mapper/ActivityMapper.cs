@@ -10,40 +10,46 @@ namespace OngProject.Core.Mapper
         {
             List<Activity> activity = new();
 
-            foreach (var m in activityDtos)
+            if (activityDtos != null)
             {
-                activity.Add
-                (
-                    new Activity
-                    {
-                        Name = m.Name,
-                        Content = m.Content,
-                        Image = m.Image,
-                    }
-                );
+                foreach (var m in activityDtos)
+                {
+                    activity.Add
+                    (
+                        new Activity
+                        {
+                            Name = m.Name,
+                            Content = m.Content,
+                            Image = m.Image,
+                        }
+                    );
+                }
+                return activity;
             }
-
-            return activity;
+            return null;
         }
 
         public static List<ActivitiesDto> ToActivitiesDtoList(List<Activity> activities)
         {
             List<ActivitiesDto> activityDtos = new();
 
-            foreach (var m in activities)
+            if (activities != null)
             {
-                activityDtos.Add
-                (
-                    new ActivitiesDto
-                    {
-                        Name = m.Name,
-                        Content = m.Content,
-                        Image = m.Image,
-                    }
-                );
+                foreach (var m in activities)
+                {
+                    activityDtos.Add
+                    (
+                        new ActivitiesDto
+                        {
+                            Name = m.Name,
+                            Content = m.Content,
+                            Image = m.Image,
+                        }
+                    );
+                }
+                return activityDtos;
             }
-
-            return activityDtos;
+            return null;
         }
     }
 }

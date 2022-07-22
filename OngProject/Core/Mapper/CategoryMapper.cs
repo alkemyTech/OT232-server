@@ -8,38 +8,53 @@ namespace OngProject.Core.Mapper
     {
         public static Category ToCategory(CategoryRequestDto categoryDto)
         {
-            Category category = new Category();
-            category.Name = categoryDto.Name;
-            return category;
+            if (categoryDto != null)
+            {
+                Category category = new()
+                {
+                    Name = categoryDto.Name
+                };
+                return category;
+            }
+            return null;
         }
 
         public static List<CategoryRequestDto> ToCategoryNameList(List<Category> categories)
         {
             List<CategoryRequestDto> categoriesDtos = new();
 
-            foreach (var c in categories)
+            if (categories != null)
             {
-                categoriesDtos.Add
-                (
-                    new CategoryRequestDto
-                    {
-                        Name = c.Name,
-                    }
-                );
-            }
+                foreach (var c in categories)
+                {
+                    categoriesDtos.Add
+                    (
+                        new CategoryRequestDto
+                        {
+                            Name = c.Name,
+                        }
+                    );
+                }
 
-            return categoriesDtos;
+                return categoriesDtos;
+            }
+            return null;
         }
 
         public static Category UpdateToCategory(UpdateCategoryDto categoryDto)
-        {
-            Category category = new Category();
+        { 
+            if (categoryDto != null)
+            {
+                Category category = new()
+                {
+                    Name = categoryDto.Name,
+                    Description = categoryDto.Description,
+                    Image = categoryDto.Image
+                };
 
-            category.Name = categoryDto.Name;
-            category.Description = categoryDto.Description;
-            category.Image = categoryDto.Image;
-
-            return category;
+                return category;
+            }
+            return null;
         }
 
         public static Category UpdateToCategory(UpdateCategoryDto dto, Category category)

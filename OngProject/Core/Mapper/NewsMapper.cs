@@ -15,9 +15,8 @@ namespace OngProject.Core.Mapper
                     Image = news.Image,
                     Name = news.Name
                 };
-
-            return dto;
-        }
+                return dto;
+            }
             return null;
         }
 
@@ -54,6 +53,7 @@ namespace OngProject.Core.Mapper
             }
             return null;
         }
+
         public static News InsertToNewsModel(InsertNewsDto dto)
         {
             if (dto != null)
@@ -68,19 +68,19 @@ namespace OngProject.Core.Mapper
                 return model;
             }
             return null;
-
         }
+
         public static News UpdateToNews(UpdateToNewsDto newsDTO)
         {
             if (newsDTO != null)
             {
-                News news = new News();
-
-                news.Name = newsDTO.Name;
-                news.Description = newsDTO.Description;
-                news.Image = newsDTO.Image;
-                news.CategoryId = newsDTO.CategoryId;
-
+                News news = new()
+                {
+                    Name = newsDTO.Name,
+                    Description = newsDTO.Description,
+                    Image = newsDTO.Image,
+                    CategoryId = newsDTO.CategoryId
+                };
                 return news;
             }
             return null;

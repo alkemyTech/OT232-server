@@ -19,11 +19,11 @@ namespace OngProject.Core.Mapper
                     (
                         new OrganizationDto
                         {
-
                             Name = m.Name,
                             Image = m.Image,
                             Address = m.Address,
                             Phone = m.Phone,
+                            Email = m.Email,
                             WelcomeText = m.WelcomeText,
                             AboutUsText = m.AboutUsText,
                             LinkedinUrl = m.LinkedinUrl,

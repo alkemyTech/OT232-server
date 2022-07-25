@@ -37,35 +37,13 @@ namespace OngProject.Controllers
         /// <response code="500">InternalServerError, Error del servidor</response>
         /// <response code="404">NotFound. No se ha encontrado el objeto solicitado.</response>
         /// <returns></returns>
-
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
-        public async Task<IActionResult> GetAll()
-        {
-            var users = await _userBusiness.GetAll();
-            if(users == null)
-            {
-                return Ok("Error");
-            }
-            return Ok(users);
-        }
-
-        [HttpGet("{Id})")]
-        public IActionResult GetById(int id)
-        {
-            return Ok();
-        }
-
-        [HttpPost]
-        public IActionResult Insert()
-        {
-            return Ok();
-        }
+        public async Task<IActionResult> GetAll() => Ok(await _userBusiness.GetAll());
 
         // PATCH: /User/1
         /// <summary>
@@ -87,7 +65,6 @@ namespace OngProject.Controllers
         /// <response code="404">NotFound. No se ha encontrado el objeto solicitado.</response>
         /// <response code="500">InternalServerError, Error del servidor</response>
         /// <returns></returns>
-
         [HttpPatch("{Id}")]
         public async Task<IActionResult> Update(UpdateUserDto userDto, int Id) => Ok(await _userBusiness.Update(userDto, Id));
 
@@ -111,9 +88,8 @@ namespace OngProject.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int id) => Ok(await _userBusiness.Delete(id));
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Delete(int Id) => Ok(await _userBusiness.Delete(Id));
 
     }
 }

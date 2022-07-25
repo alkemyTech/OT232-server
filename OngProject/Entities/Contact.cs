@@ -10,10 +10,9 @@ namespace OngProject.Entities
 
         public string Email { get; set; }
 
-        [Phone]
         public string Phone { get; set; }
 
-        [MaxLengthAttribute]
+        [MaxLength]
         public string Message { get; set; }
     }
 }

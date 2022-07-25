@@ -20,11 +20,11 @@ namespace OngProject.Core.Business
         public async Task<Response<bool>> Delete(int id)
         {
             var response = new Response<bool>(await _unitOfWork.ContactsRepository.Delete(id));
+            
             if (!response.Data)
             {
                 response.Succeeded = false;
-                response.Message = ResponseMessage.Error;
-
+                response.Message = ResponseMessage.NotFoundOrDeleted;
             }
             return response;
         }

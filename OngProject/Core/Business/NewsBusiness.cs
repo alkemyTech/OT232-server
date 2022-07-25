@@ -74,23 +74,19 @@ namespace OngProject.Core.Business
         }
 
 
-        public async Task<Response<bool>> Update(UpdateToNewsDto news, int Id)
+        public async Task<Response<bool>> Update(UpdateToNewsDto newsDto, int Id)
         {
-            var response = new Response<bool>();
-
             var find = await _unitOfWork.NewsRepository.GetById(Id);
+            var response = new Response<bool>(false);
 
-            if (find != null)
-            {
-                response.Data = await _unitOfWork.NewsRepository.Update(NewsMapper.UpdateToNews(news));
-
+            if (find == null) 
+            { 
+                response.Message = ResponseMessage.NotFoundOrDeleted;
+                response.Succeeded = false;
                 return response;
-                 
             }
 
-            response.Message = ResponseMessage.NotFoundOrDeleted;
-            response.Succeeded = false;
-
+            response.Data = await _unitOfWork.NewsRepository.Update(NewsMapper.UpdateToNews(newsDto, find));
             return response;
         }
 

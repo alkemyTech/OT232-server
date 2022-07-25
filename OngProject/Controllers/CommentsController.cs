@@ -24,7 +24,6 @@ namespace OngProject.Controllers
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
-
         public async Task<IActionResult> GetAll() => Ok(await _commentsBusiness.GetAll());
 
         [HttpPost]
@@ -32,11 +31,11 @@ namespace OngProject.Controllers
 
         [HttpPut]
         [Route("{Id}")]
-
         public async Task<IActionResult> Update(UpdateCommentDto commentDto, int Id) => Ok(await _commentsBusiness.Update(commentDto, Id));
 
         [HttpDelete("{Id}")]
         [Authorize]
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> Delete(int Id)
         {
             try

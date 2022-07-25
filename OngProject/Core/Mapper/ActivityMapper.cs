@@ -51,5 +51,17 @@ namespace OngProject.Core.Mapper
             }
             return null;
         }
+        
+        public static Activity UpdateToActivity(UpdateActivityDto activityDto, Activity model)
+        {
+            if (model != null)
+            {
+                model.Name = activityDto.Name;
+                model.Content = activityDto.Content;
+                model.Image = activityDto.Image;
+                return model;
+            }
+            return null;
+        }
     }
 }

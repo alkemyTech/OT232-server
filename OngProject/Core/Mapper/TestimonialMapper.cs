@@ -69,17 +69,14 @@ namespace OngProject.Core.Mapper
 
         }
 
-        public static Testimonial UpdateToTestimonial(UpdateTestimonialDto testimonialDto)
+        public static Testimonial UpdateToTestimonial(UpdateTestimonialDto testimonialDto, Testimonial model)
         {
             if (testimonialDto != null)
             {
-                Testimonial testimonial = new()
-                {
-                    Name = testimonialDto.Name,
-                    Content = testimonialDto.Content,
-                    Image = testimonialDto.Image
-                };
-                return testimonial;
+                model.Name = testimonialDto.Name;
+                model.Content = testimonialDto.Content;
+                model.Image = testimonialDto.Image;
+                return model;
             }
             return null;
         }

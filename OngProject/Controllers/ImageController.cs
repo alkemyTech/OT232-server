@@ -1,5 +1,7 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
@@ -24,6 +26,7 @@ namespace OngProject.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<string> UploadFile(IFormFile file) 
         {
             return await _imageHelper.UploadFile(file);

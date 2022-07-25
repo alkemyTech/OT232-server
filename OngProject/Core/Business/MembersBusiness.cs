@@ -60,23 +60,18 @@ namespace OngProject.Core.Business
 
         public async Task<Response<bool>> Update(UpdateMemberDto member, int Id)
         {
-            var response = new Response<bool>();
-
+            var response = new Response<bool>(false);
             var find = await _unitOfWork.MembersRepository.GetById(Id);
 
-            if (find != null)
+            if (find == null)
             {
-                response.Data = await _unitOfWork.MembersRepository.Update(MemberMapper.UpdateToMember(member));
-
+                response.Message = ResponseMessage.NotFoundOrDeleted;
+                response.Succeeded = false;
                 return response;
-
             }
 
-            response.Message = ResponseMessage.NotFoundOrDeleted;
-            response.Succeeded = false;
-
+            response.Data = await _unitOfWork.MembersRepository.Update(MemberMapper.UpdateToMember(member, find));
             return response;
-
         }
 
         public async Task<int> CountElements() => await _unitOfWork.MembersRepository.CountElements();

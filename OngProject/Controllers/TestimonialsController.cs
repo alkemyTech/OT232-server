@@ -121,7 +121,7 @@ namespace OngProject.Controllers
         /// <response code="400">BadRequest. Ha ocurrido un error y no se pudo llevar a cabo la peticion.</response>
         /// <response code="500">InternalServerError, Error del servidor</response>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{Id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]

@@ -70,17 +70,14 @@ namespace OngProject.Core.Mapper
             return null;
         }
 
-        public static News UpdateToNews(UpdateToNewsDto newsDTO)
+        public static News UpdateToNews(UpdateToNewsDto newsDTO, News news)
         {
-            if (newsDTO != null)
+            if (news != null)
             {
-                News news = new()
-                {
-                    Name = newsDTO.Name,
-                    Description = newsDTO.Description,
-                    Image = newsDTO.Image,
-                    CategoryId = newsDTO.CategoryId
-                };
+                news.Name = newsDTO.Name;
+                news.Description = newsDTO.Description;
+                news.Image = newsDTO.Image;
+                news.CategoryId = newsDTO.CategoryId;
                 return news;
             }
             return null;

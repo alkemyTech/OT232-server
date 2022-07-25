@@ -83,21 +83,18 @@ namespace OngProject.Core.Business
 
         public async Task<Response<bool>> Update(UpdateSlidesDto slide, int Id)
         {
-            var response = new Response<bool>();
+            var response = new Response<bool>(false);
 
             var find = await _unitOfWork.SlidesRepository.GetById(Id);
 
-            if (find != null)
+            if (find == null)
             {
-                response.Data = await _unitOfWork.SlidesRepository.Update(SlideMapper.UpdateToSlide(slide));
-
+                response.Message = ResponseMessage.NotFoundOrDeleted;
+                response.Succeeded = false;
                 return response;
-
             }
 
-            response.Message = ResponseMessage.NotFoundOrDeleted;
-            response.Succeeded = false;
-
+            response.Data = await _unitOfWork.SlidesRepository.Update(SlideMapper.UpdateToSlide(slide, find));
             return response;
         }
     }

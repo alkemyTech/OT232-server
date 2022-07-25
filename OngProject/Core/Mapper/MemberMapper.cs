@@ -36,7 +36,7 @@ namespace OngProject.Core.Mapper
         {
             List<MemberDto> memberDtos = new();
 
-            if(members != null)
+            if (members != null)
             {
                 foreach (var m in members)
                 {
@@ -58,19 +58,16 @@ namespace OngProject.Core.Mapper
             return null;
         }
 
-        public static Member UpdateToMember(UpdateMemberDto memberDto)
+        public static Member UpdateToMember(UpdateMemberDto memberDto, Member member)
         {
             if (memberDto != null)
             {
-                Member member = new()
-                {
-                    Name = memberDto.Name,
-                    Description = memberDto.Description,
-                    Image = memberDto.Image,
-                    FacebookUrl = memberDto.FacebookUrl,
-                    InstagramUrl = memberDto.InstagramUrl,
-                    LinkedinUrl = memberDto.LinkedinUrl
-                };
+                member.Name = memberDto.Name;
+                member.Description = memberDto.Description;
+                member.Image = memberDto.Image;
+                member.FacebookUrl = memberDto.FacebookUrl;
+                member.InstagramUrl = memberDto.InstagramUrl;
+                member.LinkedinUrl = memberDto.LinkedinUrl;
                 return member;
             }
             return null;

@@ -100,6 +100,7 @@ namespace OngProject.Controllers
         /// 
         [HttpPut]
         [Route("{Id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
         public async Task<IActionResult> Update(UpdateMemberDto member, int Id) => Ok(await _membersBusiness.Update(member, Id));
 
 

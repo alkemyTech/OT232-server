@@ -13,7 +13,7 @@ namespace OngProject.Core.Mapper
         {
             List<SlideDto> listSlideDto = new();
 
-            if(listSlides != null)
+            if (listSlides != null)
             {
                 foreach (var slide in listSlides)
                 {
@@ -45,17 +45,14 @@ namespace OngProject.Core.Mapper
             return null;
         }
 
-        public static Slide UpdateToSlide(UpdateSlidesDto slideDto)
+        public static Slide UpdateToSlide(UpdateSlidesDto slideDto, Slide slide)
         {
-            if(slideDto != null)
+            if (slideDto != null)
             {
-                Slide slide = new()
-                {
-                    ImageURL = slideDto.ImageURL,
-                    Text = slideDto.Text,
-                    Order = slideDto.Order,
-                    OrganizationID = slideDto.OrganizationId
-                };
+                slide.ImageURL = slideDto.ImageURL;
+                slide.Text = slideDto.Text;
+                slide.Order = slideDto.Order;
+                slide.OrganizationID = slideDto.OrganizationId;
                 return slide;
             }
             return null;
@@ -65,7 +62,7 @@ namespace OngProject.Core.Mapper
         {
             var slideDto = new List<SlideOrganizationDto>();
 
-            if (listSlides != null) 
+            if (listSlides != null)
             {
                 foreach (var slide in listSlides)
                 {
@@ -73,7 +70,6 @@ namespace OngProject.Core.Mapper
                     (
                         new SlideOrganizationDto
                         {
-
                             ImageURL = slide.ImageURL,
                             Text = slide.Text,
                             Order = slide.Order,
@@ -83,12 +79,12 @@ namespace OngProject.Core.Mapper
                                 Image = slide.Organization.Image,
                                 Phone = slide.Organization.Phone,
                                 Address = slide.Organization.Address,
+                                Email = slide.Organization.Email,
                                 WelcomeText = slide.Organization.WelcomeText,
                                 AboutUsText = slide.Organization.AboutUsText,
                                 LinkedinUrl = slide.Organization.LinkedinUrl,
                                 FacebookUrl = slide.Organization.FacebookUrl,
                                 InstagramUrl = slide.Organization.InstagramUrl
-
                             }
                         }
                     );
@@ -100,7 +96,7 @@ namespace OngProject.Core.Mapper
 
         public static Slide ToDtoInsertSlide(InsertSlideDto insertSlideDto, string order)
         {
-            if (insertSlideDto != null) 
+            if (insertSlideDto != null)
             {
                 var slide = new Slide
                 {

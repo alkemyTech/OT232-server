@@ -72,7 +72,7 @@ namespace OngProject.Core.Business
 
             if (find != null)
             {
-                response.Data = await _unitOfWork.TestimonialsRepository.Update(TestimonialMapper.UpdateToTestimonial(testimonial));
+                response.Data = await _unitOfWork.TestimonialsRepository.Update(TestimonialMapper.UpdateToTestimonial(testimonial, find));
 
                 return response;
 

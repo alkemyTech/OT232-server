@@ -71,14 +71,17 @@ namespace OngProject.Core.Business
 
         public async Task<Response<bool>> Update(UpdateCategoryDto dto, int Id)
         {
+            var response = new Response<bool>(false);
             var category = await _unitOfWork.CategoriesRepository.GetById(Id);
-            var response = new Response<bool>(await _unitOfWork.CategoriesRepository.Update(CategoryMapper.UpdateToCategory(dto, category)));
 
-            if (!response.Data)
-            {
+            if (category == null) 
+            { 
                 response.Message = ResponseMessage.NotFoundOrDeleted;
                 response.Succeeded = false;
+                return response;
             }
+
+            response.Data = await _unitOfWork.CategoriesRepository.Update(CategoryMapper.UpdateToCategory(dto, category));
             return response;
         }
 

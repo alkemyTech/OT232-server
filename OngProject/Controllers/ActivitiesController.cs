@@ -21,7 +21,7 @@ namespace OngProject.Controllers
     public class ActivitiesController : Controller
     {
         private readonly IActivitiesBusiness _activitiesBusiness;
-        public ActivitiesController(IActivitiesBusiness activitiesBusiness, IUnitOfWork unitOfWork)
+        public ActivitiesController(IActivitiesBusiness activitiesBusiness)
         {
             _activitiesBusiness = activitiesBusiness;
         }
@@ -46,26 +46,6 @@ namespace OngProject.Controllers
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> GetAll() => Ok(await _activitiesBusiness.GetAll());
-
-        // GET: /activities/5
-        /// <summary>
-        /// Obtiene una Actividad por su Id.
-        /// </summary>
-        /// <remarks>
-        /// Obtiene una Actividad por su Id.
-        /// </remarks>
-        /// <response code="401">Unauthorized.El Token JWT de acceso es incorrecto o no esta indicado.</response>              
-        /// <response code="200">OK. Devuelve una actividad por su Id.</response>        
-        /// <response code="400">BadRequest. Ha ocurrido un error y no se pudo llevar a cabo la peticion.</response>
-        /// <response code="500">InternalServerError, Error del servidor</response>
-        /// <response code="404">NotFound. No se ha encontrado el objeto solicitado.</response>
-        /// <returns></returns>
-        [HttpGet("{Id})")]
-        public IActionResult GetById(int id)
-        {
-            return NoContent();
-        }
-
 
         // POST: /activities
         /// <summary>
@@ -104,11 +84,8 @@ namespace OngProject.Controllers
         /// <response code="400">BadRequest. Ha ocurrido un error y no se pudo llevar a cabo la peticion.</response>
         /// <response code="500">InternalServerError, Error del servidor</response>
         /// <response code="404">NotFound. No se ha encontrado el objeto solicitado.</response>
-        [HttpPut]
-        public IActionResult Update(Activity entity)
-        {
-            return NoContent();
-        }
+        [HttpPut("{Id}")]
+        public async Task<IActionResult> Update(int Id, UpdateActivityDto entity) => Ok(await _activitiesBusiness.Update(Id, entity));
 
         // DELETE: /activities/5
         /// <summary>
@@ -124,27 +101,6 @@ namespace OngProject.Controllers
         /// <response code="404">NotFound. No se ha encontrado el objeto solicitado.</response>
         [HttpDelete("{Id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Estándar")]
-        public async Task<IActionResult> Delete(int Id)
-        {
-            try
-            {
-                var result = await _activitiesBusiness.Delete(Id);
-                if (result.Succeeded == false)
-                {
-                    return StatusCode(403, result);
-                }
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                var response = new Response<string>()
-                {
-                    Data = "Error - 404",
-                    Message = ex.Message,
-                    Succeeded = false
-                };
-                return StatusCode(404, response);
-            }
-        }
+        public async Task<IActionResult> Delete(int Id) => Ok(await _activitiesBusiness.Delete(Id));
     }
 }

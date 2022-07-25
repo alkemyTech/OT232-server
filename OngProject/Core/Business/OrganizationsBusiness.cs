@@ -35,19 +35,22 @@ namespace OngProject.Core.Business
 
         public async Task<Response<List<SlideOrganizationDto>>> GetSlides(int Id)
         {
-            var query = new QueryProperty<Slide>
+            var response = new Response<List<SlideOrganizationDto>>(null);
+            var query = new QueryProperty<Slide>(1, 1)
             {
                 Where = x => x.OrganizationID == Id,
                 OrderBy = x => x.Order
             };
+            var organization = await _unitOfWork.OrganizationsRepository.GetById(Id);
 
-            var response = new Response<List<SlideOrganizationDto>>(SlideMapper.ToSlideOrganizationDto(await _unitOfWork.SlidesRepository.GetAsync(query)));
-            
-            if (response == null)
+            if (organization == null) 
             {
                 response.Succeeded = false;
                 response.Message = ResponseMessage.UnexpectedErrors;
+                return response;
             }
+
+            response.Data = SlideMapper.ToSlideOrganizationDto(await _unitOfWork.SlidesRepository.GetAsync(query));
             return response;
         }
 
@@ -65,14 +68,17 @@ namespace OngProject.Core.Business
         }
         public async Task<Response<bool>> Update(int Id, UpdateOrganizationDto organization)
         {
+            var resp = new Response<bool>(false);
             var model = await _unitOfWork.OrganizationsRepository.GetById(Id);
 
-            var resp = new Response<bool>(await _unitOfWork.OrganizationsRepository.Update(OrganizationMapper.MixModels(organization, model)));
-            if (!resp.Data)
-            {
+            if (model == null) 
+            { 
                 resp.Succeeded = false;
                 resp.Message = ResponseMessage.UnexpectedErrors;
+                return resp;
             }
+
+            resp.Data = await _unitOfWork.OrganizationsRepository.Update(OrganizationMapper.MixModels(organization, model));
             return resp;
         }
 

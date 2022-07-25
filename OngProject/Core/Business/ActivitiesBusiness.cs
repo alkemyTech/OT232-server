@@ -17,23 +17,17 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
 
         }
-        public async Task<Response<string>> Delete(int id)
+        public async Task<Response<bool>> Delete(int Id)
         {
-            var response = new Response<string>();
-            var activity = await _unitOfWork.ActivitiesRepository.GetById(id);
-           
-            if (activity != null)
-            {
-                await _unitOfWork.ActivitiesRepository.Delete(id);
+            var response = new Response<bool>(await _unitOfWork.ActivitiesRepository.Delete(Id));
 
-                return new Response<string>("Success", message: "Entity Deleted");
-            }
-            else
+            if (!response.Data)
             {
                 response.Succeeded = false;
-                response.Message = ResponseMessage.UnexpectedErrors;
-                return response;
+                response.Message = ResponseMessage.NotFoundOrDeleted;
             }
+
+            return response;
         }
 
         public async Task<Response<List<ActivitiesDto>>> GetAll()
@@ -59,6 +53,22 @@ namespace OngProject.Core.Business
                 response.Message = ResponseMessage.UnexpectedErrors;
             }
 
+            return response;
+        }
+
+        public async Task<Response<bool>> Update(int Id, UpdateActivityDto activityDto)
+        {
+            var response = new Response<bool>(false);
+            var model = await _unitOfWork.ActivitiesRepository.GetById(Id);
+
+            if (model == null)
+            {
+                response.Succeeded = false;
+                response.Message = ResponseMessage.NotFound;
+                return response;
+            }
+
+            response.Data = await _unitOfWork.ActivitiesRepository.Update(ActivityMapper.UpdateToActivity(activityDto, model));
             return response;
         }
     }

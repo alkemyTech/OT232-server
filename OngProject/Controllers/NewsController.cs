@@ -131,7 +131,8 @@ namespace OngProject.Controllers
         /// <response code="400">BadRequest. Ha ocurrido un error y no se pudo llevar a cabo la peticion.</response>
         /// <response code="500">InternalServerError. Error internodel servidor</response>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{Id}")]
+        //ADMINISTRADOR
         public async Task<IActionResult> Delete(int Id) => Ok(await _newsBusiness.Delete(Id));
 
         // ACTION: api/news/5/commments
@@ -149,11 +150,12 @@ namespace OngProject.Controllers
         /// <response code="500">InternalServerError. Error interno del servidor</response>
         /// <returns></returns>
         [HttpGet("{id}/[Action]")]
-        public async Task<Response<List<CommentDto>>> Comments(int id)
+        //ESTANDAR
+        public async Task<Response<List<CommentDto>>> Comments(int Id)
         {
             try
             {
-                var entity = await _newsBusiness.GetComments(id);
+                var entity = await _newsBusiness.GetComments(Id);
                 if (entity == null)
                     return new Response<List<CommentDto>>(entity, false, null, ResponseMessage.NotFound);
                 return new Response<List<CommentDto>>(entity, true, null, ResponseMessage.Success);

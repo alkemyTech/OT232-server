@@ -9,6 +9,7 @@ namespace OngProject.Core.Interfaces
     {
         Task<Response<List<ActivitiesDto>>> GetAll();
         Task<Response<bool>> Insert(List<InsertActivityDto> activitiesDtos);
-        Task<Response<string>> Delete(int id);
+        Task<Response<bool>> Update(int Id, UpdateActivityDto activityDto);
+        Task<Response<bool>> Delete(int id);
     }
 }

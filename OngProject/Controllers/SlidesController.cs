@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models.DTOs;
-using OngProject.Entities;
-using OngProject.Repositories.Interfaces;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
@@ -30,7 +27,7 @@ namespace OngProject.Controllers
         public async Task<IActionResult> GetById(int Id) => Ok(await _slideBusiness.GetById(Id));
 
         [HttpPost]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> Insert(InsertSlideDto slideDto) => Ok(await _slideBusiness.Insert(slideDto));
 
         [HttpPut]

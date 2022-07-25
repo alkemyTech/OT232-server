@@ -21,7 +21,7 @@ namespace OngProject.Controllers
             _organizationsBusiness = organizationsBusiness;
         }
 
-        [HttpGet("public")]
+        [HttpGet("/public")]
         public async Task<IActionResult> GetAll() => Ok(await _organizationsBusiness.GetAll());
 
         [HttpGet("{Id}/[Action]")]
@@ -30,7 +30,7 @@ namespace OngProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert(List<InsertOrganizationDto> org) => Ok(await _organizationsBusiness.Insert(org));
 
-        [HttpPost("/Public")]
+        [HttpPost("/public")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
         public async Task<IActionResult> Update (int Id, UpdateOrganizationDto organization)
             => Ok(await _organizationsBusiness.Update(Id, organization));

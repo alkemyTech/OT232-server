@@ -21,16 +21,15 @@ namespace OngProject.Core.Helper
             _amazonService = amazonService;
 
             var chain = new CredentialProfileStoreChain("App_data\\credentials.ini");
-            AWSCredentials awsCredentials;
-            if (chain.TryGetAWSCredentials("default", out awsCredentials))
+            if (chain.TryGetAWSCredentials("default", out AWSCredentials awsCredentials))
             {
-                _amazonService = new AmazonS3Client(awsCredentials.GetCredentials().AccessKey, awsCredentials.GetCredentials().SecretKey, RegionEndpoint.USEast1);
+                _amazonService = new AmazonS3Client(awsCredentials.GetCredentials().AccessKey, awsCredentials.GetCredentials().SecretKey, RegionEndpoint.SAEast1);
             }
         }
 
         public async Task<string> UploadFile(IFormFile file)
         {
-
+            
             var request = new PutObjectRequest
             {
                 BucketName = _configuration["AWS:BucketName"],
@@ -40,7 +39,7 @@ namespace OngProject.Core.Helper
                 CannedACL = new S3CannedACL("public-read")
             };
 
-            var result = await _amazonService.PutObjectAsync(request);
+            await _amazonService.PutObjectAsync(request);
 
             var url = $"https://{_configuration["AWS:BucketName"]}.s3.sa-east-1.amazonaws.com/{file.FileName}";
 

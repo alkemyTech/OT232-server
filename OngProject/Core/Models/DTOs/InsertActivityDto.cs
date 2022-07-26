@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace OngProject.Core.Models.DTOs
 {
@@ -11,7 +12,7 @@ namespace OngProject.Core.Models.DTOs
         [StringLength(255)]
         public string Content { get; set; }
 
-        [StringLength(255)]
+        [DisplayFormat(ConvertEmptyStringToNull = true, NullDisplayText = "[Null]")]
         public string Image { get; set; }
     }
 }

@@ -60,7 +60,7 @@ namespace OngProject.Controllers
             if (!await _authenticationBusiness.UserRegister(request))
                 return NotFound();
 
-            await _emailSender.SendWelcomeEmailAsync(request.Email, "!");
+            await _emailSender.SendWelcomeEmailAsync(request.Email, "¡Bienvenido!");
 
             return Ok(await _authenticationBusiness.GetToken(UserMapper.ToLoginUser(request)));
         }

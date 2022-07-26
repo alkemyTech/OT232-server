@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OngProject.Core.Business;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
@@ -27,15 +25,16 @@ namespace OngProject.Controllers
         public async Task<IActionResult> GetAll() => Ok(await _commentsBusiness.GetAll());
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Insert(List<InsertCommentDto> commentDtos) => Ok(await _commentsBusiness.Insert(commentDtos));
 
         [HttpPut]
         [Route("{Id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Update(UpdateCommentDto commentDto, int Id) => Ok(await _commentsBusiness.Update(commentDto, Id));
 
         [HttpDelete("{Id}")]
-        [Authorize]
-        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Delete(int Id)
         {
             try

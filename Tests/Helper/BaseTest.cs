@@ -41,7 +41,9 @@ namespace Tests.Helper
         protected static IContactsBusiness BuildContactBussines()
         {
             var unitOfWork = BuildUnitOfWork();
-            return new ContactsBusiness(unitOfWork);
+            IConfiguration config = new ConfigurationBuilder().Build();
+            IEmailSender sender = new EmailSender(config);
+            return new ContactsBusiness(unitOfWork, null);
         }
         protected static IActivitiesBusiness BuildActivitiesBusiness()
         {
@@ -72,7 +74,6 @@ namespace Tests.Helper
             return new NewsBusiness(unitOfWork);
         }
 
-
         protected static IAuthenticationBusiness BuildAuthenticationBusiness()
         {
             var unitOfWork = BuildUnitOfWork();
@@ -85,18 +86,12 @@ namespace Tests.Helper
             return new UsersBusiness(unitOfWork);
         }
 
-
-        protected static void BuildSender()
-        {
-        }
-
-        protected IFormFile GetMockJPG()
+        protected static IFormFile GetMockJPG()
         {
             var content = new byte[] { 0xFF, 0xD8 };
             var fileName = "test.jpg";
             var stream = new MemoryStream(content);
 
-            //create FormFile with desired data
             return new FormFile(stream, 0, stream.Length, "id_from_form", fileName);
         }
 

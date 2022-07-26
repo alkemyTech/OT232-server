@@ -73,6 +73,52 @@ namespace Tests.Controllers
             //Assert
             Assert.IsTrue(response.Data);
         }
+
+        [TestMethod]
+        public async Task Update_ReturnShouldSuccessResponse()
+        {
+            //Arrange
+            var activityDtos = new List<InsertActivityDto>();
+            activityDtos.Add(new InsertActivityDto { Name = "Actividad Nueva", Image = "newactivity.jpg", Content = "Una actividad nueva" });
+            await _business.Insert(activityDtos);
+
+            var updateActivity = new UpdateActivityDto
+            {
+                Name = "Actividad Nueva Nuevita",
+                Image = "newactivity.jpg",
+                Content = "Una actividad nueva nuevita"
+            };
+
+            //Act
+            var updateResponse = await _business.Update(1, updateActivity);
+
+            //Assert
+            Assert.IsTrue(updateResponse.Data);
+
+        }
+
+        [TestMethod]
+        public async Task Update_ReturnShouldErrorResponse()
+        {
+            //Arrange
+            var activityDtos = new List<InsertActivityDto>();
+            activityDtos.Add(new InsertActivityDto { Name = "Actividad Nueva", Image = "newactivity.jpg", Content = "Una actividad nueva" });
+            await _business.Insert(activityDtos);
+
+            var updateActivity = new UpdateActivityDto
+            {
+                Name = "Actividad Nueva Nuevita",
+                Image = "newactivity.jpg",
+                Content = "Una actividad nueva nuevita"
+            };
+
+            //Act
+            var updateResponse = await _business.Update(999, updateActivity);
+
+            //Assert
+            Assert.IsFalse(updateResponse.Data);
+        }
+
         [TestMethod]
         public async Task Delete_ShouldReturnSuccessResponse()
         {

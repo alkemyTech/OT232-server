@@ -16,20 +16,15 @@ namespace OngProject.Controllers
     [ApiController]
     public class ImageController : ControllerBase
     {
-        private readonly IAmazonS3 _amazons3;
         private readonly IImageHelper _imageHelper;
 
-        public ImageController(IAmazonS3 amazonS3, IImageHelper imageHelper)
+        public ImageController(IImageHelper imageHelper)
         {
-            _amazons3 = amazonS3;
             _imageHelper = imageHelper;
         }
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrador")]
-        public async Task<string> UploadFile(IFormFile file) 
-        {
-            return await _imageHelper.UploadFile(file);
-        }
+        public async Task<IActionResult> UploadFile(IFormFile file) => Ok(await _imageHelper.UploadFile(file));
     }
 }

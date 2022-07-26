@@ -1,10 +1,11 @@
-﻿using OngProject.Core.Models.DTOs;
+﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using System.Collections.Generic;
 
 namespace OngProject.Core.Mapper
 {
-    public class ActivityMapper
+    public static class ActivityMapper
     {
         public static List<Activity> ToActivityList(List<InsertActivityDto> activityDtos)
         {
@@ -20,7 +21,7 @@ namespace OngProject.Core.Mapper
                         {
                             Name = m.Name,
                             Content = m.Content,
-                            Image = m.Image,
+                            Image = m.Image
                         }
                     );
                 }

@@ -42,9 +42,9 @@ namespace OngProject.Core.Helper
                 content = content.Replace("Datos de contacto de ONG", contact);
                 return content;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 
@@ -58,9 +58,9 @@ namespace OngProject.Core.Helper
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, String.Empty, GetWelcomeEmail());
                 var response = await client.SendEmailAsync(msg);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 
@@ -74,9 +74,9 @@ namespace OngProject.Core.Helper
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, String.Empty, GetContactEmail());
                 var response = await client.SendEmailAsync(msg);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception(ex.Message);
             }
         }
     }

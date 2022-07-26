@@ -3,7 +3,6 @@ using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Repositories.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,10 +11,11 @@ namespace OngProject.Core.Business
     public class ContactsBusiness : IContactsBusiness
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ContactsBusiness(IUnitOfWork unitOfWork)
+        private readonly IEmailSender _emailSender;
+        public ContactsBusiness(IUnitOfWork unitOfWork, IEmailSender emailSender)
         {
             _unitOfWork = unitOfWork;
-
+            _emailSender = emailSender;
         }
         public async Task<Response<bool>> Delete(int id)
         {
@@ -51,6 +51,8 @@ namespace OngProject.Core.Business
                 response.Succeeded = false;
                 response.Message = ResponseMessage.UnexpectedErrors;
             }
+            foreach(var c in contactsDtos)
+                if(_emailSender != null) await _emailSender.SendContactEmailAsync(c.Email, "Contacto");
 
             return response;
         }
